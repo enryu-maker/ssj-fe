@@ -1,5 +1,24 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Pages/Home';
+import Header from './Components/Header';
+import Contact from './Pages/Contact';
+
 function App() {
-  return <div className='text-3xl text-center text-red-500'>Hello</div>;
+  return (
+    <Router>
+      <Header />
+      <Routes>
+        <Route
+          path='/'
+          element={<Home />}
+        />
+        <Route
+          path='/contacts'
+          element={<Contact />}
+        />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
