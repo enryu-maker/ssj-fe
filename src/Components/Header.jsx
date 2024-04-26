@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <>
-      <div className='flex items-center justify-around sticky top-0 bg-secondary-color w-full  '>
+      <div className='flex items-center justify-around sticky top-0 z-50 bg-secondary-color w-full  '>
         <div>
           {/* logo */}
           <img
