@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <>
-      <div className='flex items-center justify-around sticky top-0 z-50 bg-secondary-color w-full  '>
+      <div className='flex items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  '>
         <div>
           {/* logo */}
           <img
@@ -91,7 +91,7 @@ const Header = () => {
         </div>
       </div>
       {/* header link part  */}
-      <div className='flex justify-around p-5 px-10'>
+      <div className='flex justify-around p-5 px-10 font-Raleway'>
         <div className='uppercase text-sm group cursor-pointer underlineAni '>
           All jewellery
         </div>

@@ -7,6 +7,9 @@ module.exports = {
         'primary-color': '#994e4f',
         'secondary-color': '#f2e9e9',
       },
+      fontFamily: {
+        Raleway: ['"Raleway", sans-serif'],
+      },
     },
   },
   plugins: [],

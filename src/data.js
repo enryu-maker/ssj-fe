@@ -1,38 +1,95 @@
-export const HeaderData = [
+export const Gifted = [
   {
-    title: 'All jewellery',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: 'Bestsellers',
   },
   {
-    title: 'Gold',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: 'Bestsellers',
   },
   {
-    title: 'Diamond',
+    name: 'Dainty Beaded Gold Hoop Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: '',
   },
   {
-    title: 'Earrings',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: 'Bestsellers',
   },
   {
-    title: 'Rings',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: '',
+  },
+];
+
+export const Category = [
+  {
+    name: 'Earrings',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw47b1df4b/homepage/shopByCategory/fod-earrings.jpg',
   },
   {
-    title: 'Bestsellers',
+    name: 'Finger Rings',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwfc4fb974/homepage/shopByCategory/fod-rings.jpg',
   },
   {
-    title: 'Mia',
+    name: 'Pendants',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwfc4fb974/homepage/shopByCategory/fod-rings.jpg',
   },
   {
-    title: 'Collections',
+    name: 'Nose Pins',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw0cb7b15f/homepage/shopByCategory/fod-nosepins.jpg',
   },
   {
-    title: 'Wedding',
+    name: 'Mangalsutras',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw114df9d7/homepage/shopByCategory/fod-mangalsutra.jpg',
   },
   {
-    title: 'Gifting',
+    name: 'Chains',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwcbb3ebbb/homepage/shopByCategory/fod-chain.jpg',
   },
   {
-    title: 'Golden Harvest',
+    name: 'Gold Coins',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwebf0313b/homepage/shopByCategory/fod-gold-coins.jpg',
   },
   {
-    title: 'More',
+    name: 'Bracelets',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw4dcf3d1d/homepage/shopByCategory/fod-bracelet.jpg',
+  },
+  {
+    name: 'Bangles',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw7dbdbacf/homepage/shopByCategory/fod-bangle.jpg',
+  },
+  {
+    name: 'Neckwear',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwb8086cf2/homepage/shopByCategory/fod-necklace.jpg',
+  },
+  {
+    name: 'Necklace set',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw66347a7d/homepage/shopByCategory/fod-necklace-set.jpg',
+  },
+  {
+    name: 'Pendants sets',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw407b5f83/homepage/shopByCategory/fod-pendant-set.jpg',
   },
 ];

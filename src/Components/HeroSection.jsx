@@ -28,7 +28,7 @@ const HeroSection = () => {
             }
             alt=''
           />
-          <div className='absolute font-Poppins left-10 right-10 top-44 '>
+          <div className='absolute font-Raleway left-10 right-10 top-44 '>
             <p className='mt-5 md:text-4xl font-light  md:w-96 text-left text-white'>
               We are selling happiness
             </p>
@@ -42,8 +42,8 @@ const HeroSection = () => {
             src='https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
             alt=''
           />
-          <div className='absolute font-Poppins left-10 right-10 top-44 '>
-            <p className='mt-5 md:text-4xl font-light  md:w-96 text-left text-black'>
+          <div className='absolute font-Raleway left-10 right-10 top-44 '>
+            <p className='mt-5 md:text-4xl font-light  md:w-96 text-left text-white'>
               Ad eu ad anim sint eu. Nostrud sit ipsum do proident laborum amet
               reprehenderit ullamco consequat esse.
             </p>
@@ -55,11 +55,11 @@ const HeroSection = () => {
 
         <SwiperSlide>
           <img
-            src='slider-3.webp'
+            src='https://images.unsplash.com/photo-1450297166380-cabe503887e5?q=80&w=2065&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
             alt=''
           />
-          <div className='absolute font-Poppins  left-10 right-10 top-44 '>
-            <p className='mt-5 flex md:w-96  md:text-4xl font-light md:text-left text-black'>
+          <div className='absolute font-Raleway  left-10 right-10 top-44 '>
+            <p className='mt-5 flex md:w-96  md:text-4xl font-light md:text-left text-white'>
               Id nostrud commodo deserunt ex qui ut proident nisi sit enim minim
               nisi proident ad.
             </p>
