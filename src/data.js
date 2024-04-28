@@ -93,3 +93,53 @@ export const Category = [
       'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw407b5f83/homepage/shopByCategory/fod-pendant-set.jpg',
   },
 ];
+
+export const UsefulLinks = [
+  {
+    name: 'Delivery Information',
+    link: '',
+  },
+  {
+    name: 'International Shipping',
+    link: '',
+  },
+  {
+    name: 'Payment Options',
+    link: '',
+  },
+  {
+    name: 'Track your Order',
+    link: '',
+  },
+  {
+    name: 'Returns',
+    link: '',
+  },
+  {
+    name: 'Find a Store',
+    link: '',
+  },
+];
+
+export const Information = [
+  {
+    name: 'Careers',
+    link: '',
+  },
+  {
+    name: 'Blog',
+    link: '',
+  },
+  {
+    name: 'Offers & Contest Details',
+    link: '',
+  },
+  {
+    name: 'Help & FAQs',
+    link: '',
+  },
+  {
+    name: 'About Tanishq',
+    link: '',
+  },
+];
