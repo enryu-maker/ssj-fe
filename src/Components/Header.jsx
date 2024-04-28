@@ -104,9 +104,7 @@ const Header = () => {
         <div className='uppercase text-sm  cursor-pointer underlineAni'>
           Earrings
         </div>
-        <div className='uppercase text-sm  cursor-pointer underlineAni'>
-          Rings
-        </div>
+
         <div className='uppercase text-sm  cursor-pointer underlineAni '>
           Rings
         </div>

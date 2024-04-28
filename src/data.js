@@ -93,6 +93,24 @@ export const Category = [
       'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw407b5f83/homepage/shopByCategory/fod-pendant-set.jpg',
   },
 ];
+export const Collection = [
+  {
+    name: 'String It',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw3db19e7a/homepage/ShopByCollection/string-it.jpg',
+  },
+
+  {
+    name: 'The Italian Collection',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwa0a42997/homepage/ShopByCollection/italian-connection.jpg',
+  },
+  {
+    name: 'Engagement Rings',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwd303e668/homepage/ShopByCollection/engagement-rings.jpg',
+  },
+];
 
 export const UsefulLinks = [
   {
