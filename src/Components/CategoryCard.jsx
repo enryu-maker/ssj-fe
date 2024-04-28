@@ -9,7 +9,9 @@ function CategoryCard({ ...category }) {
         alt=''
         className=' w-[200px] h-44 rounded-t'
       />
-      <h1 className='text-center text-xl font-semibold'>{category.name}</h1>
+      <h1 className='text-center text-xl font-semibold text-primary-color'>
+        {category.name}
+      </h1>
       <div className='flex justify-center items-center gap-2 py-3 mb-2 cursor-pointer group hover:gap-10 delay-75 duration-100 transition-all ease-in-out '>
         <p className='group-hover:text-primary-color'>Explore</p>
         <p className='group-hover:text-primary-color'>
