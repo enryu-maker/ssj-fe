@@ -17,7 +17,7 @@ function ShopByCategory() {
         alt=''
         className='object-cover'
       />
-      <div className='grid grid-cols-6 gap-5 px-10 mt-5 '>
+      <div className='grid md:grid-cols-6 grid-cols-2 gap-5 px-10 mt-5 '>
         {Category.map((category, index) => (
           <CategoryCard
             key={index}
