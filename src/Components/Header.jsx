@@ -88,9 +88,12 @@ const Header = () => {
           <Link
             to='#/'
             className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] '>
-            <IoCartOutline className='w-6 h-6 text-primary-color' />
+            <IoCartOutline className='w-6 h-6 text-primary-color relative' />
             Cart
           </Link>
+          <span className=' absolute right-5 top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-sm p-2'>
+            2
+          </span>
         </div>
       </div>
       {/* header link part  */}
