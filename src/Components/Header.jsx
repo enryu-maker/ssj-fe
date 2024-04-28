@@ -17,11 +17,14 @@ const Header = () => {
       <div className='flex items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  '>
         <div>
           {/* logo */}
-          <img
+          {/* <img
             src={Logo}
             alt='Logo'
             className='w-20 h-20'
-          />
+          /> */}
+          <h1 className=' text-2xl font-extrabold text-primary-color p-5'>
+            Logo
+          </h1>
         </div>
         <div className='w-[600px] relative '>
           {/* search bar */}
