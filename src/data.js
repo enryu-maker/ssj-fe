@@ -190,7 +190,7 @@ export const Information = [
     link: '',
   },
   {
-    name: 'About Tanishq',
+    name: 'About SSJ',
     link: '',
   },
 ];

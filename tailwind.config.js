@@ -9,7 +9,7 @@ module.exports = {
         'light-bg-color': '#f5f3f2',
       },
       fontFamily: {
-        Raleway: ['"Raleway", sans-serif'],
+        Raleway: ['"Open Sans", sans-serif'],
       },
     },
   },

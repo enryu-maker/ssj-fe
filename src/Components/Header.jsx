@@ -11,7 +11,11 @@ import { HiOutlineUser } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Login from '../Pages/Login';
-
+import { MdOutlinePhone,MdOutlineEmail } from "react-icons/md";
+import { FaFacebookF, FaInstagram } from "react-icons/fa6";
+import { AiOutlineYoutube } from "react-icons/ai";
+import { FaWhatsapp } from "react-icons/fa";
+import Marquee from "react-fast-marquee";
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
 
@@ -21,6 +25,41 @@ const Header = () => {
 
   return (
     <>
+      <div className='flex items-center justify-around font-Raleway h-[35px] sticky top-0 z-50 bg-secondary-color w-full  '>
+
+        <div className='flex space-x-5'>
+          <button>
+            <MdOutlinePhone className='w-5 h-5 text-primary-color' />
+          </button>
+          <p className=' text-sm font-bold text-primary-color tracking-widest'>
+            +91 84463 49063
+          </p>
+        </div>
+        <div className='flex space-x-5 text-primary-color w-[50%] tracking-widest'>
+          <Marquee>
+            Login to website 50% off making Sai Shraddha Jewellers PVT LTD
+          </Marquee>
+        </div>
+
+        <div className='flex space-x-5'>
+          <button>
+            <FaFacebookF className='w-5 h-5 text-primary-color' />
+          </button>
+          <button>
+            <FaInstagram className='w-5 h-5 text-primary-color' />
+          </button>
+          <button>
+            <AiOutlineYoutube className='w-6 h-6 text-primary-color' />
+          </button>
+          <button>
+            <FaWhatsapp className='w-5 h-5 text-primary-color' />
+          </button>
+          <button>
+            <MdOutlineEmail className='w-6 h-6 text-primary-color' />
+          </button>
+        </div>
+
+      </div>
       <div className='flex items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  '>
         <div>
           {/* logo */}
@@ -44,9 +83,9 @@ const Header = () => {
             className=' w-full p-2 rounded-md border-none focus:outline-none'
           />
           <div className='flex items-center gap-5 absolute top-2 right-2 '>
-            <button>
+            {/* <button>
               <CiMicrophoneOn className='w-6 h-6 text-primary-color' />
-            </button>
+            </button> */}
             <button>
               <IoSearchOutline className='w-6 h-6 text-primary-color' />
             </button>
@@ -129,10 +168,11 @@ const Header = () => {
             className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] relative '>
             <IoCartOutline className='w-6 h-6 text-primary-color ' />
             Cart
-          </Link>
-          <span className=' absolute md:right-2  right-0 top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-sm p-2'>
+            <span className=' absolute md:right-2  left-5 right-0 -top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs p-2'>
             2
           </span>
+          </Link>
+          
         </div>
       </div>
       {/* header link part  */}

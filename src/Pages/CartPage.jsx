@@ -66,7 +66,7 @@ const CartPage = () => {
         </div>
 
         {/* Order Summary */}
-        <div className='flex flex-col items-start justify-between gap-5 py-10 bg-light-bg-color w-1/4 p-4'>
+        <div className='flex flex-col items-center text-justify justify-between gap-5 py-10 bg-light-bg-color w-1/4 p-4'>
           <h1 className=' text-2xl font-semibold text-primary-color'>
             ORDER SUMMARY
           </h1>
