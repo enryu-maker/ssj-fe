@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../assets/Logo.png';
 import DailyWear from '../assets/EarringsIcon.svg';
 import {
@@ -7,11 +7,18 @@ import {
   IoSearchOutline,
 } from 'react-icons/io5';
 import { CiMicrophoneOn } from 'react-icons/ci';
-
 import { HiOutlineUser } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import Login from '../Pages/Login';
 
 const Header = () => {
+  const [LoginModal, setLoginModal] = useState(false);
+
+  const HandleModal = () => {
+    setLoginModal(!LoginModal);
+  };
+
   return (
     <>
       <div className='flex items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  '>
@@ -22,9 +29,11 @@ const Header = () => {
             alt='Logo'
             className='w-20 h-20'
           /> */}
-          <h1 className=' text-2xl font-extrabold text-primary-color p-5'>
-            Logo
-          </h1>
+          <Link to={'/'}>
+            <h1 className=' text-2xl font-extrabold text-primary-color p-5'>
+              Logo
+            </h1>
+          </Link>
         </div>
         <div className='w-[600px] relative '>
           {/* search bar */}
@@ -43,7 +52,7 @@ const Header = () => {
             </button>
           </div>
         </div>
-        <div className='flex items-center gap-8 font-[400] '>
+        <div className='flex items-center gap-10 font-[400] '>
           {/* Icons */}
           <Link
             to='#/'
@@ -73,12 +82,42 @@ const Header = () => {
             </svg>
             Stores
           </Link>
-          <Link
-            to='#/'
-            className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] '>
-            <HiOutlineUser className='w-6 h-6 text-primary-color' />
-            Account
-          </Link>
+          <ul className='relative parent cursor-pointer flex items-center   '>
+            <Link
+              to='#/'
+              style={{ color: '#994e4f' }}
+              className=' flex flex-col items-center uppercase underlineAni text-sm delay-100 transition-all ease-linear hover:scale-[1.1] '>
+              <HiOutlineUser className='w-6 h-6 text-primary-color' />
+              Account
+            </Link>
+            <div className='absolute top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex gap-5 m-1  items-center justify-center flex-col w-[280px]  h-40  text-sm  p-1  md:hidden child bg-white shadow-md rounded-md	'>
+              <div className='flex flex-col gap-2 items-center justify-center font-semibold '>
+                <h1 className='text-2xl uppercase'>My Account</h1>
+                <p className='text-[12px]'>LOGIN TO ACCESS YOUR ACCOUNT</p>
+              </div>
+              <div className='flex justify-center items-center gap-5 mt-5'>
+                <button
+                  onClick={HandleModal}
+                  className='  uppercase border border-primary-color rounded-md w-20'>
+                  log in
+                </button>
+                <button
+                  onClick={HandleModal}
+                  className='  uppercase bg-primary-color text-white rounded-md w-20 hover:bg-red-700'>
+                  Sign up
+                </button>
+              </div>
+              <p className=' text-center mt-5 uppercase text-[12px] font-semibold'>
+                Click Here to
+                <Link
+                  to='/contacts'
+                  className=' text-primary-color hover:text-red-700 '>
+                  {' '}
+                  contact
+                </Link>
+              </p>
+            </div>
+          </ul>
           <Link
             to='#/'
             className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] '>
@@ -86,12 +125,12 @@ const Header = () => {
             Wishlist
           </Link>
           <Link
-            to='#/'
-            className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] '>
-            <IoCartOutline className='w-6 h-6 text-primary-color relative' />
+            to='/cart'
+            className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] relative '>
+            <IoCartOutline className='w-6 h-6 text-primary-color ' />
             Cart
           </Link>
-          <span className=' absolute right-5 top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-sm p-2'>
+          <span className=' absolute md:right-2  right-0 top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-sm p-2'>
             2
           </span>
         </div>
@@ -136,6 +175,27 @@ const Header = () => {
           More
         </div>
       </div>
+
+      {/* Modal Contact */}
+      {LoginModal ? (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.25 }}
+            className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none'>
+            <div className='relative w-auto my-6 mx-auto max-w-4xl'>
+              {/*content*/}
+              <div className=' rounded-lg shadow-lg  bg-white outline-none focus:outline-none'>
+                {/*body*/}
+                <div className='relative flex-auto'>
+                  <Login setModal={HandleModal} />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      ) : null}
     </>
   );
 };

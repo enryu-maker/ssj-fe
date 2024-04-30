@@ -3,6 +3,7 @@ import Home from './Pages/Home';
 import Header from './Components/Header';
 import Contact from './Pages/Contact';
 import Footer from './Components/Footer';
+import CartPage from './Pages/CartPage';
 
 function App() {
   return (
@@ -16,6 +17,10 @@ function App() {
         <Route
           path='/contacts'
           element={<Contact />}
+        />
+        <Route
+          path='/cart'
+          element={<CartPage />}
         />
       </Routes>
       <Footer />

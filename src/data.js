@@ -111,6 +111,39 @@ export const Collection = [
       'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwd303e668/homepage/ShopByCollection/engagement-rings.jpg',
   },
 ];
+export const NewForYouData = [
+  {
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwb292158a/homepage/NewForYou/pretty-in-pink-new.jpg',
+  },
+
+  {
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw901d27ee/homepage/NewForYou/trending-earrings.jpg',
+  },
+  {
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw35ac2bd0/homepage/NewForYou/modern-designs.jpg',
+  },
+];
+export const ShopByGenderData = [
+  {
+    name: 'Men',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwef4310c0/homepage/ShopByGender/Men.jpg',
+  },
+
+  {
+    name: 'Kids',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw24db1907/homepage/ShopByGender/kid.jpg',
+  },
+  {
+    name: 'Women',
+    imgUrl:
+      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwc0abe627/homepage/ShopByGender/Woman.jpg',
+  },
+];
 
 export const UsefulLinks = [
   {

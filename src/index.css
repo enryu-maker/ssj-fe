@@ -28,3 +28,13 @@
 .underlineAni:hover::before {
   transform: scaleX(1);
 }
+
+/* HOVER ON LINK TO OPEN DROP MENU */
+.parent:hover .child {
+  display: block;
+}
+
+.child {
+  z-index: 10;
+  transition: all 0.5s ease-in-out 0.5s;
+}
