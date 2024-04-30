@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         'primary-color': '#994e4f',
         'secondary-color': '#f2e9e9',
+        'light-bg-color': '#f5f3f2',
       },
       fontFamily: {
         Raleway: ['"Raleway", sans-serif'],
