@@ -171,6 +171,126 @@ export const UsefulLinks = [
     link: '',
   },
 ];
+export const CollectionLinks = [
+  {
+    name: 'ALL JEWELLERY',
+    link: '',
+  },
+  {
+    name: 'EARRINGS',
+    link: '',
+  },
+  {
+    name: 'PENDANTS',
+    link: '',
+  },
+  {
+    name: 'FINGER RINGS',
+    link: '',
+  },
+  {
+    name: 'MANGALSUTRA',
+    link: '',
+  },
+  {
+    name: 'CHAINS',
+    link: '',
+  },
+  {
+    name: 'NOSE PIN',
+    link: '',
+  },
+  {
+    name: 'NECKLACES',
+    link: '',
+  },
+  {
+    name: 'NECKLACE SET',
+    link: '',
+  },
+  {
+    name: 'BANGLES',
+    link: '',
+  },
+  {
+    name: 'BRACELETS',
+    link: '',
+  },
+  {
+    name: 'PENDANTS & EARRING SET',
+    link: '',
+  },
+  {
+    name: 'GOLD COINS',
+    link: '',
+  },
+];
+export const PriceBandLinks = [
+  {
+    name: '<25K',
+    link: '',
+  },
+  {
+    name: '25K-50K',
+    link: '',
+  },
+  {
+    name: '50K-1L',
+    link: '',
+  },
+  {
+    name: '1L & ABOVE',
+    link: '',
+  },
+];
+export const MenProductLinks = [
+  {
+    name: 'BRACELETS',
+    link: '',
+  },
+  {
+    name: 'CHAINS',
+    link: '',
+  },
+  {
+    name: 'ENGAGEMENT RINGS',
+    link: '',
+  },
+  {
+    name: 'KADAS',
+    link: '',
+  },
+  {
+    name: 'PENDANTS',
+    link: '',
+  },
+  {
+    name: 'RINGS',
+    link: '',
+  },
+];
+export const KidProductLinks = [
+  {
+    name: 'BRACELETS',
+    link: '',
+  },
+  {
+    name: 'CHAINS',
+    link: '',
+  },
+  {
+    name: 'KADAS',
+    link: '',
+  },
+  {
+    name: 'PENDANTS',
+    link: '',
+  },
+  {
+    name: 'RINGS',
+    link: '',
+  },
+];
 
 export const Information = [
   {

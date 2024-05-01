@@ -11,11 +11,17 @@ import { HiOutlineUser } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Login from '../Pages/Login';
-import { MdOutlinePhone,MdOutlineEmail } from "react-icons/md";
-import { FaFacebookF, FaInstagram } from "react-icons/fa6";
-import { AiOutlineYoutube } from "react-icons/ai";
-import { FaWhatsapp } from "react-icons/fa";
-import Marquee from "react-fast-marquee";
+import { MdOutlinePhone, MdOutlineEmail } from 'react-icons/md';
+import { FaFacebookF, FaInstagram } from 'react-icons/fa6';
+import { AiOutlineYoutube } from 'react-icons/ai';
+import { FaWhatsapp } from 'react-icons/fa';
+import Marquee from 'react-fast-marquee';
+import {
+  CollectionLinks,
+  KidProductLinks,
+  MenProductLinks,
+  PriceBandLinks,
+} from '../data';
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
 
@@ -26,7 +32,6 @@ const Header = () => {
   return (
     <>
       <div className='flex items-center justify-around font-Raleway h-[35px] sticky top-0 z-50 bg-secondary-color w-full  '>
-
         <div className='flex space-x-5'>
           <button>
             <MdOutlinePhone className='w-5 h-5 text-primary-color' />
@@ -58,7 +63,6 @@ const Header = () => {
             <MdOutlineEmail className='w-6 h-6 text-primary-color' />
           </button>
         </div>
-
       </div>
       <div className='flex items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  '>
         <div>
@@ -169,20 +173,159 @@ const Header = () => {
             <IoCartOutline className='w-6 h-6 text-primary-color ' />
             Cart
             <span className=' absolute md:right-2  left-5 right-0 -top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs p-2'>
-            2
-          </span>
+              2
+            </span>
           </Link>
-          
         </div>
       </div>
       {/* header link part  */}
       <div className='flex justify-around p-5 px-10 font-Raleway'>
-        <div className='uppercase text-sm group cursor-pointer underlineAni '>
-          All jewellery
-        </div>
-        <div className='uppercase text-sm  cursor-pointer underlineAni'>
-          Gold
-        </div>
+        <ul className='relative parent cursor-pointer flex items-center   '>
+          <div className='uppercase text-sm group cursor-pointer underlineAni '>
+            All jewellery
+          </div>
+          <div className='absolute top-5  w-[450px] text-sm p-3 md:hidden child bg-white shadow-md shadow-red-100 rounded-md	'>
+            <div className='grid grid-cols-3 gap-5'>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  Collection
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  {CollectionLinks.map(
+                    (item, index) =>
+                      index <= 6 && (
+                        <a
+                          key={index}
+                          href={item.link}
+                          className=' text-sm font-extralight  hover:text-primary-color'>
+                          {item.name}
+                        </a>
+                      )
+                  )}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  Gender
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  <a
+                    href='#/'
+                    className=' text-sm font-extralight  hover:text-primary-color'>
+                    WOMEN'S JEWELLERY
+                  </a>
+                  <a
+                    href='#/'
+                    className=' text-sm font-extralight  hover:text-primary-color'>
+                    MEN
+                  </a>
+                  <a
+                    href='#/'
+                    className=' text-sm font-extralight  hover:text-primary-color'>
+                    KIDS & TEENS
+                  </a>
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  Price Band
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  {PriceBandLinks.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}
+                      className=' text-sm font-extralight  hover:text-primary-color'>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <ul className='relative parent cursor-pointer flex items-center   '>
+          <div className='uppercase text-sm  cursor-pointer underlineAni'>
+            Gold
+          </div>
+          <div className='absolute top-5  w-[800px] text-sm p-3 md:hidden child bg-white shadow-md shadow-red-100 rounded-md	'>
+            <div className='grid grid-cols-4 gap-5'>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  Collection
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  {CollectionLinks.map(
+                    (item, index) =>
+                      index <= 6 && (
+                        <a
+                          key={index}
+                          href={item.link}
+                          className=' text-sm font-extralight  hover:text-primary-color'>
+                          {item.name}
+                        </a>
+                      )
+                  )}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  MEN
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  {MenProductLinks.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  Kids
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  {KidProductLinks.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}
+                      className=' text-sm font-extralight  hover:text-primary-color'>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  Metal
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  <a
+                    href={'#/'}
+                    className=' text-sm font-extralight flex items-center gap-2  '>
+                    <div className='w-5 h-5 rounded-full bg-rose-300'></div>
+                    <span className='text-sm uppercase'>Rose</span>
+                  </a>
+                  <a
+                    href={'#/'}
+                    className=' text-sm font-extralight flex items-center gap-2  '>
+                    <div className='w-5 h-5 rounded-full bg-[#d5d5d4]'></div>
+                    <span className='text-sm uppercase'>White</span>
+                  </a>
+                  <a
+                    href={'#/'}
+                    className=' text-sm font-extralight flex items-center gap-2  '>
+                    <div className='w-5 h-5 rounded-full bg-yellow-200'></div>
+                    <span className='text-sm uppercase'>Yellow</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ul>
+
         <div className='uppercase text-sm  cursor-pointer underlineAni'>
           Diamond
         </div>
