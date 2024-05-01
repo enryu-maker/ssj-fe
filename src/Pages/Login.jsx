@@ -18,22 +18,6 @@ function Login({ setModal }) {
     setOpenOtp(!OpenOtp);
   };
 
-  // for hiding phone no
-  const maskNumber = (InputNum) => {
-    if (InputNum) {
-      const InputNumlength = InputNum.length;
-      const maskedLength =
-        InputNumlength - 4; /** Modify the length as per your wish */
-      let newString = InputNum;
-      for (let i = 0; i < InputNumlength; i++) {
-        if (i < maskedLength) {
-          newString = newString.replace(InputNum[i], '*');
-        }
-      }
-      return newString;
-    } else return; /**Will handle if no string is passed */
-  };
-
   return (
     <>
       <div className='grid md:grid-cols-2 font-Raleway place-content-center md:h-full h-[50vh]  '>
@@ -115,7 +99,7 @@ function Login({ setModal }) {
                 <div className='relative flex-auto'>
                   <OTP
                     setModal={HandleModal}
-                    number={maskNumber(InputNum)}
+                    number={InputNum}
                   />
                 </div>
               </div>
