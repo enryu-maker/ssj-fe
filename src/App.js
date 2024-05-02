@@ -5,6 +5,7 @@ import Contact from './Pages/Contact';
 import Footer from './Components/Footer';
 import CartPage from './Pages/CartPage';
 import AllJewellery from './Pages/AllJewellery';
+import ProductDetail from './Pages/ProductDetail';
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
         <Route
           path='/shop/jewellery'
           element={<AllJewellery />}
+        />
+        <Route
+          path='/product/:id'
+          element={<ProductDetail />}
         />
       </Routes>
       <Footer />
