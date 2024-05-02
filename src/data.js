@@ -291,6 +291,122 @@ export const KidProductLinks = [
     link: '',
   },
 ];
+export const OccasionLink = [
+  {
+    name: 'CASUAL WEAR',
+    link: '',
+  },
+  {
+    name: 'MODERN',
+    link: '',
+  },
+  {
+    name: 'TRADITIONAL',
+    link: '',
+  },
+  {
+    name: 'WEDDING',
+    link: '',
+  },
+  {
+    name: 'WORK WEAR',
+    link: '',
+  },
+];
+export const MoreLink = [
+  {
+    name: 'EXCHANGE PROGRAM',
+    link: '',
+  },
+  {
+    name: 'DIGITAL GOLD',
+    link: '',
+  },
+  {
+    name: 'GOLD RATE',
+    link: '',
+  },
+  {
+    name: 'BOOK AN APPOINTMENT',
+    link: '',
+  },
+  {
+    name: 'ENCIRCLE',
+    link: '',
+  },
+  {
+    name: 'FAQ',
+    link: '',
+  },
+  {
+    name: 'BRANDS',
+    link: '',
+  },
+];
+export const EaringsLinks = [
+  {
+    name: 'ALL EARRINGS',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dw7773c9b5/All%20Earrings%2040.png',
+    link: '',
+  },
+  {
+    name: 'DROP & DANGLERS',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dw7773c9b5/All%20Earrings%2040.png',
+    link: '',
+  },
+  {
+    name: 'HOOP & HUGGIES',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dw7773c9b5/All%20Earrings%2040.png',
+    link: '',
+  },
+  {
+    name: 'JHUMKAS',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dw7773c9b5/All%20Earrings%2040.png',
+    link: '',
+  },
+  {
+    name: 'STUDS & TOPS',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dw7773c9b5/All%20Earrings%2040.png',
+    link: '',
+  },
+];
+export const MetalAndStonesLinks = [
+  {
+    name: 'DIAMOND',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dw9210c614/diamond%20resized.png',
+    link: '',
+  },
+  {
+    name: 'GEMSTONE',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dwcfeb4ccd/gemstone%20resized.png',
+    link: '',
+  },
+  {
+    name: 'GOLD',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dwf38b3449/Group%2010.png',
+    link: '',
+  },
+  {
+    name: 'PLATINUM METAL',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dwb1fa4f17/Group%207.png',
+    link: '',
+  },
+  {
+    name: 'ROSE GOLD',
+    imgUrl:
+      'https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-site-catalog/default/dw9ecea101/Group%208.png',
+    link: '',
+  },
+];
 
 export const Information = [
   {

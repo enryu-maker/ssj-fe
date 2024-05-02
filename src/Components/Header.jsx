@@ -18,8 +18,12 @@ import { FaWhatsapp } from 'react-icons/fa';
 import Marquee from 'react-fast-marquee';
 import {
   CollectionLinks,
+  EaringsLinks,
   KidProductLinks,
   MenProductLinks,
+  MetalAndStonesLinks,
+  MoreLink,
+  OccasionLink,
   PriceBandLinks,
 } from '../data';
 const Header = () => {
@@ -184,7 +188,7 @@ const Header = () => {
           <div className='uppercase text-sm group cursor-pointer underlineAni '>
             All jewellery
           </div>
-          <div className='absolute top-5  w-[450px] text-sm p-3 md:hidden child bg-white shadow-md shadow-red-100 rounded-md	'>
+          <div className='absolute top-5  w-[450px] text-sm p-3 md:hidden child bg-white shadow-md  rounded-md	'>
             <div className='grid grid-cols-3 gap-5'>
               <div>
                 <h1 className='text-xl font-semibold text-primary-color uppercase'>
@@ -248,7 +252,7 @@ const Header = () => {
           <div className='uppercase text-sm  cursor-pointer underlineAni'>
             Gold
           </div>
-          <div className='absolute top-5  w-[800px] text-sm p-3 md:hidden child bg-white shadow-md shadow-red-100 rounded-md	'>
+          <div className='absolute top-5  w-[800px] text-sm p-3 md:hidden child bg-white shadow-md  rounded-md	'>
             <div className='grid grid-cols-4 gap-5'>
               <div>
                 <h1 className='text-xl font-semibold text-primary-color uppercase'>
@@ -325,13 +329,143 @@ const Header = () => {
             </div>
           </div>
         </ul>
-
-        <div className='uppercase text-sm  cursor-pointer underlineAni'>
-          Diamond
-        </div>
-        <div className='uppercase text-sm  cursor-pointer underlineAni'>
-          Earrings
-        </div>
+        <ul className='relative parent cursor-pointer flex items-center   '>
+          <div className='uppercase text-sm  cursor-pointer underlineAni'>
+            Diamond
+          </div>
+          <div className='absolute top-5  w-[450px] text-sm p-3 md:hidden child bg-white shadow-md rounded-md	'>
+            <div className='grid grid-cols-3 gap-5'>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  Collection
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  {CollectionLinks.map(
+                    (item, index) =>
+                      index <= 6 && (
+                        <a
+                          key={index}
+                          href={item.link}
+                          className=' text-sm font-extralight  hover:text-primary-color'>
+                          {item.name}
+                        </a>
+                      )
+                  )}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  MEN
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  {MenProductLinks.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  Kids
+                </h1>
+                <div className=' mt-5 flex flex-col gap-5 items-start '>
+                  {KidProductLinks.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}
+                      className=' text-sm font-extralight  hover:text-primary-color'>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <ul className='relative parent cursor-pointer flex items-center   '>
+          <div className='uppercase text-sm  cursor-pointer underlineAni'>
+            Earrings
+          </div>
+          <div className='absolute top-5  w-[800px] text-sm p-3 md:hidden child bg-white shadow-md rounded-md	'>
+            <div className='grid grid-cols-4 gap-5'>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  STYLE
+                </h1>
+                <div className=' mt-5 flex flex-col gap-3 items-start '>
+                  {EaringsLinks.map((item, index) => (
+                    <div className='flex items-center gap-2'>
+                      <img
+                        src={item.imgUrl}
+                        alt=''
+                        className='w-8 h-8 rounded-full'
+                      />
+                      <a
+                        href={item.link}
+                        className=' text-sm font-extralight  hover:text-primary-color'>
+                        {item.name}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  METAL & STONES
+                </h1>
+                <div className=' mt-5 flex flex-col gap-3 items-start '>
+                  {MetalAndStonesLinks.map((item, index) => (
+                    <div className='flex items-center gap-2'>
+                      <img
+                        src={item.imgUrl}
+                        alt=''
+                        className='w-8 h-8 rounded-full'
+                      />
+                      <a
+                        href={item.link}
+                        className=' text-sm font-extralight  hover:text-primary-color'>
+                        {item.name}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  OCCASION
+                </h1>
+                <div className=' mt-5 flex flex-col gap-3 items-start '>
+                  {OccasionLink.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}
+                      className=' text-sm font-extralight  hover:text-primary-color'>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  Price
+                </h1>
+                <div className=' mt-5 flex flex-col gap-3 items-start '>
+                  {PriceBandLinks.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}
+                      className=' text-sm font-extralight  hover:text-primary-color'>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ul>
 
         <div className='uppercase text-sm  cursor-pointer underlineAni '>
           Rings
@@ -354,9 +488,26 @@ const Header = () => {
         <div className='uppercase text-sm  cursor-pointer underlineAni'>
           Golden Harvest
         </div>
-        <div className='uppercase text-sm cursor-pointer underlineAni '>
-          More
-        </div>
+        <ul className='relative parent cursor-pointer flex items-center   '>
+          <div className='uppercase text-sm  cursor-pointer underlineAni'>
+            More
+          </div>
+          <div className='absolute top-5 right-1  w-[200px] text-sm p-3 md:hidden child bg-white shadow-md rounded-md	'>
+            <div className='grid grid-col'>
+              <div>
+                <div className='flex flex-col gap-3 items-start '>
+                  {MoreLink.map((item, index) => (
+                    <a
+                      href={item.link}
+                      className=' text-sm font-extralight  hover:text-primary-color'>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ul>
       </div>
 
       {/* Modal Contact */}
