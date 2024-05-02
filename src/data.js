@@ -29,6 +29,24 @@ export const Gifted = [
     price: 1000,
     tag: '',
   },
+  {
+    name: 'Dainty Beaded Gold Hoop Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: '',
+  },
+  {
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: 'Bestsellers',
+  },
+  {
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: '',
+  },
 ];
 
 export const Category = [
@@ -174,7 +192,7 @@ export const UsefulLinks = [
 export const CollectionLinks = [
   {
     name: 'ALL JEWELLERY',
-    link: '',
+    link: '/shop/jewellery',
   },
   {
     name: 'EARRINGS',

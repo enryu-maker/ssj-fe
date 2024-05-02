@@ -4,6 +4,7 @@ import Header from './Components/Header';
 import Contact from './Pages/Contact';
 import Footer from './Components/Footer';
 import CartPage from './Pages/CartPage';
+import AllJewellery from './Pages/AllJewellery';
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
         <Route
           path='/cart'
           element={<CartPage />}
+        />
+        <Route
+          path='/shop/jewellery'
+          element={<AllJewellery />}
         />
       </Routes>
       <Footer />
