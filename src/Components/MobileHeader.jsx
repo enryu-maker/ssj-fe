@@ -66,7 +66,7 @@ function MobileHeader() {
             className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] relative '>
             <IoCartOutline className='w-6 h-6 text-primary-color ' />
 
-            <span className=' absolute md:right-2 left-2 right-0 -top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs p-2'>
+            <span className='absolute md:right-2  left-5 right-0 -top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs p-2'>
               2
             </span>
           </Link>
