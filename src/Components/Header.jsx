@@ -6,7 +6,6 @@ import {
   IoCartOutline,
   IoSearchOutline,
 } from 'react-icons/io5';
-import { CiMicrophoneOn } from 'react-icons/ci';
 import { HiOutlineUser } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -129,7 +128,7 @@ const Header = () => {
             </svg>
             Stores
           </Link>
-          <ul className='relative parent cursor-pointer flex items-center   '>
+          <ul className='relative parent cursor-pointer md:flex items-center  hidden   '>
             <Link
               to='#/'
               style={{ color: '#994e4f' }}
