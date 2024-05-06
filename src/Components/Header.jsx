@@ -137,7 +137,7 @@ const Header = () => {
               <HiOutlineUser className='w-6 h-6 text-primary-color' />
               Account
             </Link>
-            <div className='absolute top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex gap-5 m-1  items-center justify-center flex-col w-[280px]  h-40  text-sm  p-1  md:hidden child bg-white shadow-md rounded-md	'>
+            <div className='absolute top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:flex hidden gap-5 m-1  items-center justify-center flex-col w-[280px]  h-40  text-sm  p-1  md:hidden child bg-white shadow-md rounded-md	'>
               <div className='flex flex-col gap-2 items-center justify-center font-semibold '>
                 <h1 className='text-2xl uppercase'>My Account</h1>
                 <p className='text-[12px]'>LOGIN TO ACCESS YOUR ACCOUNT</p>
@@ -183,7 +183,7 @@ const Header = () => {
         </div>
       </div>
       {/* header link part  */}
-      <div className='flex justify-around p-5 px-10 font-Raleway'>
+      <div className='md:flex justify-around p-5 px-10 font-Raleway hidden'>
         <ul className='relative parent cursor-pointer flex items-center   '>
           <div className='uppercase text-sm group cursor-pointer underlineAni '>
             All jewellery

@@ -6,10 +6,10 @@ import CollectionCard from '../CollectionCard';
 function ShopByCollections() {
   return (
     <div className='flex flex-col gap-2 justify-center items-center font-Raleway py-10 '>
-      <h1 className='text-4xl font-semibold text-primary-color'>
+      <h1 className='md:text-4xl text-xl text-center font-semibold text-primary-color'>
         Shop By Collections
       </h1>
-      <p className='text-md'>
+      <p className='md:text-md text-center'>
         Whatever the occasion, we've got a beautiful piece of jewellery for you.
       </p>
       <img

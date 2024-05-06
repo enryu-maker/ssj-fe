@@ -6,10 +6,10 @@ function NewForYou() {
   console.log(NewForYouData);
   return (
     <div className='flex flex-col gap-2 justify-center items-center font-Raleway py-10 '>
-      <h1 className='text-4xl font-semibold text-primary-color'>
+      <h1 className='md:text-4xl text-xl text-center font-semibold text-primary-color'>
         New For You!
       </h1>
-      <p className='text-md'>Our latest releases, just for you !</p>
+      <p className='text-md text-center'>Our latest releases, just for you !</p>
       <img
         src={Divider}
         alt=''
