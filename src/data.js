@@ -52,114 +52,93 @@ export const Gifted = [
 export const Category = [
   {
     name: 'Earrings',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw47b1df4b/homepage/shopByCategory/fod-earrings.jpg',
+    imgUrl: 'https://i.ibb.co/TBmvZtX/fod-earrings.webp',
   },
   {
     name: 'Finger Rings',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwfc4fb974/homepage/shopByCategory/fod-rings.jpg',
+    imgUrl: 'https://i.ibb.co/HqPn6G4/fod-rings.webp',
   },
   {
     name: 'Pendants',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwfc4fb974/homepage/shopByCategory/fod-rings.jpg',
+    imgUrl: 'https://i.ibb.co/HqPn6G4/fod-rings.webp',
   },
   {
     name: 'Nose Pins',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw0cb7b15f/homepage/shopByCategory/fod-nosepins.jpg',
+    imgUrl: 'https://i.ibb.co/RP3Qz4p/fod-nosepins.webp',
   },
   {
     name: 'Mangalsutras',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw114df9d7/homepage/shopByCategory/fod-mangalsutra.jpg',
+    imgUrl: 'https://i.ibb.co/jgFLYTd/fod-mangalsutra.webp',
   },
   {
     name: 'Chains',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwcbb3ebbb/homepage/shopByCategory/fod-chain.jpg',
+    imgUrl: 'https://i.ibb.co/Y24yZw5/fod-chain.webp',
   },
   {
     name: 'Gold Coins',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwebf0313b/homepage/shopByCategory/fod-gold-coins.jpg',
+    imgUrl: 'https://i.ibb.co/W2vXtJJ/fod-gold-coins.jpg',
   },
   {
     name: 'Bracelets',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw4dcf3d1d/homepage/shopByCategory/fod-bracelet.jpg',
+    imgUrl: 'https://i.ibb.co/qnttJcd/fod-bracelet.webp',
   },
   {
     name: 'Bangles',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw7dbdbacf/homepage/shopByCategory/fod-bangle.jpg',
+    imgUrl: 'https://i.ibb.co/kcprz9B/fod-bangle.webp',
   },
   {
     name: 'Neckwear',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwb8086cf2/homepage/shopByCategory/fod-necklace.jpg',
+    imgUrl: 'https://i.ibb.co/8m0RH01/fod-necklace.webp',
   },
   {
     name: 'Necklace set',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw66347a7d/homepage/shopByCategory/fod-necklace-set.jpg',
+    imgUrl: 'https://i.ibb.co/frCJWvq/fod-necklace-set.webp',
   },
   {
     name: 'Pendants sets',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw407b5f83/homepage/shopByCategory/fod-pendant-set.jpg',
+    imgUrl: 'https://i.ibb.co/yBsWHt6/fod-pendant-set.webp',
   },
 ];
 export const Collection = [
   {
     name: 'String It',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw3db19e7a/homepage/ShopByCollection/string-it.jpg',
+    imgUrl: 'https://i.ibb.co/RTYsLNT/string-it.webp',
   },
 
   {
     name: 'The Italian Collection',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwa0a42997/homepage/ShopByCollection/italian-connection.jpg',
+    imgUrl: 'https://i.ibb.co/DrzxCQS/italian-connection.webp',
   },
   {
     name: 'Engagement Rings',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwd303e668/homepage/ShopByCollection/engagement-rings.jpg',
+    imgUrl: 'https://i.ibb.co/tpZ5wf4/engagement-rings.webp',
   },
 ];
 export const NewForYouData = [
   {
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwb292158a/homepage/NewForYou/pretty-in-pink-new.jpg',
+    imgUrl: 'https://i.ibb.co/7StW190/pretty-in-pink-new.jpg"',
   },
 
   {
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw901d27ee/homepage/NewForYou/trending-earrings.jpg',
+    imgUrl: 'https://i.ibb.co/bm85wfc/trending-earrings.webp',
   },
   {
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw35ac2bd0/homepage/NewForYou/modern-designs.jpg',
+    imgUrl: 'https://i.ibb.co/bBZCNCk/modern-designs.webp',
   },
 ];
 export const ShopByGenderData = [
   {
     name: 'Men',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwef4310c0/homepage/ShopByGender/Men.jpg',
+    imgUrl: 'https://i.ibb.co/3rfCfvs/Men.webp',
   },
 
   {
     name: 'Kids',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dw24db1907/homepage/ShopByGender/kid.jpg',
+    imgUrl: 'https://i.ibb.co/BwZG9Wz/kid.jpg',
   },
   {
     name: 'Women',
-    imgUrl:
-      'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Library-Sites-TanishqSharedLibrary/default/dwc0abe627/homepage/ShopByGender/Woman.jpg',
+    imgUrl: 'https://i.ibb.co/176sqc7/Woman.webp',
   },
 ];
 
