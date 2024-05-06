@@ -18,7 +18,7 @@ function App() {
     window.addEventListener('resize', handleWindowResize);
 
     return () => window.removeEventListener('resize', handleWindowResize);
-  }, []);
+  }, [isMobile]);
 
   return (
     <Router>
