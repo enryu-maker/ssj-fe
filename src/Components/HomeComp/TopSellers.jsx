@@ -15,12 +15,15 @@ function TopSellers() {
       />
 
       <div className='flex md:flex-row flex-col gap-2 px-5 mt-5 '>
-        {Gifted.map((product, index) => (
-          <ProductCard
-            key={index}
-            {...product}
-          />
-        ))}
+        {Gifted.map(
+          (product, index) =>
+            index <= 3 && (
+              <ProductCard
+                key={index}
+                {...product}
+              />
+            )
+        )}
       </div>
     </div>
   );
