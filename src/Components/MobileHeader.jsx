@@ -19,7 +19,7 @@ function MobileHeader() {
     <div className=' font-Raleway sticky top-0 z-50 bg-secondary-color py-2   '>
       <div className='flex items-center justify-between font-Raleway sticky top-0 z-50 bg-secondary-color p-5   '>
         <div className='flex items-center gap-2 '>
-          <CiMenuFries className='w-6 h-6' />
+          <CiMenuFries className='w-6 h-6 cursor-pointer' />
           <Link to={'/'}>
             <h1 className=' text-2xl font-extrabold text-primary-color  '>
               Logo
@@ -65,7 +65,6 @@ function MobileHeader() {
             to='/cart'
             className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] relative '>
             <IoCartOutline className='w-6 h-6 text-primary-color ' />
-
             <span className='absolute md:right-2  left-5 right-0 -top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs p-2'>
               2
             </span>

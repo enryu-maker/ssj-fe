@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [isMobile, setMobile] = useState(false);
-  const breakPoint = 800;
+  const breakPoint = 768;
 
   useEffect(() => {
     const handleWindowResize = () => setMobile(window.innerWidth);
