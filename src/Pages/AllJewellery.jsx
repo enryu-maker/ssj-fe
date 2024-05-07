@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoFilterOutline, IoChevronDownOutline } from 'react-icons/io5';
-import { Gifted } from '../data';
+import { productsData } from '../data';
 import ProductCard from '../Components/ProductCard';
 
 function AllJewellery() {
@@ -37,9 +37,9 @@ function AllJewellery() {
         </div>
       </div>
       <div className='grid md:grid-cols-4 gap-5 p-5 mt-5'>
-        {Gifted.map((product, index) => (
+        {productsData.map((product) => (
           <ProductCard
-            key={index}
+            key={product.id}
             {...product}
           />
         ))}

@@ -48,6 +48,64 @@ export const Gifted = [
     tag: '',
   },
 ];
+export const productsData = [
+  {
+    id: '0',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: 'Bestsellers',
+  },
+  {
+    id: '1',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: 'Bestsellers',
+  },
+  {
+    id: '2',
+    name: 'Dainty Beaded Gold Hoop Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: '',
+  },
+  {
+    id: '3',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: 'Bestsellers',
+  },
+  {
+    id: '4',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: '',
+  },
+  {
+    id: '5',
+    name: 'Dainty Beaded Gold Hoop Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: '',
+  },
+  {
+    id: '6',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: 'Bestsellers',
+  },
+  {
+    id: '7',
+    name: 'Artistic Diamond Stud Earrings',
+    imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
+    price: 1000,
+    tag: '',
+  },
+];
 
 export const Category = [
   {
