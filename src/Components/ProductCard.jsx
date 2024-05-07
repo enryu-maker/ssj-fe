@@ -7,7 +7,7 @@ function ProductCard({ ...product }) {
     <Link to={`/product/${product.id}`}>
       <div className=' flex flex-col items-start justify-center shadow-md p-5 relative'>
         <img
-          src={product.imgUrl}
+          src={product.imgUrl[0]}
           alt=''
           className=' w-56 h-56 p-2 relative '
         />
@@ -20,7 +20,7 @@ function ProductCard({ ...product }) {
           <CiHeart className=' w-6 h-6 ' />
         </span>
         <div className=' flex flex-col gap-2'>
-          <p className='text-md font-semibold mt-2 '>{product.name}</p>
+          <p className='text-sm font-semibold mt-2 '>{product?.name}</p>
           <p className='text-xl font-semibold '>
             {product.price.toLocaleString('en-US', {
               style: 'currency',
