@@ -4,7 +4,6 @@ import { productsData } from '../data';
 
 function ProductDetail() {
   const { productId } = useParams();
-  console.log(productId);
 
   const thisProduct = productsData.find((prod) => prod.id === productId);
   return (
