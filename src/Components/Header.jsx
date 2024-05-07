@@ -25,6 +25,7 @@ import {
   OccasionLink,
   PriceBandLinks,
 } from '../data';
+import MobileHeader from './MobileHeader';
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
 
@@ -34,7 +35,7 @@ const Header = () => {
 
   return (
     <>
-      <div className='flex items-center justify-around font-Raleway h-[35px] sticky top-0 z-50 bg-secondary-color w-full  '>
+      <div className='md:flex hidden items-center justify-around font-Raleway h-[35px] sticky top-0 z-50 bg-secondary-color w-full  '>
         <div className='flex space-x-5'>
           <button>
             <MdOutlinePhone className='w-5 h-5 text-primary-color' />
@@ -67,7 +68,7 @@ const Header = () => {
           </button>
         </div>
       </div>
-      <div className='flex items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  '>
+      <div className='md:flex hidden items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  '>
         <div>
           {/* logo */}
           {/* <img
@@ -509,7 +510,12 @@ const Header = () => {
         </ul>
       </div>
 
-      {/* Modal Contact */}
+      {/* Mobile header */}
+      <div className='md:hidden block'>
+        <MobileHeader />
+      </div>
+
+      {/* Modal Login */}
       {LoginModal ? (
         <>
           <motion.div

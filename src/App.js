@@ -6,23 +6,11 @@ import Footer from './Components/Footer';
 import CartPage from './Pages/CartPage';
 import AllJewellery from './Pages/AllJewellery';
 import ProductDetail from './Pages/ProductDetail';
-import MobileHeader from './Components/MobileHeader';
-import { useEffect, useState } from 'react';
 
 function App() {
-  const [isMobile, setMobile] = useState(false);
-  const breakPoint = 768;
-
-  useEffect(() => {
-    const handleWindowResize = () => setMobile(window.innerWidth);
-    window.addEventListener('resize', handleWindowResize);
-
-    return () => window.removeEventListener('resize', handleWindowResize);
-  }, []);
-
   return (
     <Router>
-      {isMobile < breakPoint ? <MobileHeader /> : <Header />}
+      <Header />
       <Routes>
         <Route
           path='/'
