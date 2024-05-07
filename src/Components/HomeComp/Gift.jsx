@@ -1,6 +1,6 @@
 import React from 'react';
 import Divider from '../../assets/divider.png';
-import { Gifted } from '../../data';
+import { productsData } from '../../data';
 import ProductCard from '../ProductCard';
 
 function Gift() {
@@ -19,7 +19,7 @@ function Gift() {
       />
 
       <div className='flex md:flex-row flex-col gap-2 px-5 mt-5 '>
-        {Gifted.map(
+        {productsData.map(
           (product, index) =>
             index <= 3 && (
               <ProductCard

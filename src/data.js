@@ -8,9 +8,6 @@ export const Gifted = [
   {
     name: 'Artistic Diamond Stud Earrings',
     imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
-    img1: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
-    img2: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
-    img3: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
     price: 1000,
     tag: 'Bestsellers',
   },

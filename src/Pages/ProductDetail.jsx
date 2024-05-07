@@ -69,8 +69,10 @@ function ProductDetail() {
             <span className=' text-sm text-black '>Offer Price</span> ₹
             {thisProduct.price}
           </h1>
-          <p>Flat 10% off</p>
-          <p>Price Inclusive of all taxes. See full Price Breakup</p>
+          <p className='text-sm'>
+            Price Inclusive of all taxes. See full{' '}
+            <span className=' text-primary-color'>Price Breakup</span>
+          </p>
         </div>
       </div>
     </div>
