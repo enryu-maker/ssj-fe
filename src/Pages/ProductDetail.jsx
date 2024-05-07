@@ -4,8 +4,8 @@ import { productsData } from '../data';
 
 function ProductDetail() {
   const { productId } = useParams();
-
   const thisProduct = productsData.find((prod) => prod.id === productId);
+
   return (
     <div className='grid grid-cols-2'>
       <div>
