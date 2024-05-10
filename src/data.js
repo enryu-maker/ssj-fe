@@ -16,6 +16,7 @@ export const Gifted = [
     imgUrl: 'https://i.ibb.co/vZFBqD3/earinggs.webp',
     price: 1000,
     tag: '',
+    weight: '1.5',
   },
   {
     name: 'Artistic Diamond Stud Earrings',
@@ -64,6 +65,7 @@ export const productsData = [
     ],
     price: 1000,
     tag: 'Bestsellers',
+    weight: [1.5, 2],
   },
   {
     id: '1',
@@ -80,6 +82,7 @@ export const productsData = [
     ],
     price: 1000,
     tag: 'Bestsellers',
+    weight: [1.5, 2],
   },
   {
     id: '2',
@@ -96,6 +99,7 @@ export const productsData = [
     ],
     price: 1000,
     tag: '',
+    weight: [1.5, 2],
   },
   {
     id: '3',
@@ -112,6 +116,7 @@ export const productsData = [
     ],
     tag: 'Bestsellers',
     price: 1000,
+    weight: [1.5, 2],
   },
   {
     id: '4',
@@ -128,6 +133,7 @@ export const productsData = [
     ],
     price: 1000,
     tag: '',
+    weight: [1.5, 2],
   },
   {
     id: '5',
@@ -144,6 +150,7 @@ export const productsData = [
     ],
     price: 1000,
     tag: '',
+    weight: [1.5, 2],
   },
   {
     id: '6',
@@ -160,6 +167,7 @@ export const productsData = [
     ],
     price: 1000,
     tag: 'Bestsellers',
+    weight: [1.5, 2],
   },
   {
     id: '7',
@@ -176,6 +184,7 @@ export const productsData = [
     ],
     price: 1000,
     tag: '',
+    weight: [1.5, 2],
   },
 ];
 
