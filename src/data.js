@@ -479,6 +479,36 @@ export const MoreLink = [
     link: '',
   },
 ];
+export const RingsLink = [
+  {
+    name: 'CASUAL RINGS',
+    link: '',
+  },
+  {
+    name: 'COUPLE RINGS',
+    link: '',
+  },
+  {
+    name: 'DIAMOND ENGAGEMENT RINGS',
+    link: '',
+  },
+  {
+    name: 'ENGAGEMENT RINGS',
+    link: '',
+  },
+  {
+    name: 'GOLD ENGAGEMENT RINGS',
+    link: '',
+  },
+  {
+    name: 'MENS RINGS',
+    link: '',
+  },
+  {
+    name: 'PLATINUM ENGAGEMENT RINGS',
+    link: '',
+  },
+];
 export const EaringsLinks = [
   {
     name: 'ALL EARRINGS',
@@ -511,6 +541,7 @@ export const EaringsLinks = [
     link: '',
   },
 ];
+
 export const MetalAndStonesLinks = [
   {
     name: 'DIAMOND',

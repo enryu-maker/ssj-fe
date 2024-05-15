@@ -30,7 +30,7 @@ function MobileHeader() {
         <div className='flex items-center gap-5 font-[400] '>
           {/* Icons */}
           <Link
-            to='#/'
+            to='/dailywear'
             className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] '>
             <img
               src={DailyWear}
@@ -39,7 +39,7 @@ function MobileHeader() {
             />
           </Link>
           <Link
-            to='#/'
+            to='/stores'
             className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] '>
             <svg
               xmlns='http://www.w3.org/2000/svg'

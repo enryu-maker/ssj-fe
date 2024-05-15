@@ -6,6 +6,8 @@ import Footer from './Components/Footer';
 import CartPage from './Pages/CartPage';
 import AllJewellery from './Pages/AllJewellery';
 import ProductDetail from './Pages/ProductDetail';
+import Stores from './Pages/Stores';
+import DailyWear from './Pages/DailyWear';
 
 function App() {
   return (
@@ -19,6 +21,14 @@ function App() {
         <Route
           path='/contacts'
           element={<Contact />}
+        />
+        <Route
+          path='/dailywear'
+          element={<DailyWear />}
+        />
+        <Route
+          path='/stores'
+          element={<Stores />}
         />
         <Route
           path='/cart'

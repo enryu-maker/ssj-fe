@@ -24,6 +24,7 @@ import {
   MoreLink,
   OccasionLink,
   PriceBandLinks,
+  RingsLink,
 } from '../data';
 import MobileHeader from './MobileHeader';
 const Header = () => {
@@ -102,7 +103,7 @@ const Header = () => {
         <div className='flex items-center gap-10 font-[400] '>
           {/* Icons */}
           <Link
-            to='#/'
+            to='/dailywear'
             className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] '>
             <img
               src={DailyWear}
@@ -112,7 +113,7 @@ const Header = () => {
             Dailywear
           </Link>
           <Link
-            to='#/'
+            to='/stores'
             className='flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] '>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -467,9 +468,67 @@ const Header = () => {
           </div>
         </ul>
 
-        <div className='uppercase text-sm  cursor-pointer underlineAni '>
-          Rings
-        </div>
+        <ul className='relative parent cursor-pointer flex items-center   '>
+          <div className='uppercase text-sm  cursor-pointer underlineAni '>
+            Rings
+          </div>
+          <div className='absolute top-5  w-[650px] text-sm p-3 md:hidden child bg-white shadow-md rounded-md	'>
+            <div className='grid grid-cols-3 gap-5'>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  ALL RINGS
+                </h1>
+                <div className=' mt-5 flex flex-col gap-3 items-start '>
+                  {RingsLink.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}
+                      className=' text-sm font-extralight  hover:text-primary-color'>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  METAL & STONES
+                </h1>
+                <div className=' mt-5 flex flex-col gap-3 items-start '>
+                  {MetalAndStonesLinks.map((item, index) => (
+                    <div className='flex items-center gap-2'>
+                      <img
+                        src={item.imgUrl}
+                        alt=''
+                        className='w-8 h-8 rounded-full'
+                      />
+                      <a
+                        href={item.link}
+                        className=' text-sm font-extralight  hover:text-primary-color'>
+                        {item.name}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h1 className='text-xl font-semibold text-primary-color uppercase'>
+                  PRICE RANGE
+                </h1>
+                <div className=' mt-5 flex flex-col gap-3 items-start '>
+                  {PriceBandLinks.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}
+                      className=' text-sm font-extralight  hover:text-primary-color'>
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ul>
+
         <div className='uppercase text-sm  cursor-pointer underlineAni'>
           Bestsellers
         </div>

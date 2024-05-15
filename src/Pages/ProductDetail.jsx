@@ -98,7 +98,7 @@ function ProductDetail() {
             </div>
           </div>
           {openWeight && (
-            <div className=' absolute md:bottom-20 md:w-32  bg-white shadow-lg rounded-md p-2 mt-2'>
+            <div className=' absolute md:bottom-20  md:w-32  bg-white shadow-lg rounded-md p-2 mt-2'>
               <p>{thisProduct.weight[0]} g</p>
               <p>{thisProduct.weight[1]} g</p>
             </div>
