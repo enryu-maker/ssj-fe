@@ -8,7 +8,7 @@ import { CiChat1 } from 'react-icons/ci';
 const Footer = () => {
   return (
     <>
-      <div className='grid grid-cols-3  mt-10 bg-secondary-color font-Raleway '>
+      <div className='grid grid-cols-3  mt-10 bg-secondary-color font-Raleway  '>
         <div className=' mt-20 px-10 '>
           <h1 className=' text-xl mb-10 text-primary-color font-semibold'>
             Useful Links

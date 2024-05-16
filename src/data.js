@@ -597,3 +597,29 @@ export const Information = [
     link: '',
   },
 ];
+export const StoreInCities = [
+  {
+    city: 'Mumbai',
+    img: 'https://i.ibb.co/MsG5FVs/Mumbai-42b4bffdd6b38798a062.png',
+    store: '10 stores',
+    link: '',
+  },
+  {
+    city: 'Mumbai',
+    img: 'https://i.ibb.co/MsG5FVs/Mumbai-42b4bffdd6b38798a062.png',
+    store: '18 stores',
+    link: '',
+  },
+  {
+    city: 'Mumbai',
+    img: 'https://i.ibb.co/MsG5FVs/Mumbai-42b4bffdd6b38798a062.png',
+    store: '6 stores',
+    link: '',
+  },
+  {
+    city: 'Mumbai',
+    img: 'https://i.ibb.co/MsG5FVs/Mumbai-42b4bffdd6b38798a062.png',
+    store: '7 stores',
+    link: '',
+  },
+];
