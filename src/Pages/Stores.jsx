@@ -5,8 +5,8 @@ import Marquee from 'react-fast-marquee';
 
 const Stores = () => {
   return (
-    <div className='flex flex-col gap-5 font-Raleway h-screen'>
-      <div className='flex justify-around font-Raleway mt-5'>
+    <div className='flex flex-col gap-5 font-Raleway min-h-screen'>
+      <div className='flex md:flex-row flex-col gap-2 justify-around font-Raleway mt-5 px-5'>
         <Link className='border border-primary-color rounded-md py-2 px-5'>
           All Diamonds
         </Link>
@@ -26,7 +26,7 @@ const Stores = () => {
         <h1 className=' text-4xl font-semibold text-primary-color'>
           Welcome to SSJ!
         </h1>
-        <p className=' text-xl font-extralight text-gray-700'>
+        <p className=' text-xl font-extralight text-gray-700 text-center'>
           Shop from a wide range of exquisite designs for all occasions.
         </p>
       </div>
@@ -34,11 +34,11 @@ const Stores = () => {
         <h1 className='text-4xl font-semibold text-primary-color'>
           Popular Cities
         </h1>
-        <div className='flex justify-center items-centers gap-5 mt-5'>
+        <div className='flex md:flex-row flex-col justify-center items-centers gap-5 mt-5 w-full px-5'>
           {StoreInCities.map((item, index) => (
             <div
               key={index}
-              className='flex flex-col items-center shadow-lg rounded-md hover:scale-110 transition-all ease-linear '>
+              className='flex flex-col items-center shadow-lg rounded-md md:hover:scale-110 hover:scale-105 transition-all ease-linear '>
               <h2 className=' bg-gradient-to-r from-rose-200 to-pink-50 w-full h-10 rounded-t-md flex items-center p-2 text-sm'>
                 {item.store}
               </h2>
