@@ -8,6 +8,8 @@ import AllJewellery from './Pages/AllJewellery';
 import ProductDetail from './Pages/ProductDetail';
 import Stores from './Pages/Stores';
 import DailyWear from './Pages/DailyWear';
+import PrivacyPolicy from './Pages/PrivacyPolicy';
+import TermAndCondition from './Pages/TermAndCondition';
 
 function App() {
   return (
@@ -21,6 +23,14 @@ function App() {
         <Route
           path='/contacts'
           element={<Contact />}
+        />
+        <Route
+          path='/privacy-policy'
+          element={<PrivacyPolicy />}
+        />
+        <Route
+          path='/terms-and-conditions'
+          element={<TermAndCondition />}
         />
         <Route
           path='/dailywear'
