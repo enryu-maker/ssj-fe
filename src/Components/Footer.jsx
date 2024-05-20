@@ -69,17 +69,17 @@ const Footer = () => {
           <div className='flex gap-2'>
             <Link
               to='/privacy-policy'
-              className=' text-sm hover:font-semibold'>
+              className=' text-sm hover:font-semibold transition-all ease-linear delay-75'>
               Terms & Conditions |
             </Link>
             <Link
               to='/privacy-policy'
-              className='text-sm hover:font-semibold '>
+              className='text-sm hover:font-semibold transition-all ease-linear delay-75 '>
               Privacy Policy |
             </Link>
             <Link
               to='/privacy-policy'
-              className=' text-sm hover:font-semibold'>
+              className=' text-sm hover:font-semibold transition-all ease-linear delay-75'>
               Disclaimer
             </Link>
           </div>
