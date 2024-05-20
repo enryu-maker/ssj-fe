@@ -10,52 +10,56 @@ import Stores from './Pages/Stores';
 import DailyWear from './Pages/DailyWear';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
 import TermAndCondition from './Pages/TermAndCondition';
+import ScrollToTop from './Components/ScrollTo';
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route
-          path='/'
-          element={<Home />}
-        />
-        <Route
-          path='/contacts'
-          element={<Contact />}
-        />
-        <Route
-          path='/privacy-policy'
-          element={<PrivacyPolicy />}
-        />
-        <Route
-          path='/terms-and-conditions'
-          element={<TermAndCondition />}
-        />
-        <Route
-          path='/dailywear'
-          element={<DailyWear />}
-        />
-        <Route
-          path='/stores'
-          element={<Stores />}
-        />
-        <Route
-          path='/cart'
-          element={<CartPage />}
-        />
-        <Route
-          path='/shop/jewellery'
-          element={<AllJewellery />}
-        />
-        <Route
-          exact
-          path='/product/:productId'
-          element={<ProductDetail />}
-        />
-      </Routes>
-      <Footer />
-    </Router>
+    <div className='h-full w-full'>
+      <Router>
+        <ScrollToTop />
+        <Header />
+        <Routes>
+          <Route
+            path='/'
+            element={<Home />}
+          />
+          <Route
+            path='/contacts'
+            element={<Contact />}
+          />
+          <Route
+            path='/privacy-policy'
+            element={<PrivacyPolicy />}
+          />
+          <Route
+            path='/terms-and-conditions'
+            element={<TermAndCondition />}
+          />
+          <Route
+            path='/dailywear'
+            element={<DailyWear />}
+          />
+          <Route
+            path='/stores'
+            element={<Stores />}
+          />
+          <Route
+            path='/cart'
+            element={<CartPage />}
+          />
+          <Route
+            path='/shop/jewellery'
+            element={<AllJewellery />}
+          />
+          <Route
+            exact
+            path='/product/:productId'
+            element={<ProductDetail />}
+          />
+        </Routes>
+        <Footer />
+      </Router>
+    </div>
   );
 }
 
