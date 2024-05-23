@@ -11,6 +11,7 @@ import DailyWear from './Pages/DailyWear';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
 import TermAndCondition from './Pages/TermAndCondition';
 import ScrollToTop from './Components/ScrollTo';
+import RefundPolicy from './Pages/RefundPolicy';
 
 function App() {
   return (
@@ -34,6 +35,10 @@ function App() {
           <Route
             path='/terms-and-conditions'
             element={<TermAndCondition />}
+          />
+          <Route
+            path='/refund-policy'
+            element={<RefundPolicy />}
           />
           <Route
             path='/dailywear'
