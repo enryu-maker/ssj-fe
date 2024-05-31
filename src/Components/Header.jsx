@@ -72,15 +72,13 @@ const Header = () => {
       <div className='md:flex hidden items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  '>
         <div>
           {/* logo */}
-          {/* <img
+        
+          <Link to={'/'}>
+              <img
             src={Logo}
             alt='Logo'
             className='w-20 h-20'
-          /> */}
-          <Link to={'/'}>
-            <h1 className=' text-2xl font-extrabold text-primary-color p-5'>
-              Logo
-            </h1>
+          />
           </Link>
         </div>
         <div className='w-[600px] relative '>
