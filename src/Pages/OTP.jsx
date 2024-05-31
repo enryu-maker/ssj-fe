@@ -119,7 +119,10 @@ function OTP({ setModal, number }) {
             </p>
             <div className='flex justify-center items-center'>
               <button
-                onClick={HandleModal}
+                onClick={(e) => {
+                  e.preventDefault();
+                  HandleModal();
+                }}
                 className=' p-2 bg-primary-color text-white rounded-md'>
                 Verify OTP
               </button>
