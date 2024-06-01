@@ -5,7 +5,7 @@ import { TbPointerHeart } from 'react-icons/tb';
 const CartPage = () => {
   return (
     <>
-      <div className='flex items-center justify-around font-Raleway '>
+      <div className='flex flex-col md:flex-row items-center justify-around font-Raleway px-5 '>
         <div className='flex flex-col gap-5 py-10 overflow-y-auto'>
           <div className='flex  gap-5 items-start '>
             <img
@@ -66,7 +66,7 @@ const CartPage = () => {
         </div>
 
         {/* Order Summary */}
-        <div className='flex flex-col items-center text-justify justify-between gap-5 py-10 bg-light-bg-color w-1/4 p-4'>
+        <div className='flex flex-col items-center text-justify justify-between gap-5 py-10 bg-light-bg-color md:w-1/4 w-3/4 p-4'>
           <h1 className=' text-2xl font-semibold text-primary-color'>
             ORDER SUMMARY
           </h1>

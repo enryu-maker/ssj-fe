@@ -7,6 +7,7 @@ import {
 } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import DailyWear from '../assets/EarringsIcon.svg';
+import Logo from '../assets/Logo.png';
 
 function MobileHeader() {
   const [LoginModal, setLoginModal] = useState(false);
@@ -17,13 +18,15 @@ function MobileHeader() {
 
   return (
     <div className=' font-Raleway sticky top-0 z-50 bg-secondary-color py-2   '>
-      <div className='flex items-center justify-between font-Raleway sticky top-0 z-50 bg-secondary-color p-5   '>
+      <div className='flex items-center justify-between font-Raleway sticky top-0 z-50 bg-secondary-color p-5'>
         <div className='flex items-center gap-2 '>
           <CiMenuFries className='w-6 h-6 cursor-pointer' />
           <Link to={'/'}>
-            <h1 className=' text-2xl font-extrabold text-primary-color  '>
-              Logo
-            </h1>
+              <img
+            src={Logo}
+            alt='Logo'
+            className='w-20 h-20'
+          />
           </Link>
         </div>
 

@@ -12,6 +12,7 @@ import PrivacyPolicy from './Pages/PrivacyPolicy';
 import TermAndCondition from './Pages/TermAndCondition';
 import ScrollToTop from './Components/ScrollTo';
 import RefundPolicy from './Pages/RefundPolicy';
+import AboutUs from './Pages/AboutUs';
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
           <Route
             path='/contacts'
             element={<Contact />}
+          />
+          <Route
+            path='/about-us'
+            element={<AboutUs />}
           />
           <Route
             path='/privacy-policy'

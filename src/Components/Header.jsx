@@ -77,7 +77,7 @@ const Header = () => {
               <img
             src={Logo}
             alt='Logo'
-            className='w-20 h-20'
+            className='w-28 h-28'
           />
           </Link>
         </div>
