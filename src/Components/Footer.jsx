@@ -10,8 +10,8 @@ const Footer = () => {
   return (
     <>
       <div className=' mt-10 bg-secondary-color font-Raleway  '>
-        <div className='grid grid-cols-3 '>
-          <div className=' mt-20 px-10 '>
+        <div className='grid grid-cols-2 md:grid-cols-3 '>
+          <div className=' mt-20 md:px-10 px-5 '>
             <h1 className=' text-xl mb-10 text-primary-color font-semibold'>
               Useful Links
             </h1>
@@ -20,7 +20,7 @@ const Footer = () => {
                 <a
                   href={items.link}
                   key={index}
-                  className=' text-xl'>
+                  className=' md:text-xl text-lg'>
                   {items.name}
                 </a>
               ))}
@@ -35,27 +35,27 @@ const Footer = () => {
                 <a
                   href={items.link}
                   key={index}
-                  className=' text-xl'>
+                  className=' md:text-xl text-lg'>
                   {items.name}
                 </a>
               ))}
             </div>
           </div>
-          <div className='mt-20'>
+          <div className='mt-20 px-5'>
             <h1 className=' text-xl mb-10 text-primary-color font-semibold'>
               Contact Us
             </h1>
             <div className=' flex flex-col gap-8'>
-              <div className=' flex items-center gap-3 text-xl'>
-                <GoMail className=' text-3xl' />
+              <div className=' flex items-center gap-3 md:text-xl text-lg'>
+                <GoMail className=' md:text-3xl text-xl' />
                 <a href='#/'>Write to Us</a>
               </div>
-              <div className=' flex items-center gap-3 text-xl'>
-                <BsTelephone className=' text-3xl' />
+              <div className=' flex items-center gap-3 md:text-xl text-lg'>
+                <BsTelephone className=' md:text-3xl text-xl' />
                 <a href='#/'>1234567890</a>
               </div>
-              <div className=' flex items-center gap-3 text-xl'>
-                <CiChat1 className=' text-3xl' />
+              <div className=' flex items-center gap-3 md:text-xl text-lg'>
+                <CiChat1 className=' md:text-3xl text-xl' />
                 <a href='#/'>Chat with Us</a>
               </div>
             </div>
@@ -66,20 +66,20 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} SSJ Company Limited. All Rights
             Reserved.
           </p>
-          <div className='flex gap-2'>
+          <div className='flex gap-2 text-wrap '>
             <Link
               to='/terms-and-conditions'
-              className=' text-sm hover:font-semibold transition-all ease-linear delay-75'>
+              className=' text-sm md:hover:font-semibold transition-all ease-linear delay-75'>
               Terms & Conditions |
             </Link>
             <Link
               to='/privacy-policy'
-              className='text-sm hover:font-semibold transition-all ease-linear delay-75 '>
+              className='text-sm md:hover:font-semibold transition-all ease-linear delay-75 '>
               Privacy Policy |
             </Link>
             <Link
               to='/refund-policy'
-              className=' text-sm hover:font-semibold transition-all ease-linear delay-75'>
+              className=' text-sm md:hover:font-semibold transition-all ease-linear delay-75'>
               Refund and Cancellation Policy
             </Link>
           </div>

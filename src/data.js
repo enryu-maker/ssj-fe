@@ -593,7 +593,7 @@ export const Information = [
   },
   {
     name: 'About SSJ',
-    link: '',
+    link: '/about-us',
   },
 ];
 export const StoreInCities = [
