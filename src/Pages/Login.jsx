@@ -3,11 +3,16 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { RxCross2 } from "react-icons/rx";
 import OTP from "./OTP";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLoggedInUser } from "../features/Auth/authSlice";
 
 function Login({ setModal }) {
   const [OpenOtp, setOpenOtp] = useState(false);
   const [InputNum, setInputNum] = useState("");
   const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInUser);
 
   const HandleChange = (e) => {
     e.preventDefault();
@@ -80,7 +85,9 @@ function Login({ setModal }) {
                 onClick={(e) => {
                   e.preventDefault();
                   HandleModal();
+                  
                 }}
+                
                 className="p-2 bg-primary-color text-white rounded-md"
               >
                 Request OTP
