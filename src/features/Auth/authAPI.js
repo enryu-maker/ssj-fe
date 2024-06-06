@@ -18,3 +18,15 @@ export function createUser(userData) {
     }
   });
 }
+
+
+// otp verify
+export async function verifyOtp(otpData) {
+  const response = await fetch('/auth/verify/', {
+    method: 'POST',
+    body: JSON.stringify(otpData),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const data = await response.json();
+  return { ok: response.ok, data };
+}
