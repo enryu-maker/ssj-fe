@@ -28,5 +28,6 @@ export async function verifyOtp(otpData) {
     headers: { 'Content-Type': 'application/json' },
   });
   const data = await response.json();
+  console.log(data);
   return { ok: response.ok, data };
 }

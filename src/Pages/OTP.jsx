@@ -57,7 +57,7 @@ function OTP({ setModal, number }) {
 
   const handleVerifyOtp = (e) => {
     e.preventDefault();
-    dispatch(verifyOtpAsync({ otp }));
+    dispatch(verifyOtpAsync({ mobile_number: number, otp }));
   };
 
   useEffect(() => {

@@ -16,9 +16,9 @@ export const createUserAsync = createAsyncThunk(
 
 export const verifyOtpAsync = createAsyncThunk(
   'auth/verifyOtp',
-  async (otp, { rejectWithValue }) => {
+  async ({ mobile_number, otp }, { rejectWithValue }) => {
     try {
-      const response = await verifyOtp({ otp });
+      const response = await verifyOtp({ mobile_number, otp });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -28,6 +28,14 @@ export const verifyOtpAsync = createAsyncThunk(
     }
   }
 );
+
+// helper func for save cookies
+const setCookie = (name, value, days) => {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  const expires = `expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value};${expires};path=/`;
+};
 
 // Auth slice
 const authSlice = createSlice({
@@ -63,6 +71,10 @@ const authSlice = createSlice({
         state.status = 'succeeded';
         state.user = action.payload;
         state.isLoading = false;
+       // Save tokens in cookies
+       setCookie('access_token', action.payload.access, 7);
+       setCookie('refresh_token', action.payload.refresh, 7);
+       setCookie('is_complete', action.payload.is_complete, 7);
       })
       .addCase(verifyOtpAsync.rejected, (state, action) => {
         state.status = 'failed';
