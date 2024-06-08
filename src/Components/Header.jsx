@@ -28,12 +28,14 @@ import {
 } from "../data";
 import MobileHeader from "./MobileHeader";
 import { useSelector } from "react-redux";
-import { selectIsAuthenticated, selectLoggedInUser } from "../features/Auth/authSlice";
+import {
+  selectIsAuthenticated,
+  selectLoggedInUser,
+} from "../features/Auth/authSlice";
 import LoginDetails from "../Pages/LoginDetails";
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
   const [openDetailPage, setDetailPage] = useState(false);
- 
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectLoggedInUser);
@@ -42,11 +44,9 @@ const Header = () => {
     setLoginModal(!LoginModal);
   };
 
-  const  handleDetailModal= useCallback(() => {
+  const handleDetailModal = useCallback(() => {
     setDetailPage((prev) => !prev);
   }, []);
-
-
 
   return (
     <>
@@ -139,38 +139,41 @@ const Header = () => {
           </Link>
           {isAuthenticated ? (
             <div>
-            <ul className="relative parent cursor-pointer md:flex items-center  hidden   ">
-              <Link
-                to="#/"
-                style={{ color: "#994e4f" }}
-                className=" flex flex-col items-center uppercase underlineAni text-sm delay-100 transition-all ease-linear hover:scale-[1.1] "
-              >
-                <HiOutlineUser className="w-6 h-6 text-primary-color" />
-                Profile
-              </Link>
-              <div className="absolute top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:flex hidden gap-5 m-1  items-center justify-center flex-col w-[280px]  h-40  text-sm  p-1  md:hidden child bg-white shadow-md rounded-md	">
-                <div className="flex flex-col gap-2 items-center justify-center font-semibold ">
-                  <h1 className="text-2xl uppercase">My Profile</h1>
-                  <p className="text-[12px]">Complete Your Profile</p>
-                  <button
-                    onClick={handleDetailModal}
-                    className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
-                  >
-                    Complete Profile
-                  </button>
+              <ul className="relative parent cursor-pointer md:flex items-center  hidden   ">
+                <Link
+                  to="#/"
+                  style={{ color: "#994e4f" }}
+                  className=" flex flex-col items-center uppercase underlineAni text-sm delay-100 transition-all ease-linear hover:scale-[1.1] "
+                >
+                  <HiOutlineUser className="w-6 h-6 text-primary-color" />
+                  Profile
+                </Link>
+                <div className="absolute top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:flex hidden gap-5 m-1  items-center justify-center flex-col w-[280px]  h-40  text-sm  p-1  md:hidden child bg-white shadow-md rounded-md	">
+                  <div className="flex flex-col gap-2 items-center justify-center font-semibold ">
+                    <h1 className="text-2xl uppercase">My Profile</h1>
+                    <p className="text-[12px]">Complete Your Profile</p>
+                    {/* TODO: check user details completed or not show the button vice versa */}
+                    {!user.is_complete && (
+                      <button
+                        onClick={handleDetailModal}
+                        className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
+                      >
+                        Complete Profile
+                      </button>
+                    )}
+                  </div>
+                  <p className=" text-center mt-5 uppercase text-[12px] font-semibold">
+                    Click Here to
+                    <Link
+                      to="/contacts"
+                      className=" text-primary-color hover:text-red-700 "
+                    >
+                      {" "}
+                      contact
+                    </Link>
+                  </p>
                 </div>
-                <p className=" text-center mt-5 uppercase text-[12px] font-semibold">
-                  Click Here to
-                  <Link
-                    to="/contacts"
-                    className=" text-primary-color hover:text-red-700 "
-                  >
-                    {" "}
-                    contact
-                  </Link>
-                </p>
-              </div>
-            </ul>
+              </ul>
             </div>
           ) : (
             <ul className="relative parent cursor-pointer md:flex items-center  hidden   ">
@@ -672,8 +675,11 @@ const Header = () => {
           <div className="relative w-auto my-6 mx-auto max-w-4xl">
             <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
               <div className="relative flex-auto">
-              {/* TODO: pass user mobile number into props */}
-                <LoginDetails number={JSON.stringify(user.mobile_number)} setModal={handleDetailModal} />
+                {/* TODO: pass user mobile number into props */}
+                <LoginDetails
+                  number={JSON.stringify(user.mobile_number)}
+                  setModal={handleDetailModal}
+                />
               </div>
             </div>
           </div>

@@ -58,6 +58,7 @@ const authSlice = createSlice({
     checkAuthentication(state) {
       const accessToken = getCookie('access_token') || sessionStorage.getItem('access_token');
       const refreshToken = getCookie('refresh_token') || sessionStorage.getItem('refresh_token');
+      const IsComplete = getCookie('is_complete') || sessionStorage.getItem('is_complete');
 
       if (accessToken && refreshToken) {
         state.isAuthenticated = true;
@@ -94,8 +95,10 @@ const authSlice = createSlice({
         // Save tokens in cookies and session storage
         setCookie('access_token', action.payload.access, 7);
         setCookie('refresh_token', action.payload.refresh, 7);
+        setCookie('is_complete', action.payload.is_complete, 7);
         sessionStorage.setItem('access_token', action.payload.access);
         sessionStorage.setItem('refresh_token', action.payload.refresh);
+        sessionStorage.setItem('is_complete', action.payload.is_complete);
       })
       .addCase(verifyOtpAsync.rejected, (state, action) => {
         state.status = 'failed';
