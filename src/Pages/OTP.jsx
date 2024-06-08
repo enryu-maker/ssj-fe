@@ -14,6 +14,8 @@ function OTP({ setModal, number }) {
   const error = useSelector(selectAuthError);
   const isLoading = useSelector(selectIsLoading);
   const user = useSelector(selectLoggedInUser);
+  
+  
 
   // Timer logic
   const [delay, setDelay] = useState(180);
