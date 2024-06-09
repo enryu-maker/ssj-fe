@@ -677,7 +677,7 @@ const Header = () => {
               <div className="relative flex-auto">
                 {/* TODO: pass user mobile number into props */}
                 <LoginDetails
-                  number={JSON.stringify(user.mobile_number)}
+                  number={user.mobile_number}
                   setModal={handleDetailModal}
                 />
               </div>
