@@ -41,7 +41,7 @@ const Header = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
-  const ProfileCompleted = sessionStorage.getItem('is_complete'); 
+  const ProfileCompleted = sessionStorage.getItem("is_complete");
 
   const handleLogout = () => {
     dispatch(logout());
@@ -53,7 +53,7 @@ const Header = () => {
 
   const handleDetailModal = () => {
     setDetailPage(!openDetailPage);
-  }
+  };
 
   return (
     <>
@@ -157,46 +157,52 @@ const Header = () => {
                 </Link>
                 <div className="absolute top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:flex hidden gap-5 m-1  items-center justify-center flex-col w-[280px]  h-56  text-sm p-1  md:hidden child bg-white shadow-md rounded-md	">
                   <div className="flex flex-col gap-2 items-center justify-center font-semibold ">
-                    <h1 className="text-2xl uppercase">My Profile</h1> 
+                    <h1 className="text-2xl uppercase">My Profile</h1>
                     {/* TODO: check user details completed or not show the button vice versa */}
                     {ProfileCompleted ? (
                       <>
-                      <button
-                        onClick={handleDetailModal}
-                        className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
-                      >
-                        Show Profile
-                      </button>
-                      <Link to={'/my-orders'} className="  uppercase bg-primary-color text-white  text-center rounded-md w-3/4 p-2 " >
-                        My Order
-                      </Link>
-                      <button
-                        onClick={handleLogout}
-                        className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
-                      >
-                        Logout
-                      </button>
+                        <button
+                          onClick={handleDetailModal}
+                          className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
+                        >
+                          Show Profile
+                        </button>
+                        <Link
+                          to={"/my-orders"}
+                          className="  uppercase bg-primary-color text-white  text-center rounded-md w-3/4 p-2 "
+                        >
+                          My Order
+                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
+                        >
+                          Logout
+                        </button>
                       </>
                     ) : (
                       <>
-                      <p className="text-[12px]">Complete Your Profile</p>
-                      <button
-                        onClick={handleDetailModal}
-                        className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
-                      >
-                        Complete Profile
-                      </button>
-                      <Link to={'/my-orders'} className="uppercase bg-primary-color text-white text-center rounded-md w-3/4 p-2 " >
-                        My Order
-                      </Link>
-                      <button
-                        onClick={handleLogout}
-                        className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
-                      >
-                        Logout
-                      </button>
+                        <p className="text-[12px]">Complete Your Profile</p>
+                        <button
+                          onClick={handleDetailModal}
+                          className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
+                        >
+                          Complete Profile
+                        </button>
+                        <Link
+                          to={"/my-orders"}
+                          className="uppercase bg-primary-color text-white text-center rounded-md w-3/4 p-2 "
+                        >
+                          My Order
+                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
+                        >
+                          Logout
+                        </button>
                       </>
-                    ) }
+                    )}
                   </div>
                   <p className=" text-center mt-5 uppercase text-[12px] font-semibold">
                     Click Here to
@@ -721,7 +727,6 @@ const Header = () => {
           </div>
         </motion.div>
       )}
-      
     </>
   );
 };
