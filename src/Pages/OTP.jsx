@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import OtpInput from 'react-otp-input';
 import { useDispatch, useSelector } from 'react-redux';
-import { verifyOtpAsync, selectAuthError, selectIsLoading, selectLoggedInUser } from '../features/Auth/authSlice';
+import { verifyOtpAsync, selectAuthError, selectIsLoading, selectLoggedInUser, selectIsAuthenticated } from '../features/Auth/authSlice';
 import LoginDetails from './LoginDetails';
 
 function OTP({ setModal, number }) {
@@ -14,6 +14,7 @@ function OTP({ setModal, number }) {
   const error = useSelector(selectAuthError);
   const isLoading = useSelector(selectIsLoading);
   const user = useSelector(selectLoggedInUser);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   
   
 
@@ -64,6 +65,7 @@ function OTP({ setModal, number }) {
 
   useEffect(() => {
     if (user) {
+      console.log(user);
       handleModal();
     }
   }, [user, handleModal]);
@@ -171,7 +173,7 @@ function OTP({ setModal, number }) {
           <div className="relative w-auto my-6 mx-auto max-w-4xl">
             <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
               <div className="relative flex-auto">
-                <LoginDetails setModal={handleModal} />
+                <LoginDetails number={isAuthenticated.mobile_number} setModal={handleModal} />
               </div>
             </div>
           </div>
