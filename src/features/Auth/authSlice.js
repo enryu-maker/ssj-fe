@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { VerifyUserDetails, createUser, verifyOtp } from "./authAPI";
+import { VerifyUserDetails, createUser, getProfile, verifyOtp, updateProfile } from "../Auth/authAPI";
 
-// Thunks for creating user and verifying OTP
+// Thunks for creating user, verifying OTP, fetching profile, and updating profile
 export const createUserAsync = createAsyncThunk(
   "auth/createUser",
   async (userData, { rejectWithValue }) => {
@@ -29,26 +29,46 @@ export const verifyOtpAsync = createAsyncThunk(
   }
 );
 
-export const VerifyUserDetailsAsync = createAsyncThunk(
-  "auth/VerifyUserDetails",
-
-  async (userDetails ,{ rejectWithValue }) => {
-    // console.log(token);
+export const verifyUserDetailsAsync = createAsyncThunk(
+  "auth/verifyUserDetails",
+  async (userDetails, { rejectWithValue }) => {
     try {
-    
       const response = await VerifyUserDetails(userDetails);
-      if (response.status !== 200 ) {
+      if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }
       return response.data;
     } catch (error) {
-      
       return rejectWithValue(error.message);
     }
   }
 );
 
-// helper func for saving cookies
+export const fetchUserProfileAsync = createAsyncThunk(
+  "auth/fetchUserProfile",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getProfile();
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateUserProfileAsync = createAsyncThunk(
+  "auth/updateProfile",
+  async (profileData, { rejectWithValue }) => {
+    try {
+      const response = await updateProfile(profileData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Helper functions for cookie handling
 const setCookie = (name, value, days) => {
   const date = new Date();
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
@@ -72,7 +92,7 @@ const authSlice = createSlice({
     isLoading: false,
     error: null,
     isAuthenticated: false,
-    isUserDetailsCompleted: false,
+    profile: null, // Add profile to state
   },
   reducers: {
     checkAuthentication(state) {
@@ -80,20 +100,25 @@ const authSlice = createSlice({
         getCookie("access_token") || sessionStorage.getItem("access_token");
       const refreshToken =
         getCookie("refresh_token") || sessionStorage.getItem("refresh_token");
-      const mobile_number =
-        sessionStorage.getItem("mobile_number");
+      const mobileNumber = sessionStorage.getItem("mobile_number");
 
-      if (accessToken && refreshToken && mobile_number) {
+      if (accessToken && refreshToken && mobileNumber) {
         state.isAuthenticated = true;
-        state.user = { accessToken, refreshToken, mobile_number };
+        state.user = { accessToken, refreshToken, mobileNumber };
       }
     },
-    checkUserDetails(state){
-      const IsComplete =
-        getCookie("is_complete") || sessionStorage.getItem("is_complete");
-        if(IsComplete){
-          state.isUserDetailsCompleted = true; 
-        }
+    logout(state) {
+      // Clear tokens from cookies and session storage
+      document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      sessionStorage.removeItem("access_token");
+      sessionStorage.removeItem("refresh_token");
+      sessionStorage.removeItem("is_complete");
+      sessionStorage.removeItem("mobile_number");
+
+      // Clear user state
+      state.user = null;
+      state.isAuthenticated = false;
     }
   },
   extraReducers: (builder) => {
@@ -137,32 +162,57 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = false;
       })
-      .addCase(VerifyUserDetailsAsync.pending, (state) => {
+      .addCase(verifyUserDetailsAsync.pending, (state) => {
         state.status = "loading";
         state.isLoading = true;
       })
-      // TODO: Fix the issue
-      .addCase(VerifyUserDetailsAsync.fulfilled, (state, action) => {
+      .addCase(verifyUserDetailsAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.user = action.payload;
         state.isLoading = false;
-        state.isUserDetailsCompleted = true;
       })
-      .addCase(VerifyUserDetailsAsync.rejected, (state, action) => {
+      .addCase(verifyUserDetailsAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || action.error.message;
         state.isLoading = false;
-        state.isUserDetailsCompleted = false;
+      })
+      .addCase(fetchUserProfileAsync.pending, (state) => {
+        state.status = "loading";
+        state.isLoading = true;
+      })
+      .addCase(fetchUserProfileAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.profile = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchUserProfileAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+        state.isLoading = false;
+      })
+      .addCase(updateUserProfileAsync.pending, (state) => {
+        state.status = "loading";
+        state.isLoading = true;
+      })
+      .addCase(updateUserProfileAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.profile = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(updateUserProfileAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+        state.isLoading = false;
       });
   },
 });
 
-export const { checkAuthentication } = authSlice.actions;
+export const { checkAuthentication, logout } = authSlice.actions;
 
 export const selectLoggedInUser = (state) => state.auth.user;
 export const selectAuthError = (state) => state.auth.error;
 export const selectIsLoading = (state) => state.auth.isLoading;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
-export const isUserDetailsCompleted = (state) => state.auth.isUserDetailsCompleted;
+export const selectUserProfile = (state) => state.auth.profile;
 
 export default authSlice.reducer;
