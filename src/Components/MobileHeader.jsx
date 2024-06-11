@@ -3,6 +3,7 @@ import { CiMenuFries } from "react-icons/ci";
 import {
   IoCartOutline,
   IoHeartOutline,
+  IoLogOutOutline,
   IoSearchOutline,
 } from "react-icons/io5";
 import { GoArrowLeft } from "react-icons/go";
@@ -139,22 +140,40 @@ function MobileHeader() {
                     Rs 500 off on first order
                   </span>
                   {isAuthenticated && ProfileCompleted ? (
-                    <button
-                      onClick={handleDetailModal}
-                      className="flex flex-col items-center uppercase text-primary-color p-2"
-                    >
-                      <HiOutlineUser className="w-6 h-6 text-primary-color" />
-                      Profile
-                    </button>
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={handleDetailModal}
+                        className="flex flex-col items-center uppercase text-primary-color p-2"
+                      >
+                        <HiOutlineUser className="w-6 h-6 text-primary-color" />
+                        Profile
+                      </button>
+                      <button
+                        className="flex flex-col items-center uppercase text-primary-color p-2"
+                        onClick={handleLogout}
+                      >
+                        <IoLogOutOutline className="w-6 h-6 text-primary-color" />
+                        Logout
+                      </button>
+                    </div>
                   ) : (
                     <div className="flex gap-5">
                       {isAuthenticated && !ProfileCompleted && (
-                        <button
-                          onClick={handleDetailModal}
-                          className="uppercase bg-primary-color text-white rounded-md w-3/4 p-2"
-                        >
-                          Complete Profile
-                        </button>
+                        <div className="flex items-center gap-4">
+                          <button
+                            onClick={handleDetailModal}
+                            className="uppercase bg-primary-color text-white rounded-md w-3/4 p-2"
+                          >
+                            Complete Profile
+                          </button>
+                          <button
+                            className="flex flex-col items-center uppercase text-primary-color p-2"
+                            onClick={handleLogout}
+                          >
+                            <IoLogOutOutline className="w-6 h-6 text-primary-color" />
+                            Logout
+                          </button>
+                        </div>
                       )}
                       {!isAuthenticated && (
                         <>
