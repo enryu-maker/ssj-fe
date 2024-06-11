@@ -162,8 +162,9 @@ function MobileHeader() {
                         <div className="flex items-center gap-4">
                           <button
                             onClick={handleDetailModal}
-                            className="uppercase bg-primary-color text-white rounded-md w-3/4 p-2"
+                            className="flex flex-col items-center uppercase text-primary-color p-2"
                           >
+                            <HiOutlineUser className="w-6 h-6 text-primary-color" />
                             Complete Profile
                           </button>
                           <button
