@@ -12,7 +12,6 @@ function Login({ setModal }) {
   
 
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
   const authError = useSelector(selectAuthError);
 
   const handleChange = (e) => {
@@ -35,7 +34,13 @@ function Login({ setModal }) {
 
   return (
     <>
-      <div className="grid md:grid-cols-2 font-Raleway place-content-center md:h-full h-[50vh]">
+    {
+      openOtp ? (
+        <div>
+        <OTP setModal={setModal} number={`+91${inputNum}`} />
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-2 font-Raleway place-content-center md:h-full h-[50vh]">
         <div className="absolute right-0">
           <motion.button
             whileHover={{ rotate: -90 }}
@@ -100,26 +105,12 @@ function Login({ setModal }) {
           </form>
         </div>
       </div>
+      )
+    }
+      
 
-      {/* Modal Otp */}
-      {openOtp ? (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.25 }}
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none"
-          >
-            <div className="relative w-auto my-6 mx-auto max-w-4xl">
-              <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
-                <div className="relative flex-auto">
-                  <OTP setModal={handleModal} number={`+91${inputNum}`} />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </>
-      ) : null}
+      
+      
     </>
   );
 }

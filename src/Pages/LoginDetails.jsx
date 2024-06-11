@@ -9,7 +9,7 @@ import {
 } from "../features/Auth/authSlice";
 import ProfileDetails from "./ProfileDetails";
 
-function LoginDetails({ setModal, number }) {
+function LoginDetails({ setModal }) {
   const [formData, setFormData] = useState({
     gender: "",
     name: "",

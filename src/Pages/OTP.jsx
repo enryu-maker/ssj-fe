@@ -72,7 +72,24 @@ function OTP({ setModal, number }) {
 
   return (
     <>
-      <div className="grid md:grid-cols-2 font-Raleway place-content-center md:h-full h-[50vh]">
+     {
+      openDetailPage ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.25 }}
+          className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none"
+        >
+          <div className="relative w-auto my-6 mx-auto max-w-4xl">
+            <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
+              <div className="relative flex-auto">
+                <LoginDetails number={isAuthenticated.mobile_number} setModal={setModal} />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      ) : (
+        <div className="grid md:grid-cols-2 font-Raleway place-content-center md:h-full h-[50vh]">
         <div className="absolute right-0">
           <motion.button
             whileHover={{ rotate: -90 }}
@@ -162,23 +179,9 @@ function OTP({ setModal, number }) {
           />
         </div>
       </div>
+      )
+     }
 
-      {openDetailPage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.25 }}
-          className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none"
-        >
-          <div className="relative w-auto my-6 mx-auto max-w-4xl">
-            <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
-              <div className="relative flex-auto">
-                <LoginDetails number={isAuthenticated.mobile_number} setModal={handleModal} />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
     </>
   );
 }

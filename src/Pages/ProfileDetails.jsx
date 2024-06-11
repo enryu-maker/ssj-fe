@@ -12,6 +12,8 @@ import {
 import FemaleImg from "../assets/Female.jpeg";
 import maleImg from "../assets/male.jpg";
 import ProfileEdit from "./ProfileEdit";
+import { LiaUserEditSolid } from "react-icons/lia";
+import { IoLogOutOutline } from "react-icons/io5";
 
 const ProfileDetails = ({ setModal }) => {
   const [OpenEditForm, setEditForm] = useState(false);
@@ -103,16 +105,18 @@ const ProfileDetails = ({ setModal }) => {
             </div>
             <div className="flex justify-around w-full mt-5">
               <button
-                className="uppercase bg-primary-color text-white rounded-md p-2"
+                className="flex items-center gap-2 uppercase bg-primary-color text-white rounded-md p-2"
                 onClick={handleModal}
               >
                 Edit
+                <LiaUserEditSolid className=" text-2xl" />
               </button>
               <button
-                className="uppercase bg-primary-color text-white rounded-md p-2"
+                className="flex items-center gap-2 uppercase bg-primary-color text-white rounded-md p-2"
                 onClick={handleLogout}
               >
                 Logout
+                <IoLogOutOutline className=" text-2xl" />
               </button>
             </div>
           </div>

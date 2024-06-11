@@ -155,7 +155,7 @@ const Header = () => {
                   <HiOutlineUser className="w-6 h-6 text-primary-color" />
                   Profile
                 </Link>
-                <div className="absolute top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:flex hidden gap-5 m-1  items-center justify-center flex-col w-[280px]  h-56  text-sm p-1  md:hidden child bg-white shadow-md rounded-md	">
+                <div className="absolute top-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:flex hidden gap-5 m-1  items-center justify-center flex-col w-[280px]  h-56  text-sm p-1  md:hidden child bg-white shadow-md rounded-md	">
                   <div className="flex flex-col gap-2 items-center justify-center font-semibold ">
                     <h1 className="text-2xl uppercase">My Profile</h1>
                     {/* TODO: check user details completed or not show the button vice versa */}
