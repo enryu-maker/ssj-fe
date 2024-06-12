@@ -3,7 +3,7 @@ import Image from '../assets/about_image.jpeg'; // Import your image
 
 const AboutUs = () => {
   return (
-    <div className='font-Raleway min-h-screen px-5'>
+    <div className='font-Raleway min-h-screen p-10'>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-10 items-center justify-center'>
         <div className='text-left'>
           <h1 className='text-4xl font-extrabold text-primary-color mb-5'>About Sai Shraddha Jewellers</h1>
