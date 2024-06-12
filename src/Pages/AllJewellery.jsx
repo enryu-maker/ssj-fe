@@ -18,13 +18,13 @@ const [sortBy, setSortBy] = useState('Best Matches');
 
 
   return (
-    <div className="px-10">
+    <div className="px-10 mt-5">
     <div className="flex items-center justify-between gap-5">
       <div className="flex items-center gap-2">
         <IoFilterOutline className="text-primary-color font-extrabold" />
         <h1 className="text-primary-color">FILTER</h1>
       </div>
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="md:flex hidden items-center gap-2 flex-wrap">
         <button className="border border-primary-color p-2 w-24 text-center">
           Bangle
         </button>
@@ -41,7 +41,7 @@ const [sortBy, setSortBy] = useState('Best Matches');
           Mangalsutra
         </button>
       </div>
-      <div className="relative z-50">
+      <div className="relative z-10">
       <div
         className="flex items-center gap-2 cursor-pointer"
         onClick={() => setShowOptions(!showOptions)}

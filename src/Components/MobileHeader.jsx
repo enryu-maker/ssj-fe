@@ -197,7 +197,7 @@ function MobileHeader() {
                 </div>
                 <ul className="space-y-5 text-black ">
                   <li onClick={handleNavModal}>
-                    <Link to="/all-jewellery">All Jewellery</Link>
+                    <Link to="/shop/jewellery">All Jewellery</Link>
                   </li>
                   <li onClick={handleNavModal}>
                     <Link to="/gold">Gold</Link>
@@ -214,9 +214,7 @@ function MobileHeader() {
                   <li onClick={handleNavModal}>
                     <Link to="/bestsellers">Bestsellers</Link>
                   </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/mia">Mia</Link>
-                  </li>
+                  
                   <li onClick={handleNavModal}>
                     <Link to="/collections">Collections</Link>
                   </li>
