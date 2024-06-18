@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Logo from "../assets/Logo.png";
 import DailyWear from "../assets/EarringsIcon.svg";
 import {
