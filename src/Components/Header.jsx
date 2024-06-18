@@ -98,7 +98,7 @@ const Header = () => {
             <img src={Logo} alt="Logo" className="w-28 h-28" />
           </Link>
         </div>
-        <div className="w-[600px] relative ">
+        <div className="w-[40rem] relative px-5 ">
           {/* search bar */}
           <input
             type="text"
@@ -106,7 +106,7 @@ const Header = () => {
             placeholder="Search for Gold Jewellery, Diamond…"
             className=" w-full p-2 rounded-md border-none focus:outline-none"
           />
-          <div className="flex items-center gap-5 absolute top-2 right-2 ">
+          <div className="flex items-center gap-5 absolute top-2 right-10 ">
             {/* <button>
               <CiMicrophoneOn className='w-6 h-6 text-primary-color' />
             </button> */}
@@ -279,8 +279,8 @@ const Header = () => {
         </div>
       </div>
       {/* header link part  */}
-      <div className="md:flex justify-around p-5 px-10 font-Raleway hidden">
-        <ul className="relative parent cursor-pointer flex items-center   ">
+      <div className="md:flex flex-wrap gap-5 items-center justify-evenly p-5 px-10 font-Raleway hidden">
+        <ul className="relative parent cursor-pointer flex items-center">
           <div className="uppercase text-sm group cursor-pointer underlineAni ">
             All jewellery
           </div>
