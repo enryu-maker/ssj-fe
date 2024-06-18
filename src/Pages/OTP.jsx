@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { verifyOtpAsync, selectAuthError, selectIsLoading, selectLoggedInUser, selectIsAuthenticated } from '../features/Auth/authSlice';
 import LoginDetails from './LoginDetails';
 
-function OTP({ setModal, number }) {
+function OTP({ setModal, number, user }) {
   const [otp, setOtp] = useState("");
   const [openDetailPage, setDetailPage] = useState(false);
 
   const dispatch = useDispatch();
   const error = useSelector(selectAuthError);
   const isLoading = useSelector(selectIsLoading);
-  const user = useSelector(selectLoggedInUser);
+  // const user = useSelector(selectLoggedInUser);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   
   
@@ -58,9 +58,16 @@ function OTP({ setModal, number }) {
     setDetailPage((prev) => !prev);
   }, []);
 
-  const handleVerifyOtp = (e) => {
+  const handleVerifyOtp = async(e) => {
     e.preventDefault();
-    dispatch(verifyOtpAsync({ mobile_number: number, otp }));
+    try {
+     const data = await user.confirm(otp)
+     console.log(data);
+     handleModal();
+    } catch (error) {
+      console.log(error);
+    }
+    // dispatch(verifyOtpAsync({ mobile_number: number, otp }));
   };
 
   useEffect(() => {

@@ -4,11 +4,14 @@ import { motion } from "framer-motion";
 import { RxCross2 } from "react-icons/rx";
 import OTP from "./OTP";
 import { useDispatch, useSelector } from "react-redux";
-import { createUserAsync, selectLoggedInUser, selectAuthError } from "../features/Auth/authSlice";
+import {  selectAuthError } from "../features/Auth/authSlice";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { auth } from "../helper/firebase";
 
 function Login({ setModal }) {
   const [openOtp, setOpenOtp] = useState(false);
   const [inputNum, setInputNum] = useState("");
+  const [user, setUser] = useState(null);
   
 
   const dispatch = useDispatch();
@@ -22,22 +25,31 @@ function Login({ setModal }) {
     setOpenOtp(!openOtp);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const fullNumber = `+91${inputNum}`;
-    dispatch(createUserAsync({ mobile_number: fullNumber })).then((result) => {
-      if (result.type === 'auth/createUser/fulfilled') {
+    try {
+      const fullNumber = `+91${inputNum}`;
+      const recaptcha = new RecaptchaVerifier(auth,"recaptcha", {} );
+      const confirmation = await signInWithPhoneNumber(auth, fullNumber, recaptcha);
+      setUser(confirmation);
+      console.log(confirmation);
+      if (confirmation) {
         handleModal();
-      } 
-    });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+ 
+  
 
   return (
     <>
     {
       openOtp ? (
         <div>
-        <OTP setModal={setModal} number={`+91${inputNum}`} />
+        <OTP setModal={setModal} number={`+91${inputNum}`} user={user} />
         </div>
       ) : (
         <div className="grid md:grid-cols-2 font-Raleway place-content-center md:h-full h-[50vh]">
@@ -80,6 +92,7 @@ function Login({ setModal }) {
                 placeholder="Enter your Mobile Number"
               />
             </div>
+            <div id="recaptcha" className="mt-5"></div>
             
             {authError && (
               <p className="text-sm text-center text-red-500">{authError}</p>
