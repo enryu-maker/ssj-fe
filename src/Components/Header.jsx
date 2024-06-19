@@ -28,23 +28,18 @@ import {
 } from "../data";
 import MobileHeader from "./MobileHeader";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  logout,
-  selectIsAuthenticated,
-  selectLoggedInUser,
-} from "../features/Auth/authSlice";
-import LoginDetails from "../Pages/LoginDetails";
+import ProfileDetails from "../Pages/ProfileDetails";
+import { selectIsAuthenticated, selectUser, signOutUser } from "../features/Auth/authSlice";
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
   const [openDetailPage, setDetailPage] = useState(false);
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const ProfileCompleted = sessionStorage.getItem("is_complete");
-
+  
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(signOutUser());
   };
 
   const HandleModal = () => {
@@ -159,7 +154,7 @@ const Header = () => {
                   <div className="flex flex-col gap-2 items-center justify-center font-semibold ">
                     <h1 className="text-2xl uppercase">My Profile</h1>
                     {/* TODO: check user details completed or not show the button vice versa */}
-                    {ProfileCompleted ? (
+                     
                       <>
                         <button
                           onClick={handleDetailModal}
@@ -180,29 +175,7 @@ const Header = () => {
                           Logout
                         </button>
                       </>
-                    ) : (
-                      <>
-                        <p className="text-[12px]">Complete Your Profile</p>
-                        <button
-                          onClick={handleDetailModal}
-                          className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
-                        >
-                          Complete Profile
-                        </button>
-                        <Link
-                          to={"/my-orders"}
-                          className="uppercase bg-primary-color text-white text-center rounded-md w-3/4 p-2 "
-                        >
-                          My Order
-                        </Link>
-                        <button
-                          onClick={handleLogout}
-                          className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
-                        >
-                          Logout
-                        </button>
-                      </>
-                    )}
+                 
                   </div>
                   <p className=" text-center mt-5 uppercase text-[12px] font-semibold">
                     Click Here to
@@ -716,8 +689,7 @@ const Header = () => {
             <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
               <div className="relative flex-auto">
                 {/* TODO: pass user mobile number into props */}
-                <LoginDetails
-                  number={user?.mobile_number}
+                <ProfileDetails
                   setModal={handleDetailModal}
                 />
               </div>

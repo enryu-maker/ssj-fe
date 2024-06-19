@@ -13,13 +13,13 @@ import DailyWear from "../assets/EarringsIcon.svg";
 import Logo from "../assets/Logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  logout,
   selectIsAuthenticated,
-  selectLoggedInUser,
+  selectUser,
+  signOutUser,
 } from "../features/Auth/authSlice";
 import Login from "../Pages/Login";
-import LoginDetails from "../Pages/LoginDetails";
 import { HiOutlineUser } from "react-icons/hi2";
+import ProfileDetails from "../Pages/ProfileDetails";
 
 function MobileHeader() {
   const [openNavModal, setNavModal] = useState(false);
@@ -30,12 +30,11 @@ function MobileHeader() {
     setNavModal(!openNavModal);
   };
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const ProfileCompleted = sessionStorage.getItem("is_complete");
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(signOutUser());
   };
 
   const HandleModal = () => {
@@ -139,7 +138,7 @@ function MobileHeader() {
                   <span className="text-xl font-semibold text-pink-500">
                     Rs 500 off on first order
                   </span>
-                  {isAuthenticated && ProfileCompleted ? (
+                  {isAuthenticated && user ? (
                     <div className="flex items-center gap-4">
                       <button
                         onClick={handleDetailModal}
@@ -158,40 +157,22 @@ function MobileHeader() {
                     </div>
                   ) : (
                     <div className="flex gap-5">
-                      {isAuthenticated && !ProfileCompleted && (
-                        <div className="flex items-center gap-4">
-                          <button
-                            onClick={handleDetailModal}
-                            className="flex flex-col items-center uppercase text-primary-color p-2"
-                          >
-                            <HiOutlineUser className="w-6 h-6 text-primary-color" />
-                            Complete Profile
-                          </button>
-                          <button
-                            className="flex flex-col items-center uppercase text-primary-color p-2"
-                            onClick={handleLogout}
-                          >
-                            <IoLogOutOutline className="w-6 h-6 text-primary-color" />
-                            Logout
-                          </button>
-                        </div>
-                      )}
-                      {!isAuthenticated && (
+                      
                         <>
-                          <button
-                            onClick={HandleModal}
-                            className="text-primary-color"
-                          >
-                            LOG IN
-                          </button>
-                          <button
-                            onClick={HandleModal}
-                            className="text-primary-color"
-                          >
-                            SIGN UP
-                          </button>
-                        </>
-                      )}
+                        <button
+                          onClick={HandleModal}
+                          className="text-primary-color"
+                        >
+                          LOG IN
+                        </button>
+                        <button
+                          onClick={HandleModal}
+                          className="text-primary-color"
+                        >
+                          SIGN UP
+                        </button>
+                      </>
+                    
                     </div>
                   )}
                 </div>
@@ -279,8 +260,7 @@ function MobileHeader() {
             <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
               <div className="relative flex-auto">
                 {/* TODO: pass user mobile number into props */}
-                <LoginDetails
-                  number={user?.mobile_number}
+                <ProfileDetails
                   setModal={handleDetailModal}
                 />
               </div>

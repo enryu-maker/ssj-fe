@@ -60,27 +60,27 @@ export const VerifyUserDetails = async (userDetails) => {
 };
 
 // Function to get user profile
-export const getProfile = async () => {
-  const token = sessionStorage.getItem('access_token');
-  try {
-    const response = await axios.get('/profile/', {
-      headers: {
-        'Authorization': `Bearer ${token}`, 
-      },
-    });
-    return response.data;
-  } catch (error) {
-    if (error.response) {
-      throw new Error(error.response.data.message || 'Network response was not ok');
-    } else if (error.request) {
-      // Request was made but no response was received
-      throw new Error('No response received from server');
-    } else {
-      // Something happened in setting up the request
-      throw new Error(error.message);
-    }
-  }
-};
+// export const getProfile = async () => {
+//   const token = sessionStorage.getItem('access_token');
+//   try {
+//     const response = await axios.get('/profile/', {
+//       headers: {
+//         'Authorization': `Bearer ${token}`, 
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     if (error.response) {
+//       throw new Error(error.response.data.message || 'Network response was not ok');
+//     } else if (error.request) {
+//       // Request was made but no response was received
+//       throw new Error('No response received from server');
+//     } else {
+//       // Something happened in setting up the request
+//       throw new Error(error.message);
+//     }
+//   }
+// };
 
 // Function to update user profile
 export const updateProfile = async (profileData) => {

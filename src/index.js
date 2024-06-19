@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { checkAuthentication } from './features/Auth/authSlice';
 
 // Dispatch the checkAuthentication action when the application starts
-store.dispatch(checkAuthentication());
+// store.dispatch(checkAuthentication());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

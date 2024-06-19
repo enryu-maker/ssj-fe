@@ -1,218 +1,133 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { VerifyUserDetails, createUser, getProfile, verifyOtp, updateProfile } from "../Auth/authAPI";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { signInWithPopup, signOut } from 'firebase/auth'; // Import signOut if needed
+import { auth, provider } from '../../helper/firebase';
 
-// Thunks for creating user, verifying OTP, fetching profile, and updating profile
-export const createUserAsync = createAsyncThunk(
-  "auth/createUser",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await createUser(userData);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+const initialState = {
+  user: null,
+  isAuthenticated: false,
+  loading: false,
+  error: null,
+};
 
-export const verifyOtpAsync = createAsyncThunk(
-  "auth/verifyOtp",
-  async ({ mobile_number, otp }, { rejectWithValue }) => {
-    try {
-      const response = await verifyOtp({ mobile_number, otp });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const verifyUserDetailsAsync = createAsyncThunk(
-  "auth/verifyUserDetails",
-  async (userDetails, { rejectWithValue }) => {
-    try {
-      const response = await VerifyUserDetails(userDetails);
-      if (response.status !== 200) {
-        throw new Error("Network response was not ok");
-      }
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const fetchUserProfileAsync = createAsyncThunk(
-  "auth/fetchUserProfile",
+// Async thunk to sign in with Google
+export const signInWithGoogle = createAsyncThunk(
+  'auth/signInWithGoogle',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await getProfile();
-      return response;
+      const result = await signInWithPopup(auth, provider);
+      const { displayName, email, photoURL } = result.user; // Extract serializable properties
+      const user = { displayName, email, photoURL }; // Create a plain JavaScript object
+      localStorage.setItem('user', JSON.stringify(user)); // Store user in local storage
+      return user; // Return the serializable user object
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-export const updateUserProfileAsync = createAsyncThunk(
-  "auth/updateProfile",
-  async (profileData, { rejectWithValue }) => {
+// Async thunk to fetch user details (if needed)
+export const fetchUserDetails = createAsyncThunk(
+  'auth/fetchUserDetails',
+  async (_, { getState, rejectWithValue }) => {
+    const { user } = getState().auth;
+    if (user) {
+      // Extract serializable properties of the user object
+      const serializedUser = {
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        // Add other necessary serializable properties
+      };
+      return serializedUser;
+    } else {
+      return rejectWithValue('User not authenticated');
+    }
+  }
+);
+
+// Async thunk to sign out
+export const signOutUser = createAsyncThunk(
+  'auth/signOutUser',
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await updateProfile(profileData);
-      return response;
+      await signOut(auth);
+      localStorage.removeItem('user'); // Remove user from local storage
+      window.location.reload();
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Helper functions for cookie handling
-const setCookie = (name, value, days) => {
-  const date = new Date();
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-  const expires = `expires=${date.toUTCString()}`;
-  document.cookie = `${name}=${value};${expires};path=/`;
-};
-
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-  return null;
-};
-
-// Auth slice
+// Slice definition
 const authSlice = createSlice({
-  name: "auth",
-  initialState: {
-    user: null,
-    status: "idle",
-    isLoading: false,
-    error: null,
-    isAuthenticated: false,
-    profile: null, // Add profile to state
-  },
+  name: 'auth',
+  initialState,
   reducers: {
-    checkAuthentication(state) {
-      const accessToken =
-        getCookie("access_token") || sessionStorage.getItem("access_token");
-      const refreshToken =
-        getCookie("refresh_token") || sessionStorage.getItem("refresh_token");
-      const mobileNumber = sessionStorage.getItem("mobile_number");
-
-      if (accessToken && refreshToken && mobileNumber) {
-        state.isAuthenticated = true;
-        state.user = { accessToken, refreshToken, mobileNumber };
-      }
+    setUser: (state, action) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+      state.error = null;
     },
-    logout(state) {
-      // Clear tokens from cookies and session storage
-      document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      sessionStorage.removeItem("access_token");
-      sessionStorage.removeItem("refresh_token");
-      sessionStorage.removeItem("is_complete");
-      sessionStorage.removeItem("mobile_number");
-
-      // Clear user state
+    clearUser: (state) => {
       state.user = null;
       state.isAuthenticated = false;
-    }
+      state.error = null;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createUserAsync.pending, (state) => {
-        state.status = "loading";
-        state.isLoading = true;
+      .addCase(signInWithGoogle.pending, (state) => {
+        state.loading = true;
       })
-      .addCase(createUserAsync.fulfilled, (state, action) => {
-        state.status = "succeeded";
+      .addCase(signInWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
         state.user = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(createUserAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload || action.error.message;
-        state.isLoading = false;
-      })
-      .addCase(verifyOtpAsync.pending, (state) => {
-        state.status = "loading";
-        state.isLoading = true;
-      })
-      .addCase(verifyOtpAsync.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload;
-        state.isLoading = false;
         state.isAuthenticated = true;
-
-        // Save tokens in cookies and session storage
-        setCookie("access_token", action.payload.access, 7);
-        setCookie("refresh_token", action.payload.refresh, 7);
-        setCookie("is_complete", action.payload.is_complete, 7);
-        sessionStorage.setItem("access_token", action.payload.access);
-        sessionStorage.setItem("refresh_token", action.payload.refresh);
-        sessionStorage.setItem("is_complete", action.payload.is_complete);
-        sessionStorage.setItem("mobile_number", action.payload.mobile_number);
       })
-      .addCase(verifyOtpAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload || action.error.message;
-        state.isLoading = false;
+      .addCase(signInWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchUserDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUserDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchUserDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(signOutUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(signOutUser.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
         state.isAuthenticated = false;
       })
-      .addCase(verifyUserDetailsAsync.pending, (state) => {
-        state.status = "loading";
-        state.isLoading = true;
+      .addCase(signOutUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       })
-      .addCase(verifyUserDetailsAsync.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(verifyUserDetailsAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload || action.error.message;
-        state.isLoading = false;
-      })
-      .addCase(fetchUserProfileAsync.pending, (state) => {
-        state.status = "loading";
-        state.isLoading = true;
-      })
-      .addCase(fetchUserProfileAsync.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.profile = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(fetchUserProfileAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload || action.error.message;
-        state.isLoading = false;
-      })
-      .addCase(updateUserProfileAsync.pending, (state) => {
-        state.status = "loading";
-        state.isLoading = true;
-      })
-      .addCase(updateUserProfileAsync.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.profile = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(updateUserProfileAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload || action.error.message;
-        state.isLoading = false;
-      });
   },
 });
 
-export const { checkAuthentication, logout } = authSlice.actions;
+// Export actions and selectors
+export const { setUser, clearUser, setError, clearError } = authSlice.actions;
 
-export const selectLoggedInUser = (state) => state.auth.user;
-export const selectAuthError = (state) => state.auth.error;
-export const selectIsLoading = (state) => state.auth.isLoading;
+export const selectUser = (state) => state.auth.user;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
-export const selectUserProfile = (state) => state.auth.profile;
+export const selectAuthError = (state) => state.auth.error;
+export const selectLoading = (state) => state.auth.loading;
 
 export default authSlice.reducer;
