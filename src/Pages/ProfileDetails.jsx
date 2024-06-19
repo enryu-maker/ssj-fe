@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoLogOutOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { fetchUserDetails, selectUser, signOutUser } from "../features/Auth/authSlice";
-import FemaleImg from "../assets/Female.jpeg";
-import MaleImg from "../assets/male.jpg";
+
 
 const ProfileDetails = ({ setModal }) => {
   const dispatch = useDispatch();
