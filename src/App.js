@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import MyOrders from "./Pages/MyOrders";
 
 function App() {
+
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
   return (
@@ -36,7 +37,7 @@ function App() {
           <Route path="/stores" element={<Stores />} />
           {isAuthenticated && (
             <Route path="/my-orders" element={<MyOrders />} />
-          ) }
+          )}
           <Route path="/cart" element={<CartPage />} />
           <Route path="/shop/jewellery" element={<AllJewellery />} />
           <Route exact path="/product/:productId" element={<ProductDetail />} />
