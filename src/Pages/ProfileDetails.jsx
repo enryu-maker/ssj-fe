@@ -40,7 +40,7 @@ const ProfileDetails = ({ setModal }) => {
           <div>
               <img
                 src={profile?.photoURL}
-                alt=""
+                alt="Profile"
                 className="md:rounded-l-lg md:rounded-t-none rounded-t-lg h-full w-full  object-cover"
               />
 

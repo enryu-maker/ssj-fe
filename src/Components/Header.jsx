@@ -139,7 +139,7 @@ const Header = () => {
             </svg>
             Stores
           </Link>
-          {isAuthenticated ? (
+          {isAuthenticated && user ? (
             <div>
               <ul className="relative parent cursor-pointer md:flex items-center  hidden   ">
                 <Link

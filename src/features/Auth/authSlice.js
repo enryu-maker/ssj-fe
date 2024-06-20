@@ -15,6 +15,7 @@ export const signInWithGoogle = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const result = await signInWithPopup(auth, provider);
+      console.log(result);
       const { displayName, email, photoURL } = result.user; // Extract serializable properties
       const user = { displayName, email, photoURL }; // Create a plain JavaScript object
       localStorage.setItem('user', JSON.stringify(user)); // Store user in local storage
