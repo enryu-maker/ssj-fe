@@ -16,6 +16,7 @@ import AboutUs from "./Pages/AboutUs";
 import { selectIsAuthenticated } from "./features/Auth/authSlice";
 import { useSelector } from "react-redux";
 import MyOrders from "./Pages/MyOrders";
+import Collections from "./Pages/Collections";
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/shop/jewellery" element={<AllJewellery />} />
           <Route exact path="/product/:productId" element={<ProductDetail />} />
+          <Route path="/collections" element={<Collections />} />
         </Routes>
         <Footer />
       </Router>

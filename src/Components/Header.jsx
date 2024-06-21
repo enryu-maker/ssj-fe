@@ -614,11 +614,10 @@ const Header = () => {
 
         <div className="uppercase text-sm  cursor-pointer underlineAni">
           Bestsellers
-        </div>
-                  
-        <div className="uppercase text-sm  cursor-pointer underlineAni ">
+        </div>       
+        <Link to={'/collections'} className="uppercase text-sm  cursor-pointer underlineAni ">
           Collections
-        </div>
+        </Link>
         <div className="uppercase text-sm  cursor-pointer underlineAni">
           Wedding
         </div>
