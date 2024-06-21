@@ -25,8 +25,7 @@ const ProfileDetails = ({ setModal }) => {
 
   return (
     <>
-      
-        <div className="grid md:grid-cols-2 md:grid-rows-1 grid-rows-2 font-Raleway place-content-center md:h-full h-[60vh]">
+      <div className="grid md:grid-cols-2 md:grid-rows-1 grid-rows-2 font-Raleway place-content-center md:h-full h-[60vh]">
           <div className="absolute right-0">
             <motion.button
               whileHover={{ rotate: -90 }}
@@ -72,7 +71,6 @@ const ProfileDetails = ({ setModal }) => {
             </div>
           </div>
         </div>
-      
     </>
   );
 };

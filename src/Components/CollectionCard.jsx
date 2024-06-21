@@ -3,9 +3,9 @@ import { FaChevronRight } from 'react-icons/fa6';
 
 function CollectionCard({ ...collection }) {
   return (
-    <div className='shadow-md flex flex-col  font-Raleway hover:shadow-red-50 cursor-pointer '>
+    <div className='shadow-md flex flex-col font-Raleway hover:shadow-red-50 cursor-pointer '>
       <img
-        src={collection.imgUrl}
+        src={collection.image}
         alt=''
         className='rounded-t'
       />
