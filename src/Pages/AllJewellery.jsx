@@ -1,12 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoFilterOutline, IoChevronDownOutline } from 'react-icons/io5';
 import { productsData } from '../data';
 import ProductCard from '../Components/ProductCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllProductsAsync, selectProducts, selectProductsError, selectProductsLoading } from '../features/Products/AllProduct/productSlice';
 
 function AllJewellery() {
 
 const [sortBy, setSortBy] = useState('Best Matches');
-  const [showOptions, setShowOptions] = useState(false);
+const [showOptions, setShowOptions] = useState(false);
+
+  const dispatch = useDispatch();
+  const products = useSelector(selectProducts);
+  const loading = useSelector(selectProductsLoading);
+  const error = useSelector(selectProductsError);
+  console.log(products);
+
+  useEffect(() => {
+    dispatch(fetchAllProductsAsync());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+
 
   const options = ['Price: Low to High', 'Price: High to Low'];
 
@@ -68,7 +90,7 @@ const [sortBy, setSortBy] = useState('Best Matches');
     </div>
     </div>
     <div className="grid md:grid-cols-4 gap-5 p-5 mt-5">
-      {productsData.map((product) => (
+      {products.map((product) => (
         <ProductCard key={product.id} {...product} />
       ))}
     </div>

@@ -16,11 +16,11 @@ function ProductDetail() {
   const thisProduct = productsData.find((prod) => prod.id === productId);
 
   const [images, setImages] = useState({
-    img: thisProduct?.imgUrl[0],
-    img1: thisProduct?.imgUrl[1],
-    img2: thisProduct?.imgUrl[2],
-    img3: thisProduct?.imgUrl[3],
-    img4: thisProduct?.imgUrl[4],
+    img: thisProduct?.image[0],
+    img1: thisProduct?.image[1],
+    img2: thisProduct?.image[2],
+    img3: thisProduct?.image[3],
+    img4: thisProduct?.image[4],
   });
 
   const [activeImg, setActiveImage] = useState(images.img1);

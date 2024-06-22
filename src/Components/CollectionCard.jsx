@@ -1,8 +1,10 @@
 import React from 'react';
 import { FaChevronRight } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 
 function CollectionCard({ ...collection }) {
   return (
+    <Link to={`/collections/${collection.id}`} >
     <div className='shadow-md flex flex-col font-Raleway hover:shadow-red-50 cursor-pointer '>
       <img
         src={collection.image}
@@ -19,6 +21,7 @@ function CollectionCard({ ...collection }) {
         </p>
       </div>
     </div>
+    </Link>
   );
 }
 

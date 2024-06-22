@@ -17,6 +17,7 @@ import { selectIsAuthenticated } from "./features/Auth/authSlice";
 import { useSelector } from "react-redux";
 import MyOrders from "./Pages/MyOrders";
 import Collections from "./Pages/Collections";
+import CollectionProduct from "./Pages/CollectionProduct";
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/shop/jewellery" element={<AllJewellery />} />
           <Route exact path="/product/:productId" element={<ProductDetail />} />
           <Route path="/collections" element={<Collections />} />
+          <Route path="/collections/:collectionId" element={<CollectionProduct />} />
         </Routes>
         <Footer />
       </Router>

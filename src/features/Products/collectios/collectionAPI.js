@@ -18,3 +18,13 @@ export const getCollections = async () => {
     }
   }
 };
+
+export const getCollectionById = async (collectionId) => {
+    try {
+      const response = await axios.get(`/web/collections/${collectionId}/`);
+      return response.data;
+    } catch (error) {
+      throw new  Error(error.message);
+    }
+  }
+

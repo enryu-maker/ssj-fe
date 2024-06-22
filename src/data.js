@@ -55,7 +55,7 @@ export const productsData = [
     name: 'Artistic Diamond Stud Earrings',
     description:
       'These mesh pattern geometric stud earrings crafted in 18 Karat yellow gold studded with diamonds are a must have in your collection Stone Clarity I1I2',
-    imgUrl: [
+    image: [
       'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dwfc9c925a/images/hi-res/502117SKUAAA09_1.jpg?sw=115&sh=115',
       'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dwfc9c925a/images/hi-res/502117SKUAAA09_1.jpg?sw=115&sh=115',
       'https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dwcfbf242b/images/hi-res/502117SKUAAA09_2.jpg?sw=115&sh=115',
@@ -72,7 +72,7 @@ export const productsData = [
     name: 'Artistic Diamond Stud Earrings',
     description:
       'These mesh pattern geometric stud earrings crafted in 18 Karat yellow gold studded with diamonds are a must have in your collection Stone Clarity I1I2',
-    imgUrl: [
+      image: [
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
@@ -89,7 +89,7 @@ export const productsData = [
     name: 'Dainty Beaded Gold Hoop Earrings',
     description:
       'These mesh pattern geometric stud earrings crafted in 18 Karat yellow gold studded with diamonds are a must have in your collection Stone Clarity I1I2',
-    imgUrl: [
+      image: [
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
@@ -106,7 +106,7 @@ export const productsData = [
     name: 'Artistic Diamond Stud Earrings',
     description:
       'These mesh pattern geometric stud earrings crafted in 18 Karat yellow gold studded with diamonds are a must have in your collection Stone Clarity I1I2',
-    imgUrl: [
+      image: [
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
@@ -123,7 +123,7 @@ export const productsData = [
     name: 'Artistic Diamond Stud Earrings',
     description:
       'These mesh pattern geometric stud earrings crafted in 18 Karat yellow gold studded with diamonds are a must have in your collection Stone Clarity I1I2',
-    imgUrl: [
+      image: [
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
@@ -140,7 +140,7 @@ export const productsData = [
     name: 'Dainty Beaded Gold Hoop Earrings',
     description:
       'These mesh pattern geometric stud earrings crafted in 18 Karat yellow gold studded with diamonds are a must have in your collection Stone Clarity I1I2',
-    imgUrl: [
+      image: [
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
@@ -157,7 +157,7 @@ export const productsData = [
     name: 'Artistic Diamond Stud Earrings',
     description:
       'These mesh pattern geometric stud earrings crafted in 18 Karat yellow gold studded with diamonds are a must have in your collection Stone Clarity I1I2',
-    imgUrl: [
+      image: [
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
@@ -174,7 +174,7 @@ export const productsData = [
     name: 'Artistic Diamond Stud Earrings',
     description:
       'These mesh pattern geometric stud earrings crafted in 18 Karat yellow gold studded with diamonds are a must have in your collection Stone Clarity I1I2',
-    imgUrl: [
+      image: [
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
       'https://i.ibb.co/vZFBqD3/earinggs.webp',
