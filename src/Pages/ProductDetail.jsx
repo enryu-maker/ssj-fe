@@ -6,6 +6,7 @@ import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icon
 import { fetchAllProductsAsync, selectProducts, selectProductsError, selectProductsLoading } from "../features/Products/AllProduct/productSlice";
 import { addToCart } from "../features/cart/cartSlice";
 import { useNavigate } from 'react-router-dom';
+import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 
 function ProductDetail() {
   const [openWeight, setOpenWeight] = useState(false);
@@ -38,25 +39,26 @@ function ProductDetail() {
     ...(thisProduct?.other_images ? thisProduct.other_images.map(img => img.images) : [])
   ];
 
+  //  adding product to the cart
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
     navigate('/cart');
   }
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
-  if (error) {
-    return <h1>Error: {error}</h1>;
-  }
-
-  if (!thisProduct) {
-    return <h1>Product not found</h1>;
-  }
+//  adding products to wish list
+  const handleAddToWishlist = (product) => {
+    dispatch(addToWishlist(product));
+  };
 
   return (
     <div className="grid md:grid-cols-2 gap-5 px-20 font-Raleway mt-5">
+      {loading && (
+        <h1>Loading...</h1>
+      )}
+      {error && (
+        <h1>Error: {error}</h1>
+      )}
+     
       <div className="flex flex-col gap-6 lg:w-3/4 sm:w-full">
         <img
           src={activeImg}
@@ -77,9 +79,9 @@ function ProductDetail() {
       </div>
       <div className="flex flex-col mt-5">
         <div className="flex justify-end">
-          <Link to="#/" className="flex flex-col items-center uppercase text-sm text-primary-color transition-all ease-linear hover:scale-110">
+          <button onClick={() => handleAddToWishlist(thisProduct)} to="#/" className="flex flex-col items-center uppercase text-sm text-primary-color transition-all ease-linear hover:scale-110">
             <IoHeartOutline className="w-8 h-8 text-primary-color" />
-          </Link>
+          </button>
         </div>
         <h1 className="text-2xl font-medium">{thisProduct.name}</h1>
         <div className="mt-2 border border-primary-color" />

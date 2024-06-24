@@ -10,6 +10,8 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
     address: "",
     zipCode: "",
     city: "",
@@ -34,10 +36,10 @@ const CheckoutPage = () => {
   };
 
   const handlePlaceOrder = async () => {
-    const { address, zipCode, city, state, phoneNumber, paymentMethod, cardNumber, expiryDate, cvv } = formData;
+    const { fullName, email, address, zipCode, city, state, phoneNumber, paymentMethod, cardNumber, expiryDate, cvv } = formData;
 
     // Form validation
-    if (!address || !zipCode || !city || !state || !phoneNumber) {
+    if (!fullName || !email || !address || !zipCode || !city || !state || !phoneNumber) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -45,6 +47,8 @@ const CheckoutPage = () => {
     // Prepare order details
     const orderDetails = {
       items: cart.cartItems,
+      fullName, 
+      email,
       address: `${address}, ${city}, ${state} - ${zipCode}`,
       phoneNumber,
       paymentMethod,
@@ -78,7 +82,6 @@ const CheckoutPage = () => {
   return (
     <div className="container mx-auto mt-10 px-4 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-semibold mb-5">Checkout</h1>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Products */}
         <div className="bg-white rounded-lg shadow-md p-4">
@@ -142,6 +145,28 @@ const CheckoutPage = () => {
         <h2 className="text-lg font-semibold mb-4">Customer Details</h2>
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="fullname" className="font-semibold">Full Name</label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className="border border-gray-300 p-2 rounded w-full"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="font-semibold">Email</label>
+              <input
+                type="email"
+                id="Email"
+                name="Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="border border-gray-300 p-2 rounded w-full"
+              />
+            </div>
             <div>
               <label htmlFor="address" className="font-semibold">Address</label>
               <input
