@@ -18,6 +18,8 @@ import { useSelector } from "react-redux";
 import MyOrders from "./Pages/MyOrders";
 import Collections from "./Pages/Collections";
 import CollectionProduct from "./Pages/CollectionProduct";
+import WishList from "./Pages/WishList";
+import CheckoutPage from "./Pages/CheckoutPage";
 
 function App() {
 
@@ -40,7 +42,11 @@ function App() {
           {isAuthenticated && (
             <Route path="/my-orders" element={<MyOrders />} />
           )}
+          {isAuthenticated && (
+           <Route path="/checkout" element={<CheckoutPage />} />
+          )}
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/wishlist" element={<WishList />} />
           <Route path="/shop/jewellery" element={<AllJewellery />} />
           <Route exact path="/product/:productId" element={<ProductDetail />} />
           <Route path="/collections" element={<Collections />} />

@@ -234,7 +234,7 @@ const Header = () => {
             </ul>
           )}
           <Link
-            to="#/"
+            to="/wishlist"
             className="flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] "
           >
             <IoHeartOutline className="w-6 h-6 text-primary-color" />

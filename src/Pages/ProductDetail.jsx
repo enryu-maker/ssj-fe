@@ -2,74 +2,61 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { IoHeartOutline } from "react-icons/io5";
-import {
-  MdOutlineKeyboardArrowDown,
-  MdOutlineKeyboardArrowUp,
-} from "react-icons/md";
-import {
-  fetchAllProductsAsync,
-  selectProducts,
-  selectProductsError,
-  selectProductsLoading,
-} from "../features/Products/AllProduct/productSlice";
-import { addToCart} from "../features/cart/cartSlice";
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
+import { fetchAllProductsAsync, selectProducts, selectProductsError, selectProductsLoading } from "../features/Products/AllProduct/productSlice";
+import { addToCart } from "../features/cart/cartSlice";
 import { useNavigate } from 'react-router-dom';
 
 function ProductDetail() {
   const [openWeight, setOpenWeight] = useState(false);
- const { productId } = useParams();
- const navigate = useNavigate();
+  const { productId } = useParams();
+  const navigate = useNavigate();
   
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
-  const cart = useSelector((state) => state.cart);
-  console.log(cart);
 
+  const [activeImg, setActiveImage] = useState('');
+  const [selectedWeight, setSelectedWeight] = useState('');
+  
   useEffect(() => {
     dispatch(fetchAllProductsAsync());
   }, [dispatch]);
 
-  // useEffect(()=>{
-  //   dispatch(fetchSingleProductAsync(productId));
-  // },[dispatch, productId]);
-
-  
-
   const thisProduct = products.find((prod) => prod.id === parseInt(productId));
 
-  const [activeImg, setActiveImage] = useState(thisProduct?.image || '');
-  const [selectedWeight, setSelectedWeight] = useState(thisProduct?.size_chart?.[0]?.size?.[0]?.weight || '');
+  useEffect(() => {
+    if (thisProduct) {
+      setActiveImage(thisProduct.image);
+      setSelectedWeight(thisProduct.size_chart?.[0]?.size?.[0]?.weight || '');
+    }
+  }, [thisProduct]);
 
   const images = [
-    thisProduct.image, // Assuming thisProduct.image is defined
-    ...(thisProduct.other_images ? thisProduct.other_images.map(img => img.images) : [])
+    thisProduct?.image,
+    ...(thisProduct?.other_images ? thisProduct.other_images.map(img => img.images) : [])
   ];
 
   const handleAddToCart = (product) => {
-     dispatch(addToCart(product));
-     navigate('/cart');
+    dispatch(addToCart(product));
+    navigate('/cart');
   }
 
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>Error: {error}</h1>;
+  }
+
+  if (!thisProduct) {
+    return <h1>Product not found</h1>;
+  }
 
   return (
     <div className="grid md:grid-cols-2 gap-5 px-20 font-Raleway mt-5">
-      {
-        loading && (
-          <h1>Loading...</h1>
-        )
-      }
-      {
-        error && (
-          <h1>Error: {error}</h1>
-        )
-      }
-      {
-        !thisProduct && (
-          <h1>Product not found</h1>
-        )
-      }
       <div className="flex flex-col gap-6 lg:w-3/4 sm:w-full">
         <img
           src={activeImg}
@@ -89,12 +76,8 @@ function ProductDetail() {
         </div>
       </div>
       <div className="flex flex-col mt-5">
-        <div className="flex justify-between">
-          <p className="font-thin text-md">{thisProduct.id}</p>
-          <Link
-            to="#/"
-            className="flex flex-col items-center uppercase text-sm text-primary-color transition-all ease-linear hover:scale-110"
-          >
+        <div className="flex justify-end">
+          <Link to="#/" className="flex flex-col items-center uppercase text-sm text-primary-color transition-all ease-linear hover:scale-110">
             <IoHeartOutline className="w-8 h-8 text-primary-color" />
           </Link>
         </div>
@@ -144,7 +127,6 @@ function ProductDetail() {
               </div>
             )}
           </div>
-         
         </div>
         <div className="flex gap-5 mt-5">
           <div>
@@ -152,7 +134,7 @@ function ProductDetail() {
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-5 mt-5">
-          <button onClick={()=> handleAddToCart(thisProduct)} className="border border-black w-full p-3 rounded-md cursor-pointer">
+          <button onClick={() => handleAddToCart(thisProduct)} className="border border-black w-full p-3 rounded-md cursor-pointer">
             Add To Cart
           </button>
           <button className="border bg-primary-color w-full p-3 rounded-md text-white hover:bg-red-700">
