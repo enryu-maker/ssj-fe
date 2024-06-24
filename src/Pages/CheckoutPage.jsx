@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeFromCart } from "../features/cart/cartSlice";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { toast } from "react-toastify";
 
 const CheckoutPage = () => {
   const cart = useSelector((state) => state.cart);
@@ -40,7 +41,10 @@ const CheckoutPage = () => {
 
     // Form validation
     if (!fullName || !email || !address || !zipCode || !city || !state || !phoneNumber) {
-      alert("Please fill in all required fields.");
+      toast.error("Please fill in all required fields.", {
+        position: 'top-center',
+      })
+      
       return;
     }
 
