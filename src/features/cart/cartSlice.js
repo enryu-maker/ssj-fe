@@ -60,7 +60,7 @@ export const cartSlice = createSlice({
           });
         } else {
           state.cartItems.splice(itemIndex, 1);
-          toast.info(`${itemName} removed from cart`, {
+          toast.error(`${itemName} removed from cart`, {
             position: "bottom-left",
           });
         }
