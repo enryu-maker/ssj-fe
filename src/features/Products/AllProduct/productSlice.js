@@ -1,30 +1,29 @@
-// productsSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { GetAllProducts, GetSingleProduct } from './productAPI';
 
 const initialState = {
   products: [],
+  singleProduct: null,
   status: 'idle',
   loading: false,
   error: null,
 };
 
 // Async thunk to fetch all products using axios
-  export const fetchAllProductsAsync = createAsyncThunk(
-    'products/fetchAllProducts',
-    async (_, { rejectWithValue }) => {
-      try {
-        const response = await GetAllProducts();
-        if (!response) {
-          throw new Error('Invalid response from server');
-        }
-        return response;
-      } catch (error) {
-        return rejectWithValue(error.message);
+export const fetchAllProductsAsync = createAsyncThunk(
+  'products/fetchAllProducts',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await GetAllProducts();
+      if (!response) {
+        throw new Error('Invalid response from server');
       }
+      return response; // Assuming the API response structure has a 'data' property
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
-  );
+  }
+);
 
 // Async thunk to fetch a single product using axios
 export const fetchSingleProductAsync = createAsyncThunk(
@@ -32,10 +31,10 @@ export const fetchSingleProductAsync = createAsyncThunk(
   async (productId, { rejectWithValue }) => {
     try {
       const response = await GetSingleProduct(productId);
-      if (!response) {
+      if (!response || response.status !== 200 || !response.data) {
         throw new Error('Invalid response from server');
       }
-      return response.data; // Assuming your API response is structured with a 'data' property
+      return response.data; // Assuming the API response structure has a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -71,7 +70,7 @@ const productsSlice = createSlice({
       .addCase(fetchSingleProductAsync.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.loading = false;
-        state.products = action.payload; // Update with the fetched product object
+        state.singleProduct = action.payload; // Update with the fetched product object
       })
       .addCase(fetchSingleProductAsync.rejected, (state, action) => {
         state.status = 'failed';
