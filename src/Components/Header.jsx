@@ -37,6 +37,7 @@ const Header = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
   const cart = useSelector((state) => state.cart);
+  const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
   
   const handleLogout = () => {
@@ -233,13 +234,18 @@ const Header = () => {
               </div>
             </ul>
           )}
-          <Link
-            to="/wishlist"
-            className="flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] "
-          >
-            <IoHeartOutline className="w-6 h-6 text-primary-color" />
-            Wishlist
-          </Link>
+           <Link
+          to="/wishlist"
+          className="flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] "
+        >
+          <IoHeartOutline className="w-6 h-6 text-primary-color" />
+          Wishlist
+          {wishlist.length > 0 && (
+            <span className="absolute -top-2 left-5 right-0 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs p-2">
+              {wishlist.wishlistItems.length}
+            </span>
+          )}
+        </Link>
           <Link
             to="/cart"
             className="flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] relative "
