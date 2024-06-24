@@ -10,5 +10,6 @@ export const store = configureStore({
     collections: collectionsReducer,
     products: productsReducer,
     cart: cartReducer,
+  
   },
 });

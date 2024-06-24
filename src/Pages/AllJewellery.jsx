@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { IoFilterOutline, IoChevronDownOutline } from 'react-icons/io5';
-import { productsData } from '../data';
 import ProductCard from '../Components/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllProductsAsync, selectProducts, selectProductsError, selectProductsLoading } from '../features/Products/AllProduct/productSlice';

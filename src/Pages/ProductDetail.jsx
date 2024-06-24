@@ -1,64 +1,91 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { productsData } from "../data";
+import { useDispatch, useSelector } from "react-redux";
 import { IoHeartOutline } from "react-icons/io5";
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
+import {
+  fetchAllProductsAsync,
+  selectProducts,
+  selectProductsError,
+  selectProductsLoading,
+} from "../features/Products/AllProduct/productSlice";
+import { addToCart} from "../features/cart/cartSlice";
+import { useNavigate } from 'react-router-dom';
 
 function ProductDetail() {
-  const [quantity, setQuantity] = useState(1);
   const [openWeight, setOpenWeight] = useState(false);
+ const { productId } = useParams();
+ const navigate = useNavigate();
+  
+  const dispatch = useDispatch();
+  const products = useSelector(selectProducts);
+  const loading = useSelector(selectProductsLoading);
+  const error = useSelector(selectProductsError);
+  const cart = useSelector((state) => state.cart);
+  console.log(cart);
 
+  useEffect(() => {
+    dispatch(fetchAllProductsAsync());
+  }, [dispatch]);
 
-  const { productId } = useParams();
-  const thisProduct = productsData.find((prod) => prod.id === productId);
+  // useEffect(()=>{
+  //   dispatch(fetchSingleProductAsync(productId));
+  // },[dispatch, productId]);
 
-  const [images, setImages] = useState({
-    img: thisProduct?.image[0],
-    img1: thisProduct?.image[1],
-    img2: thisProduct?.image[2],
-    img3: thisProduct?.image[3],
-    img4: thisProduct?.image[4],
-  });
+  
 
-  const [activeImg, setActiveImage] = useState(images.img1);
-  const [selectedWeight, setSelectedWeight] = useState(thisProduct.weight[0]);
+  const thisProduct = products.find((prod) => prod.id === parseInt(productId));
+
+  const [activeImg, setActiveImage] = useState(thisProduct?.image || '');
+  const [selectedWeight, setSelectedWeight] = useState(thisProduct?.size_chart?.[0]?.size?.[0]?.weight || '');
+
+  const images = [
+    thisProduct.image, // Assuming thisProduct.image is defined
+    ...(thisProduct.other_images ? thisProduct.other_images.map(img => img.images) : [])
+  ];
+
+  const handleAddToCart = (product) => {
+     dispatch(addToCart(product));
+     navigate('/cart');
+  }
+
 
   return (
-    <div className="grid md:grid-cols-2 px-20 font-Raleway mt-5">
+    <div className="grid md:grid-cols-2 gap-5 px-20 font-Raleway mt-5">
+      {
+        loading && (
+          <h1>Loading...</h1>
+        )
+      }
+      {
+        error && (
+          <h1>Error: {error}</h1>
+        )
+      }
+      {
+        !thisProduct && (
+          <h1>Product not found</h1>
+        )
+      }
       <div className="flex flex-col gap-6 lg:w-3/4 sm:w-full">
         <img
           src={activeImg}
-          alt=""
+          alt={thisProduct.name}
           className="w-full aspect-square object-cover rounded-xl"
         />
         <div className="flex md:flex-row flex-wrap justify-between gap-2 h-24">
-          <img
-            src={images.img1}
-            alt=""
-            className="w-24 h-24 rounded-md cursor-pointer"
-            onClick={() => setActiveImage(images.img1)}
-          />
-          <img
-            src={images.img2}
-            alt=""
-            className="w-24 h-24 rounded-md cursor-pointer"
-            onClick={() => setActiveImage(images.img2)}
-          />
-          <img
-            src={images.img3}
-            alt=""
-            className="w-24 h-24 rounded-md cursor-pointer"
-            onClick={() => setActiveImage(images.img3)}
-          />
-          <img
-            src={images.img4}
-            alt=""
-            className="w-24 h-24 rounded-md cursor-pointer md:block hidden"
-            onClick={() => setActiveImage(images.img4)}
-          />
+          {images.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt={thisProduct.name}
+              className="w-24 h-24 rounded-md cursor-pointer"
+              onClick={() => setActiveImage(img)}
+            />
+          ))}
         </div>
       </div>
       <div className="flex flex-col mt-5">
@@ -71,13 +98,13 @@ function ProductDetail() {
             <IoHeartOutline className="w-8 h-8 text-primary-color" />
           </Link>
         </div>
-        <h1 className="text-2xl font-medium">{thisProduct?.name}</h1>
+        <h1 className="text-2xl font-medium">{thisProduct.name}</h1>
         <div className="mt-2 border border-primary-color" />
         <p className="font-light text-sm mt-5">{thisProduct.description}</p>
         <div className="mt-5 flex flex-col">
           <h1 className="text-2xl font-semibold text-black">
             <span className="text-sm text-black">Offer Price</span> ₹
-            {thisProduct.price}
+            {thisProduct.size_chart[0].total_price}
           </h1>
           <p className="text-sm">
             Price Inclusive of all taxes. See full{" "}
@@ -102,59 +129,30 @@ function ProductDetail() {
             </div>
             {openWeight && (
               <div className="absolute md:bottom-0 md:w-32 w-full bg-white shadow-lg rounded-md p-2 mt-2">
-              {thisProduct.weight.map((weight, index) => (
+                {thisProduct.size_chart[0].size.map((weight, index) => (
                   <p
                     key={index}
                     className="cursor-pointer hover:bg-gray-200 p-2 rounded"
                     onClick={() => {
-                      setSelectedWeight(weight);
+                      setSelectedWeight(weight.weight);
                       setOpenWeight(false);
                     }}
                   >
-                    {weight} g
+                    {weight.weight} g
                   </p>
                 ))}
               </div>
             )}
           </div>
-          <div className="flex flex-col md:items-center gap-2">
-            <h1 className="font-medium">Qty</h1>
-            <div className="flex md:justify-normal justify-between gap-5">
-              <button
-                onClick={() => {
-                  if (quantity === 0) {
-                    return;
-                  }
-                  setQuantity(quantity - 1);
-                }}
-                className="bg-gray-200 h-10 w-10 rounded-full flex justify-center items-center"
-              >
-                -
-              </button>
-              <p className="flex justify-center items-center font-medium text-md">
-                {quantity}N
-              </p>
-              <button
-                onClick={() => {
-                  setQuantity(quantity + 1);
-                }}
-                className="bg-gray-200 h-10 w-10 rounded-full flex justify-center items-center"
-              >
-                +
-              </button>
-            </div>
-          </div>
+         
         </div>
         <div className="flex gap-5 mt-5">
           <div>
-            <h2 className="font-medium text-md">Gold Purity: 18 Karat</h2>
-          </div>
-          <div>
-            <h2 className="font-medium text-md">Diamond weight: 0.235 c</h2>
+            <h2 className="font-medium text-md">Gold Purity: 24 Karat</h2>
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-5 mt-5">
-          <button className="border border-black w-full p-3 rounded-md">
+          <button onClick={()=> handleAddToCart(thisProduct)} className="border border-black w-full p-3 rounded-md cursor-pointer">
             Add To Cart
           </button>
           <button className="border bg-primary-color w-full p-3 rounded-md text-white hover:bg-red-700">

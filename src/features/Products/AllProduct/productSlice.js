@@ -1,16 +1,41 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GetAllProducts } from './productAPI';
+// productsSlice.js
 
-// Async thunk to fetch products using axios
-export const fetchAllProductsAsync = createAsyncThunk(
-  'products/fetchProducts',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await GetAllProducts()
-      if(!response){
-        throw new Error("Invalid response from server");
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { GetAllProducts, GetSingleProduct } from './productAPI';
+
+const initialState = {
+  products: [],
+  status: 'idle',
+  loading: false,
+  error: null,
+};
+
+// Async thunk to fetch all products using axios
+  export const fetchAllProductsAsync = createAsyncThunk(
+    'products/fetchAllProducts',
+    async (_, { rejectWithValue }) => {
+      try {
+        const response = await GetAllProducts();
+        if (!response) {
+          throw new Error('Invalid response from server');
+        }
+        return response;
+      } catch (error) {
+        return rejectWithValue(error.message);
       }
-      return response;
+    }
+  );
+
+// Async thunk to fetch a single product using axios
+export const fetchSingleProductAsync = createAsyncThunk(
+  'products/fetchSingleProduct',
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await GetSingleProduct(productId);
+      if (!response) {
+        throw new Error('Invalid response from server');
+      }
+      return response.data; // Assuming your API response is structured with a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -19,12 +44,7 @@ export const fetchAllProductsAsync = createAsyncThunk(
 
 const productsSlice = createSlice({
   name: 'products',
-  initialState: {
-    products: [],
-    status: 'idle',
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -34,11 +54,26 @@ const productsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
-        state.status ='succeeded';
+        state.status = 'succeeded';
         state.loading = false;
         state.products = action.payload;
       })
       .addCase(fetchAllProductsAsync.rejected, (state, action) => {
+        state.status = 'failed';
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchSingleProductAsync.pending, (state) => {
+        state.status = 'loading';
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSingleProductAsync.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.loading = false;
+        state.products = action.payload; // Update with the fetched product object
+      })
+      .addCase(fetchSingleProductAsync.rejected, (state, action) => {
         state.status = 'failed';
         state.loading = false;
         state.error = action.payload;
@@ -47,6 +82,7 @@ const productsSlice = createSlice({
 });
 
 export const selectProducts = (state) => state.products.products;
+export const selectSingleProduct = (state) => state.products.singleProduct;
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 

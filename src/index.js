@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
-import { checkAuthentication } from './features/Auth/authSlice';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Dispatch the checkAuthentication action when the application starts
 // store.dispatch(checkAuthentication());
@@ -14,6 +15,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
+      <ToastContainer />
     </Provider>
   </React.StrictMode>
 );

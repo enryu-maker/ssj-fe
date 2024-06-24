@@ -9,3 +9,11 @@ export const GetAllProducts = async () => {
       }
     }
  
+    export const GetSingleProduct = async (productId) => {
+      try {
+        const response = await axios.get(`http://190.92.175.141/product/${productId}`);
+        return response.data; // Assuming response.data contains the single product object
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    };

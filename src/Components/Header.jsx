@@ -36,6 +36,7 @@ const Header = () => {
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   
   const handleLogout = () => {
@@ -246,7 +247,7 @@ const Header = () => {
             <IoCartOutline className="w-6 h-6 text-primary-color " />
             Cart
             <span className=" absolute md:right-2  left-5 right-0 -top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs p-2">
-              2
+              {cart.cartItems.length}
             </span>
           </Link>
         </div>
