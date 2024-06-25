@@ -1,5 +1,3 @@
-// src/features/wishlist/wishlistSlice.js
-
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
@@ -36,6 +34,9 @@ const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addToWishlist: (state, action) => {
+      if (!Array.isArray(state.wishlistItems)) {
+        state.wishlistItems = [];
+      }
       const { id, name } = action.payload;
       const existingItemIndex = state.wishlistItems.findIndex(
         (item) => item.id === id
@@ -53,6 +54,9 @@ const wishlistSlice = createSlice({
       }
     },
     removeFromWishlist: (state, action) => {
+      if (!Array.isArray(state.wishlistItems)) {
+        state.wishlistItems = [];
+      }
       const { id, name } = action.payload;
       state.wishlistItems = state.wishlistItems.filter(
         (item) => item.id !== id
@@ -63,6 +67,9 @@ const wishlistSlice = createSlice({
       saveToLocalStorage(state.wishlistItems);
     },
     clearWishlist: (state) => {
+      if (!Array.isArray(state.wishlistItems)) {
+        state.wishlistItems = [];
+      }
       const clearedItems = state.wishlistItems.map((item) => item.name);
       state.wishlistItems = [];
       toast.info(`Cleared Wishlist (${clearedItems.join(", ")})`, {
