@@ -100,7 +100,7 @@ function ProductDetail() {
               >
                 <h1 className="font-medium">Gross Weight</h1>
                 <div className="flex items-center justify-between border md:w-32 w-full p-2 cursor-pointer rounded-md">
-                  <p className="text-md font-medium">{selectedWeight} g</p>
+                  <p className="text-md font-medium">{selectedWeight}</p>
                   {openWeight ? (
                     <MdOutlineKeyboardArrowUp />
                   ) : (
@@ -109,16 +109,16 @@ function ProductDetail() {
                 </div>
                 {openWeight && (
                   <div className="absolute md:bottom-0 md:w-32 w-full bg-white shadow-lg rounded-md p-2 mt-2">
-                    {thisProduct.size_chart?.[0]?.size.map((weight, index) => (
+                    {thisProduct.size_chart?.map((weight, index) => (
                       <p
                         key={index}
                         className="cursor-pointer hover:bg-gray-200 p-2 rounded"
                         onClick={() => {
-                          setSelectedWeight(weight.weight);
+                          setSelectedWeight(weight.name);
                           setOpenWeight(false);
                         }}
                       >
-                        {weight.weight} g
+                        {weight.name}
                       </p>
                     ))}
                   </div>
@@ -126,8 +126,22 @@ function ProductDetail() {
               </div>
             </div>
             <div className="flex gap-5 mt-5">
-              <div>
-                <h2 className="font-medium text-md">Gold Purity: 24 Karat</h2>
+              <div className="flex justify-center items-center gap-5">
+              {/* Gold Purity: 24 Karat */}
+                {/* TODO: when wight change dynamically change the purity Or material */}
+                  {
+                    thisProduct.size_chart?.[0]?.size.map((item) => (
+                      <>
+                      <h1 className="font-medium text-md">{item.material.name}: 
+                        <span className=" ml-2 text-lg text-primary-color">
+                          {item.material.purity} Karat
+                        </span>
+                      </h1>
+                      
+                      </>
+                    ))
+                  }
+                
               </div>
             </div>
             <div className="flex flex-col md:flex-row gap-5 mt-5">

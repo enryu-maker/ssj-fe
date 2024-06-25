@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Divider from "../../assets/divider.png";
-import { Collection } from "../../data";
 import CollectionCard from "../CollectionCard";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -33,7 +32,7 @@ function ShopByCollections() {
       <img src={Divider} alt="" className=" object-cover" />
 
       <div className="flex md:flex-row flex-col gap-2 px-5 mt-5 ">
-        {collections.map((collection, index) => (
+        {collections.map((collection, index) => index <= 2 && (
           <CollectionCard key={index} {...collection} />
         ))}
       </div>

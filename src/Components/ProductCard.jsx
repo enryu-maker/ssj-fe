@@ -7,7 +7,7 @@ import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 function ProductCard({ ...product }) {
   const dispatch = useDispatch();
 
-  const { id, name, image, tags, size_chart } = product;
+  const { id, name, image, size_chart } = product;
   const total_price = size_chart && size_chart.length > 0 ? size_chart[0].total_price : undefined;
 
   const handleAddToWishlist = () => {
@@ -24,13 +24,11 @@ function ProductCard({ ...product }) {
           className="w-56 h-56 object-cover mb-2 rounded-lg"
         />
         </Link>
-        {tags && tags.length > 0 && (
+        {product.is_bestseller && (
           <div>
-            {tags.map((tag) => (
-              <span className="bg-red-800 text-white px-2 py-1 text-xs absolute top-2 left-2 rounded-md" key={tag.id}>
-                {tag.name}
+              <span className="bg-red-800 text-white px-2 py-1 text-xs absolute top-2 left-2 rounded-md" >
+                Best Seller
               </span>
-            ))}
           </div>
         )}
         <button onClick={handleAddToWishlist} className="absolute top-5 right-5 cursor-pointer hover:text-red-500 z-20">

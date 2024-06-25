@@ -449,14 +449,7 @@ export const OccasionLink = [
   },
 ];
 export const MoreLink = [
-  {
-    name: 'EXCHANGE PROGRAM',
-    link: '',
-  },
-  {
-    name: 'DIGITAL GOLD',
-    link: '',
-  },
+  
   {
     name: 'GOLD RATE',
     link: '',

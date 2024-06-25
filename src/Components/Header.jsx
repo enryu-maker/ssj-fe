@@ -261,73 +261,10 @@ const Header = () => {
       {/* header link part  */}
       <div className="md:flex flex-wrap gap-5 items-center justify-evenly p-5 px-10 font-Raleway hidden">
         <ul className="relative parent cursor-pointer flex items-center">
-          <div className="uppercase text-sm group cursor-pointer underlineAni ">
+          <Link to={'/products'} className="uppercase text-sm group cursor-pointer underlineAni ">
             All jewellery
-          </div>
-          <div className="absolute top-5  w-[450px] text-sm p-3 md:hidden child bg-white shadow-md  rounded-md	">
-            <div className="grid grid-cols-3 gap-5">
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  Collection
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  {CollectionLinks.map(
-                    (item, index) =>
-                      index <= 6 && (
-                        <a
-                          key={index}
-                          href={item.link}
-                          className=" text-sm font-extralight  hover:text-primary-color"
-                        >
-                          {item.name}
-                        </a>
-                      )
-                  )}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  Gender
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  <a
-                    href="#/"
-                    className=" text-sm font-extralight  hover:text-primary-color"
-                  >
-                    WOMEN'S JEWELLERY
-                  </a>
-                  <a
-                    href="#/"
-                    className=" text-sm font-extralight  hover:text-primary-color"
-                  >
-                    MEN
-                  </a>
-                  <a
-                    href="#/"
-                    className=" text-sm font-extralight  hover:text-primary-color"
-                  >
-                    KIDS & TEENS
-                  </a>
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  Price Band
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  {PriceBandLinks.map((item, index) => (
-                    <a
-                      key={index}
-                      href={item.link}
-                      className=" text-sm font-extralight  hover:text-primary-color"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          </Link>
+         
         </ul>
         <ul className="relative parent cursor-pointer flex items-center   ">
           <div className="uppercase text-sm  cursor-pointer underlineAni">
@@ -627,12 +564,6 @@ const Header = () => {
         </Link>
         <div className="uppercase text-sm  cursor-pointer underlineAni">
           Wedding
-        </div>
-        <div className="uppercase text-sm  cursor-pointer underlineAni">
-          Gifting
-        </div>
-        <div className="uppercase text-sm  cursor-pointer underlineAni">
-          Golden Harvest
         </div>
         <ul className="relative parent cursor-pointer flex items-center   ">
           <div className="uppercase text-sm  cursor-pointer underlineAni">

@@ -47,7 +47,7 @@ function App() {
           )}
           <Route path="/cart" element={<CartPage />} />
           <Route path="/wishlist" element={<WishList />} />
-          <Route path="/shop/jewellery" element={<AllJewellery />} />
+          <Route path="/products" element={<AllJewellery />} />
           <Route exact path="/product/:productId" element={<ProductDetail />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="/collections/:collectionId" element={<CollectionProduct />} />
