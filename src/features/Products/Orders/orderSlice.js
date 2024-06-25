@@ -90,7 +90,7 @@ const ordersSlice = createSlice({
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.loading = false;
         state.orders = action.payload;
-        toast.success('Orders fetched successfully!', { position: 'bottom-left' });
+        
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.loading = false;
