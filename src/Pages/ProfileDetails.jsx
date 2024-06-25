@@ -3,15 +3,16 @@ import React, {  useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoLogOutOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
-import { fetchUserDetails, selectUser, signOutUser } from "../features/Auth/authSlice";
+import {  fetchUserProfile, selectUser, signOutUser } from "../features/Auth/authSlice";
 
 
 const ProfileDetails = ({ setModal }) => {
   const dispatch = useDispatch();
   const profile = useSelector(selectUser);
+  console.log(profile);
 
   useEffect(() => {
-    dispatch(fetchUserDetails()); // Fetch user details when component mounts
+    dispatch(fetchUserProfile()); // Fetch user details when component mounts
   }, [dispatch]);
 
   const handleLogout = () => {
@@ -38,7 +39,7 @@ const ProfileDetails = ({ setModal }) => {
           </div>
           <div>
               <img
-                src={profile?.photoURL}
+                src={profile?.photo}
                 alt="Profile"
                 className="md:rounded-l-lg md:rounded-t-none rounded-t-lg h-full w-full  object-cover"
               />
@@ -52,7 +53,7 @@ const ProfileDetails = ({ setModal }) => {
             </div>
             <div className="flex flex-col gap-10 justify-center">
               <h1 className="text-2xl text-primary-color">
-                Name: <span className="text-black">{profile?.displayName}</span>
+                Name: <span className="text-black">{profile?.name}</span>
               </h1>
             
               <h1 className="text-2xl text-primary-color">

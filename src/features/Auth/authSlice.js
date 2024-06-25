@@ -1,47 +1,74 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { signInWithPopup, signOut } from 'firebase/auth'; // Import signOut if needed
+import { signInWithPopup, signOut } from 'firebase/auth';
 import { auth, provider } from '../../helper/firebase';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const initialState = {
-  user: null,
-  isAuthenticated: false,
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  isAuthenticated: !!localStorage.getItem('accessToken'),
   loading: false,
   error: null,
 };
 
-// Async thunk to sign in with Google
-export const signInWithGoogle = createAsyncThunk(
-  'auth/signInWithGoogle',
-  async (_, { rejectWithValue }) => {
+// Function to create a user in your API
+export const createUser = createAsyncThunk(
+  'auth/createUser',
+  async (userData, { rejectWithValue }) => {
     try {
-      const result = await signInWithPopup(auth, provider);
-      console.log(result);
-      const { displayName, email, photoURL } = result.user; // Extract serializable properties
-      const user = { displayName, email, photoURL }; // Create a plain JavaScript object
-      localStorage.setItem('user', JSON.stringify(user)); // Store user in local storage
-      return user; // Return the serializable user object
+      const response = await axios.post('/auth/login/', userData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Async thunk to fetch user details (if needed)
-export const fetchUserDetails = createAsyncThunk(
-  'auth/fetchUserDetails',
+// Async thunk to sign in with Google and create user in your API
+export const signInWithGoogle = createAsyncThunk(
+  'auth/signInWithGoogle',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const { displayName, email, photoURL } = result.user;
+      const user = { name: displayName, email, photo: photoURL };
+
+      // Send user data to your API
+      const apiResponse = await dispatch(createUser(user));
+    
+      const { access } = apiResponse.payload;
+      localStorage.setItem('accessToken', access);
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      // Display success toast
+      toast.success('Logged in successfully!', { position: 'bottom-left' });
+      
+      return user;
+    } catch (error) {
+      toast.error('Login failed!', { position: 'bottom-left' });
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Async thunk to fetch user profile
+export const fetchUserProfile = createAsyncThunk(
+  'auth/fetchUserProfile',
   async (_, { getState, rejectWithValue }) => {
-    const { user } = getState().auth;
-    if (user) {
-      // Extract serializable properties of the user object
-      const serializedUser = {
-        displayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        // Add other necessary serializable properties
-      };
-      return serializedUser;
-    } else {
-      return rejectWithValue('User not authenticated');
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      return rejectWithValue('No access token found');
+    }
+
+    try {
+      const response = await axios.get('/profile/', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -52,9 +79,15 @@ export const signOutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await signOut(auth);
-      localStorage.removeItem('user'); // Remove user from local storage
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
+      
+      // Display success toast
+      toast.info('Logged out successfully!', { position: 'bottom-left' });
+
       window.location.reload();
     } catch (error) {
+      toast.error('Logout failed!', { position: 'bottom-left' });
       return rejectWithValue(error.message);
     }
   }
@@ -96,15 +129,25 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(fetchUserDetails.pending, (state) => {
+      .addCase(createUser.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchUserDetails.fulfilled, (state, action) => {
+      .addCase(createUser.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchUserProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
         state.isAuthenticated = true;
       })
-      .addCase(fetchUserDetails.rejected, (state, action) => {
+      .addCase(fetchUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -119,7 +162,7 @@ const authSlice = createSlice({
       .addCase(signOutUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
+      });
   },
 });
 
@@ -132,3 +175,15 @@ export const selectAuthError = (state) => state.auth.error;
 export const selectLoading = (state) => state.auth.loading;
 
 export default authSlice.reducer;
+
+// Ensure user remains authenticated on page refresh
+export const initializeAuthState = () => (dispatch) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (user && accessToken) {
+    dispatch(setUser(user));
+  } else {
+    dispatch(clearUser());
+  }
+};
