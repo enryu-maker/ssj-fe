@@ -7,7 +7,7 @@ import {
   selectCategory,
   selectCategoryError,
   selectCategoryLoading,
-} from "../features/Products/category/categorySlice";
+} from "../features/Products/subCategory/categorySlice";
 
 const Categories = () => {
   const { categoryId } = useParams();

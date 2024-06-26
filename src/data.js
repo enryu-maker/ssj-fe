@@ -266,16 +266,16 @@ export const NewForYouData = [
 ];
 export const ShopByGenderData = [
   {
-    name: 'Men',
+    name: 'men',
     imgUrl: 'https://i.ibb.co/3rfCfvs/Men.webp',
   },
 
   {
-    name: 'Kids',
+    name: 'kids',
     imgUrl: 'https://i.ibb.co/BwZG9Wz/kid.jpg',
   },
   {
-    name: 'Women',
+    name: 'woman',
     imgUrl: 'https://i.ibb.co/176sqc7/Woman.webp',
   },
 ];

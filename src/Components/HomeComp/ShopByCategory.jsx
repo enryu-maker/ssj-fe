@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import Divider from '../../assets/divider.png';
 import CategoryCard from '../CategoryCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategoryAsync, selectCategories, selectCategoryError, selectCategoryLoading, selectCategorys } from '../../features/Products/category/categorySlice';
+import { fetchCategoryAsync, selectCategories, selectCategoryError, selectCategoryLoading } from '../../features/Products/subCategory/categorySlice';
+
+
 
 function ShopByCategory() {
 

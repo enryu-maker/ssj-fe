@@ -2,8 +2,15 @@ import React from 'react';
 import Divider from '../../assets/divider.png';
 import { ShopByGenderData } from '../../data';
 import { FaChevronRight } from 'react-icons/fa6';
+import { useDispatch } from 'react-redux';
+import { fetchProductByTagsAsync } from '../../features/Products/AllProduct/productSlice';
+import { useNavigate, useParams } from "react-router-dom";
 
 function ShopByGender() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {Tagname} = useParams();
+  
   return (
     <div className='flex flex-col gap-2 justify-center items-center font-Raleway py-10 '>
       <h1 className='md:text-4xl text-xl text-center font-semibold text-primary-color'>
@@ -28,7 +35,11 @@ function ShopByGender() {
               alt=''
               className='rounded-t'
             />
-            <div className='flex justify-between items-center h-14 px-2'>
+            <div onClick={()=> {
+              
+              navigate(`/Tag/${collection.name}`)
+
+            }} className='flex justify-between items-center h-14 px-2'>
               <h1 className=' text-xl font-semibold text-primary-color'>
                 {collection.name}
               </h1>

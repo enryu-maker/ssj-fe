@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GetAllProducts, GetSingleProduct } from './productAPI';
+import { GetAllProducts, GetProductByTags, GetSingleProduct } from './productAPI';
 
 const initialState = {
   products: [],
   singleProduct: null,
+  TagsProduct: null,
   status: 'idle',
   loading: false,
   error: null,
@@ -35,6 +36,23 @@ export const fetchSingleProductAsync = createAsyncThunk(
         throw new Error('Invalid response from server');
       }
       return response.data; // Assuming the API response structure has a 'data' property
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Async thunk to fetch a single product using axios
+export const fetchProductByTagsAsync = createAsyncThunk(
+  'products/fetchProductByTags',
+  async (Tagname, { rejectWithValue }) => {
+    try {
+      const response = await GetProductByTags(Tagname);
+      console.log(response);
+      if (!response || !response.data) {
+        throw new Error('Invalid response from server');
+      }
+      return response; // Assuming the API response structure has a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -76,12 +94,27 @@ const productsSlice = createSlice({
         state.status = 'failed';
         state.loading = false;
         state.error = action.payload;
+      }) 
+      .addCase(fetchProductByTagsAsync.pending, (state) => {
+        state.status = 'loading';
+        state.loading = true;
+      })
+      .addCase(fetchProductByTagsAsync.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.loading = false;
+        state.TagsProduct = action.payload;
+      })
+      .addCase(fetchProductByTagsAsync.rejected, (state, action) => {
+        state.status = 'failed';
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
 
 export const selectProducts = (state) => state.products.products;
 export const selectSingleProduct = (state) => state.products.singleProduct;
+export const selectProductByTag = (state) => state.products.TagsProduct;
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 
