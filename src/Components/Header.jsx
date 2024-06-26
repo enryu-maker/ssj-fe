@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import Logo from "../assets/Logo.png";
 import DailyWear from "../assets/EarringsIcon.svg";
 import {
@@ -30,15 +30,28 @@ import MobileHeader from "./MobileHeader";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileDetails from "../Pages/ProfileDetails";
 import { selectIsAuthenticated, selectUser, signOutUser } from "../features/Auth/authSlice";
+import { fetchMainCategoryAsync, selectMainCategories, } from "../features/Products/mainCategory/mainCategoriesSlice";
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
   const [openDetailPage, setDetailPage] = useState(false);
 
+  const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
   const cart = useSelector((state) => state.cart);
   const wishlist = useSelector((state) => state.wishlist);
-  const dispatch = useDispatch();
+ 
+  // TODO: Map the data in header
+  const mainCategories = useSelector(selectMainCategories);
+ 
+  console.log(mainCategories);
+
+
+
+  useEffect(() => {
+    dispatch(fetchMainCategoryAsync());
+  }, [dispatch]);
+
   
   const handleLogout = () => {
     dispatch(signOutUser());
@@ -562,9 +575,7 @@ const Header = () => {
         <Link to={'/collections'} className="uppercase text-sm  cursor-pointer underlineAni ">
           Collections
         </Link>
-        <div className="uppercase text-sm  cursor-pointer underlineAni">
-          Wedding
-        </div>
+
         <ul className="relative parent cursor-pointer flex items-center   ">
           <div className="uppercase text-sm  cursor-pointer underlineAni">
             More
