@@ -4,7 +4,7 @@ import { GetAllProducts, GetProductByTags, GetSingleProduct } from './productAPI
 const initialState = {
   products: [],
   singleProduct: null,
-  TagsProduct: null,
+  TagsProduct: [],
   status: 'idle',
   loading: false,
   error: null,
@@ -52,7 +52,8 @@ export const fetchProductByTagsAsync = createAsyncThunk(
       if (!response || !response.data) {
         throw new Error('Invalid response from server');
       }
-      return response; // Assuming the API response structure has a 'data' property
+      return await response.JSON()
+      // return response; // Assuming the API response structure has a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -115,6 +116,7 @@ const productsSlice = createSlice({
 export const selectProducts = (state) => state.products.products;
 export const selectSingleProduct = (state) => state.products.singleProduct;
 export const selectProductByTag = (state) => state.products.TagsProduct;
+console.log(selectProductByTag);
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 

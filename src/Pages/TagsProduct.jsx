@@ -1,28 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductByTagsAsync, selectProductByTag,  selectProductsError, selectProductsLoading } from '../features/Products/AllProduct/productSlice';
+import { fetchProductByTagsAsync, selectProductByTag, selectProductsLoading, selectProductsError } from '../features/Products/AllProduct/productSlice';
 import { useLocation } from 'react-router-dom';
 
 const TagsProduct = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-    const state = useLocation();
-    const product = useSelector(selectProductByTag)
-    const loading = useSelector(selectProductsLoading)
-    const error = useSelector(selectProductsError)
-   
-    const Tagname = state.pathname.split('/')[2];
-    // TODO: Fix the api for products
-    console.log(product);
+  const productsByTag = useSelector(selectProductByTag);
+  const loading = useSelector(selectProductsLoading);
+  const error = useSelector(selectProductsError);
 
-    useEffect(()=>{
-        dispatch(fetchProductByTagsAsync(Tagname))
-    }, [dispatch, Tagname])
+  // Extract tag name from the URL pathname
+  const pathnameParts = location.pathname.split('/');
+  const tagName = pathnameParts[pathnameParts.length - 1]; // Assuming tag name is the last part of the pathname
 
+  useEffect(() => {
+    // Ensure tagName is not empty before dispatching
+    if (tagName) {
+      dispatch(fetchProductByTagsAsync(tagName));
+    }
+  }, [dispatch, tagName]);
+
+  console.log(productsByTag);
 
   return (
-    <div>TagsProduct</div>
-  )
+    <div>
+      <h2>Products by Tag: {tagName}</h2>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      {productsByTag && (
+        <ul>
+          {productsByTag.map(product => (
+            <li key={product.id}>
+              {product.name} - {product.price}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
 
-export default TagsProduct
+export default TagsProduct;

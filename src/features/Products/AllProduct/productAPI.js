@@ -18,12 +18,12 @@ export const GetAllProducts = async () => {
       }
     };
     
-    export const GetProductByTags = async (Tagname) => {
+    export const GetProductByTags = async (tagName) => {
       try {
-        const response = await axios.get(`/product/tags?tags=${Tagname}`);
-        return response.data; // Assuming response.data contains the single product object
+        const response = await axios.get(`/product/tags?tags=${tagName}`);
+        return response.data; // Assuming response.data contains the products array or an object
       } catch (error) {
-        throw new Error(error.message);
+        throw new Error(error.message); // Throw an error if request fails
       }
     };
 
