@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../assets/Logo.png";
 import DailyWear from "../assets/EarringsIcon.svg";
 import {
@@ -29,30 +29,35 @@ import {
 import MobileHeader from "./MobileHeader";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileDetails from "../Pages/ProfileDetails";
-import { selectIsAuthenticated, selectUser, signOutUser } from "../features/Auth/authSlice";
-import { fetchMainCategoryAsync, selectMainCategories, } from "../features/Products/mainCategory/mainCategoriesSlice";
+import {
+  selectIsAuthenticated,
+  selectUser,
+  signOutUser,
+} from "../features/Auth/authSlice";
+import {
+  fetchMainCategoryAsync,
+  selectMainCategories,
+} from "../features/Products/mainCategory/mainCategoriesSlice";
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
   const [openDetailPage, setDetailPage] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(null);
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
   const cart = useSelector((state) => state.cart);
   const wishlist = useSelector((state) => state.wishlist);
- 
+
   // TODO: Map the data in header
   const mainCategories = useSelector(selectMainCategories);
- 
+
   console.log(mainCategories);
-
-
 
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
   }, [dispatch]);
 
-  
   const handleLogout = () => {
     dispatch(signOutUser());
   };
@@ -169,28 +174,27 @@ const Header = () => {
                   <div className="flex flex-col gap-2 items-center justify-center font-semibold ">
                     <h1 className="text-2xl uppercase">My Profile</h1>
                     {/* TODO: check user details completed or not show the button vice versa */}
-                     
-                      <>
-                        <button
-                          onClick={handleDetailModal}
-                          className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
-                        >
-                          Show Profile
-                        </button>
-                        <Link
-                          to={"/my-orders"}
-                          className="  uppercase bg-primary-color text-white  text-center rounded-md w-3/4 p-2 "
-                        >
-                          My Order
-                        </Link>
-                        <button
-                          onClick={handleLogout}
-                          className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
-                        >
-                          Logout
-                        </button>
-                      </>
-                 
+
+                    <>
+                      <button
+                        onClick={handleDetailModal}
+                        className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
+                      >
+                        Show Profile
+                      </button>
+                      <Link
+                        to={"/my-orders"}
+                        className="  uppercase bg-primary-color text-white  text-center rounded-md w-3/4 p-2 "
+                      >
+                        My Order
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
+                      >
+                        Logout
+                      </button>
+                    </>
                   </div>
                   <p className=" text-center mt-5 uppercase text-[12px] font-semibold">
                     Click Here to
@@ -247,18 +251,18 @@ const Header = () => {
               </div>
             </ul>
           )}
-           <Link
-          to="/wishlist"
-          className="flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] "
-        >
-          <IoHeartOutline className="w-6 h-6 text-primary-color" />
-          Wishlist
-          {wishlist.length > 0 && (
-            <span className="absolute -top-2 left-5 right-0 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs p-2">
-              {wishlist.wishlistItems.length}
-            </span>
-          )}
-        </Link>
+          <Link
+            to="/wishlist"
+            className="flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] "
+          >
+            <IoHeartOutline className="w-6 h-6 text-primary-color" />
+            Wishlist
+            {wishlist.length > 0 && (
+              <span className="absolute -top-2 left-5 right-0 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs p-2">
+                {wishlist.wishlistItems.length}
+              </span>
+            )}
+          </Link>
           <Link
             to="/cart"
             className="flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] relative "
@@ -272,328 +276,82 @@ const Header = () => {
         </div>
       </div>
       {/* header link part  */}
-      <div className="md:flex flex-wrap gap-5 items-center justify-evenly p-5 px-10 font-Raleway hidden">
-        <ul className="relative parent cursor-pointer flex items-center">
-          <Link to={'/products'} className="uppercase text-sm group cursor-pointer underlineAni ">
-            All jewellery
-          </Link>
-         
-        </ul>
-        <ul className="relative parent cursor-pointer flex items-center   ">
-          <div className="uppercase text-sm  cursor-pointer underlineAni">
-            Gold
-          </div>
-          <div className="absolute top-5  w-[800px] text-sm p-3 md:hidden child bg-white shadow-md  rounded-md	">
-            <div className="grid grid-cols-4 gap-5">
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  Collection
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  {CollectionLinks.map(
-                    (item, index) =>
-                      index <= 6 && (
+      <div className="md:flex flex-wrap justify-around items-center p-5 font-Raleway hidden">
+        {/* All Jewellery Link */}
+        <Link
+          to="/products"
+          className="uppercase text-sm group cursor-pointer underlineAni"
+        >
+          All jewellery
+        </Link>
+        {mainCategories.map((mainCategory) => (
+          // TODO: add categories routig
+          <div
+            key={mainCategory.id}
+            className="relative parent cursor-pointer group list-none z-50"
+            onMouseEnter={() => setActiveCategory(mainCategory.id)}
+            onMouseLeave={() => setActiveCategory(null)}
+          >
+            <div className="flex uppercase text-sm cursor-pointer underlineAni">
+              {mainCategory.name}
+            </div>
+            {activeCategory === mainCategory.id && (
+              <div className="absolute top-5 left-0 w-[400px] text-sm p-3 bg-white shadow-md rounded-md">
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <h1 className="text-xl font-semibold text-primary-color uppercase">
+                      {mainCategory.name}
+                    </h1>
+                    <div className="mt-5 flex flex-col gap-3 items-start">
+                      {mainCategory.sub_category.map((subCategory) => (
                         <a
-                          key={index}
-                          href={item.link}
-                          className=" text-sm font-extralight  hover:text-primary-color"
+                          key={subCategory.id}
+                          href={`#/${subCategory.name.toLowerCase()}`} // Assuming link is derived from name
+                          className="text-sm font-extralight hover:text-primary-color"
                         >
-                          {item.name}
+                          {subCategory.name}
                         </a>
-                      )
-                  )}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  MEN
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  {MenProductLinks.map((item, index) => (
-                    <a key={index} href={item.link}>
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  Kids
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  {KidProductLinks.map((item, index) => (
-                    <a
-                      key={index}
-                      href={item.link}
-                      className=" text-sm font-extralight  hover:text-primary-color"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  Metal
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  <a
-                    href={"#/"}
-                    className=" text-sm font-extralight flex items-center gap-2  "
-                  >
-                    <div className="w-5 h-5 rounded-full bg-rose-300"></div>
-                    <span className="text-sm uppercase">Rose</span>
-                  </a>
-                  <a
-                    href={"#/"}
-                    className=" text-sm font-extralight flex items-center gap-2  "
-                  >
-                    <div className="w-5 h-5 rounded-full bg-[#d5d5d4]"></div>
-                    <span className="text-sm uppercase">White</span>
-                  </a>
-                  <a
-                    href={"#/"}
-                    className=" text-sm font-extralight flex items-center gap-2  "
-                  >
-                    <div className="w-5 h-5 rounded-full bg-yellow-200"></div>
-                    <span className="text-sm uppercase">Yellow</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ul>
-        <ul className="relative parent cursor-pointer flex items-center   ">
-          <div className="uppercase text-sm  cursor-pointer underlineAni">
-            Diamond
-          </div>
-          <div className="absolute top-5  w-[450px] text-sm p-3 md:hidden child bg-white shadow-md rounded-md	">
-            <div className="grid grid-cols-3 gap-5">
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  Collection
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  {CollectionLinks.map(
-                    (item, index) =>
-                      index <= 6 && (
-                        <a
-                          key={index}
-                          href={item.link}
-                          className=" text-sm font-extralight  hover:text-primary-color"
-                        >
-                          {item.name}
-                        </a>
-                      )
-                  )}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  MEN
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  {MenProductLinks.map((item, index) => (
-                    <a key={index} href={item.link}>
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  Kids
-                </h1>
-                <div className=" mt-5 flex flex-col gap-5 items-start ">
-                  {KidProductLinks.map((item, index) => (
-                    <a
-                      key={index}
-                      href={item.link}
-                      className=" text-sm font-extralight  hover:text-primary-color"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </ul>
-        <ul className="relative parent cursor-pointer flex items-center   ">
-          <div className="uppercase text-sm  cursor-pointer underlineAni">
-            Earrings
-          </div>
-          <div className="absolute top-5  w-[800px] text-sm p-3 md:hidden child bg-white shadow-md rounded-md	">
-            <div className="grid grid-cols-4 gap-5">
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  STYLE
-                </h1>
-                <div className=" mt-5 flex flex-col gap-3 items-start ">
-                  {EaringsLinks.map((item, index) => (
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={item.imgUrl}
-                        alt=""
-                        className="w-8 h-8 rounded-full"
-                      />
-                      <a
-                        href={item.link}
-                        className=" text-sm font-extralight  hover:text-primary-color"
-                      >
-                        {item.name}
-                      </a>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
               </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  METAL & STONES
-                </h1>
-                <div className=" mt-5 flex flex-col gap-3 items-start ">
-                  {MetalAndStonesLinks.map((item, index) => (
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={item.imgUrl}
-                        alt=""
-                        className="w-8 h-8 rounded-full"
-                      />
-                      <a
-                        href={item.link}
-                        className=" text-sm font-extralight  hover:text-primary-color"
-                      >
-                        {item.name}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  OCCASION
-                </h1>
-                <div className=" mt-5 flex flex-col gap-3 items-start ">
-                  {OccasionLink.map((item, index) => (
-                    <a
-                      key={index}
-                      href={item.link}
-                      className=" text-sm font-extralight  hover:text-primary-color"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  Price
-                </h1>
-                <div className=" mt-5 flex flex-col gap-3 items-start ">
-                  {PriceBandLinks.map((item, index) => (
-                    <a
-                      key={index}
-                      href={item.link}
-                      className=" text-sm font-extralight  hover:text-primary-color"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
+            )}
           </div>
-        </ul>
+        ))}
 
-        <ul className="relative parent cursor-pointer flex items-center   ">
-          <div className="uppercase text-sm  cursor-pointer underlineAni ">
-            Rings
-          </div>
-          <div className="absolute top-5  w-[650px] text-sm p-3 md:hidden child bg-white shadow-md rounded-md	">
-            <div className="grid grid-cols-3 gap-5">
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  ALL RINGS
-                </h1>
-                <div className=" mt-5 flex flex-col gap-3 items-start ">
-                  {RingsLink.map((item, index) => (
-                    <a
-                      key={index}
-                      href={item.link}
-                      className=" text-sm font-extralight  hover:text-primary-color"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  METAL & STONES
-                </h1>
-                <div className=" mt-5 flex flex-col gap-3 items-start ">
-                  {MetalAndStonesLinks.map((item, index) => (
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={item.imgUrl}
-                        alt=""
-                        className="w-8 h-8 rounded-full"
-                      />
-                      <a
-                        href={item.link}
-                        className=" text-sm font-extralight  hover:text-primary-color"
-                      >
-                        {item.name}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-primary-color uppercase">
-                  PRICE RANGE
-                </h1>
-                <div className=" mt-5 flex flex-col gap-3 items-start ">
-                  {PriceBandLinks.map((item, index) => (
-                    <a
-                      key={index}
-                      href={item.link}
-                      className=" text-sm font-extralight  hover:text-primary-color"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </ul>
-
-        <div className="uppercase text-sm  cursor-pointer underlineAni">
+        {/* Bestsellers and Collections Links */}
+        <Link
+          to="/bestsellers"
+          className="uppercase text-sm cursor-pointer underlineAni"
+        >
           Bestsellers
-        </div>       
-        <Link to={'/collections'} className="uppercase text-sm  cursor-pointer underlineAni ">
+        </Link>
+
+        <Link
+          to="/collections"
+          className="uppercase text-sm cursor-pointer underlineAni"
+        >
           Collections
         </Link>
 
-        <ul className="relative parent cursor-pointer flex items-center   ">
-          <div className="uppercase text-sm  cursor-pointer underlineAni">
+        {/* More Links */}
+        <ul className="relative parent cursor-pointer flex items-center gap-5">
+          <div className="uppercase text-sm cursor-pointer underlineAni">
             More
           </div>
-          <div className="absolute top-5 right-1  w-[200px] text-sm p-3 md:hidden child bg-white shadow-md rounded-md	">
-            <div className="grid grid-col">
-              <div>
-                <div className="flex flex-col gap-3 items-start ">
-                  {MoreLink.map((item, index) => (
-                    <a
-                      href={item.link}
-                      className=" text-sm font-extralight  hover:text-primary-color"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
+          <div className="absolute top-5 right-0 w-[200px] text-sm p-3 md:hidden child bg-white shadow-md rounded-md">
+            <div className="flex flex-col gap-3 items-start">
+              {/* Assuming MoreLink is an array of objects with name and link */}
+              {MoreLink.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.link}
+                  className="text-sm font-extralight hover:text-primary-color"
+                >
+                  {item.name}
+                </a>
+              ))}
             </div>
           </div>
         </ul>
@@ -637,9 +395,7 @@ const Header = () => {
             <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
               <div className="relative flex-auto">
                 {/* TODO: pass user mobile number into props */}
-                <ProfileDetails
-                  setModal={handleDetailModal}
-                />
+                <ProfileDetails setModal={handleDetailModal} />
               </div>
             </div>
           </div>
