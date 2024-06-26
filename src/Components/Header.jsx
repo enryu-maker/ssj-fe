@@ -16,15 +16,7 @@ import { AiOutlineYoutube } from "react-icons/ai";
 import { FaWhatsapp } from "react-icons/fa";
 import Marquee from "react-fast-marquee";
 import {
-  CollectionLinks,
-  EaringsLinks,
-  KidProductLinks,
-  MenProductLinks,
-  MetalAndStonesLinks,
   MoreLink,
-  OccasionLink,
-  PriceBandLinks,
-  RingsLink,
 } from "../data";
 import MobileHeader from "./MobileHeader";
 import { useDispatch, useSelector } from "react-redux";

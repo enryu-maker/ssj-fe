@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import {
   IoCartOutline,
@@ -20,18 +20,29 @@ import {
 import Login from "../Pages/Login";
 import { HiOutlineUser } from "react-icons/hi2";
 import ProfileDetails from "../Pages/ProfileDetails";
+import {
+  fetchMainCategoryAsync,
+  selectMainCategories,
+} from "../features/Products/mainCategory/mainCategoriesSlice";
 
 function MobileHeader() {
   const [openNavModal, setNavModal] = useState(false);
   const [LoginModal, setLoginModal] = useState(false);
   const [openDetailPage, setDetailPage] = useState(false);
+  const [selectedMainCategory, setSelectedMainCategory] = useState(null);
+
+  const dispatch = useDispatch();
+  const mainCategories = useSelector(selectMainCategories);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const user = useSelector(selectUser);
+
+  useEffect(() => {
+    dispatch(fetchMainCategoryAsync());
+  }, [dispatch]);
 
   const handleNavModal = () => {
     setNavModal(!openNavModal);
   };
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectUser);
-  const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(signOutUser());
@@ -45,224 +56,270 @@ function MobileHeader() {
     setDetailPage(!openDetailPage);
   };
 
+  const handleMainCategoryClick = (mainCategory) => {
+    setSelectedMainCategory(
+      selectedMainCategory === mainCategory ? null : mainCategory
+    );
+  };
+
   return (
     <>
       <div className="font-Raleway sticky top-0 z-50 bg-secondary-color py-2">
-        <div className="flex items-center justify-between p-5 bg-secondary-color">
-          <div className="flex items-center gap-2">
-            <button onClick={handleNavModal}>
-              <CiMenuFries className="w-6 h-6 cursor-pointer" />
-            </button>
+        <div className="flex items-center justify-between px-4 md:px-8 py-3 md:py-4 bg-secondary-color">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-2"
+          >
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handleNavModal}
+            >
+              <CiMenuFries className="w-8 h-8 md:w-10 md:h-10 cursor-pointer" />
+            </motion.button>
             <Link to={"/"}>
-              <img src={Logo} alt="Logo" className="w-20 h-20" />
+              <motion.img
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                src={Logo}
+                alt="Logo"
+                className="w-16 h-16 md:w-20 md:h-20"
+              />
             </Link>
-          </div>
+          </motion.div>
 
           <div className="flex items-center gap-5">
             <Link
               to="/dailywear"
-              className="flex flex-col items-center text-primary-color text-sm transition-all ease-linear hover:scale-110"
+              className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110"
             >
-              <img src={DailyWear} alt="" className="w-6 h-6" />
-            </Link>
-            <Link
-              to="/stores"
-              className="flex flex-col items-center text-primary-color text-sm transition-all ease-linear hover:scale-110"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
-                />
-              </svg>
+              <img src={DailyWear} alt="" className="w-6 h-6 md:w-8 md:h-8" />
             </Link>
 
             <Link
-              to="#/"
-              className="flex flex-col items-center text-primary-color text-sm transition-all ease-linear hover:scale-110"
+              to="/wishlist"
+              className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110"
             >
-              <IoHeartOutline className="w-6 h-6" />
+              <IoHeartOutline className="w-6 h-6 md:w-8 md:h-8" />
             </Link>
             <Link
               to="/cart"
-              className="flex flex-col items-center text-primary-color text-sm transition-all ease-linear hover:scale-110 relative"
+              className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110 relative"
             >
-              <IoCartOutline className="w-6 h-6" />
-              <span className="absolute left-5 -top-2 w-3 h-3 bg-primary-color text-white flex items-center justify-center rounded-full text-xs">
+              <IoCartOutline className="w-6 h-6 md:w-8 md:h-8" />
+              <span className="absolute left-3 md:left-5 -top-1 md:-top-2 w-3 h-3 md:w-4 md:h-4 bg-primary-color text-white flex items-center justify-center rounded-full text-xs">
                 2
               </span>
             </Link>
           </div>
         </div>
-        <div className="relative px-2">
+        <div className="relative px-2 md:px-8 py-2 md:py-3">
           <input
             type="text"
             name="search"
             placeholder="Search for Gold Jewellery, Diamond…"
-            className="w-full p-2 rounded-md border-none focus:outline-none"
+            className="w-full p-2 md:p-3 rounded-md border-none focus:outline-none"
           />
-          <div className="absolute top-2 right-3">
-            <button>
-              <IoSearchOutline className="w-6 h-6 text-primary-color" />
-            </button>
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="absolute top-2 right-3 md:right-6"
+          >
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <IoSearchOutline className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
+            </motion.button>
+          </motion.div>
         </div>
 
         <AnimatePresence>
           {openNavModal && (
             <motion.div
-              className="fixed inset-0 z-50 bg-white p-4"
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "tween" }}
+              initial={{ x: "-100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "-100%", opacity: 0 }}
+              transition={{ type: "tween", duration: 0.5 }}
+              className="fixed inset-0 z-50 bg-white p-4 md:p-8"
             >
               <motion.button
                 whileHover={{ rotate: -360 }}
                 whileTap={{ scale: 0.85 }}
                 onClick={handleNavModal}
-                className="absolute top-4 right-8"
+                className="absolute top-4 md:top-8 right-8 md:right-12"
               >
-                <GoArrowLeft className="text-3xl text-primary-color" />
+                <GoArrowLeft className="text-3xl md:text-4xl text-primary-color" />
               </motion.button>
-              <div className="mt-14">
+              <div className="mt-14 md:mt-20">
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-xl font-semibold text-pink-500">
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-lg md:text-xl font-semibold text-pink-500"
+                  >
                     Rs 500 off on first order
-                  </span>
+                  </motion.span>
                   {isAuthenticated && user ? (
                     <div className="flex items-center gap-4">
-                      <button
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                         onClick={handleDetailModal}
-                        className="flex flex-col items-center uppercase text-primary-color p-2"
+                        className="flex flex-col items-center uppercase text-primary-color p-2 md:p-3"
                       >
-                        <HiOutlineUser className="w-6 h-6 text-primary-color" />
+                        <HiOutlineUser className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
                         Profile
-                      </button>
-                      <button
-                        className="flex flex-col items-center uppercase text-primary-color p-2"
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="flex flex-col items-center uppercase text-primary-color p-2 md:p-3"
                         onClick={handleLogout}
                       >
-                        <IoLogOutOutline className="w-6 h-6 text-primary-color" />
+                        <IoLogOutOutline className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
                         Logout
-                      </button>
+                      </motion.button>
                     </div>
                   ) : (
                     <div className="flex gap-5">
-                      
-                        <>
-                        <button
+                      <>
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
                           onClick={HandleModal}
                           className="text-primary-color"
                         >
                           LOG IN
-                        </button>
-                        <button
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
                           onClick={HandleModal}
                           className="text-primary-color"
                         >
                           SIGN UP
-                        </button>
+                        </motion.button>
                       </>
-                    
                     </div>
                   )}
                 </div>
-                <ul className="space-y-5 text-black ">
-                  <li onClick={handleNavModal}>
-                    <Link to="/shop/jewellery">All Jewellery</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/gold">Gold</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/diamond">Diamond</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/earrings">Earrings</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/rings">Rings</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/bestsellers">Bestsellers</Link>
-                  </li>
-                  
-                  <li onClick={handleNavModal}>
-                    <Link to="/collections">Collections</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/wedding">Wedding</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/gifting">Gifting</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/golden-harvest">Golden Harvest</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
-                    <Link to="/more">More</Link>
-                  </li>
+ {/*  TODO: Add redirect to like shop by category */}
+                <ul className="space-y-5 text-black">
+                  <motion.li
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Link
+                      to={"/products"}
+                      onClick={handleNavModal}
+                      className="flex flex-col items-start text-primary-color text-md md:text-base"
+                    >
+                      All Products
+                    </Link>
+                  </motion.li>
+
+                  {mainCategories &&
+                    mainCategories.map((mainCategory) => (
+                      <motion.li
+                        key={mainCategory.id}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <motion.button
+                          onClick={() => handleMainCategoryClick(mainCategory)}
+                          className="flex flex-col items-center text-primary-color text-md md:text-base transition-all ease-linear hover:scale-110"
+                        >
+                          {mainCategory.name}
+                        </motion.button>
+                        {selectedMainCategory === mainCategory && (
+                          <ul className="space-y-2 pl-4">
+                            {mainCategory.sub_category.map((subcategory) => (
+                              <motion.li
+                                key={subcategory.id}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.3 }}
+                                onClick={handleNavModal}
+                              >
+                                <Link
+                                  to={`/subcategory/${subcategory.slug}`}
+                                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-md"
+                                >
+                                  {subcategory.name}
+                                </Link>
+                              </motion.li>
+                            ))}
+                          </ul>
+                        )}
+                      </motion.li>
+                    ))}
                   <hr />
-                  <li onClick={handleNavModal}>
+                  <motion.li
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={handleNavModal}
+                  >
                     <Link to="/my-orders">My Orders</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
+                  </motion.li>
+                  <motion.li
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={handleNavModal}
+                  >
                     <Link to="/digitalgold">Digital Gold</Link>
-                  </li>
-                  <li onClick={handleNavModal}>
+                  </motion.li>
+                  <motion.li
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={handleNavModal}
+                  >
                     <Link to="/faqs">FAQs</Link>
-                  </li>
+                  </motion.li>
                 </ul>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-      {/* Modal Login */}
-      {LoginModal ? (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.25 }}
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none"
-          >
-            <div className="relative w-auto my-6 mx-auto max-w-4xl">
-              {/*content*/}
-              <div className=" rounded-lg shadow-lg  bg-white outline-none focus:outline-none">
-                {/*body*/}
-                <div className="relative flex-auto">
-                  <Login setModal={HandleModal} />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </>
-      ) : null}
 
-      {openDetailPage && (
+      {LoginModal && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.25 }}
+          transition={{ duration: 0.5 }}
           className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none"
         >
           <div className="relative w-auto my-6 mx-auto max-w-4xl">
             <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
               <div className="relative flex-auto">
-                {/* TODO: pass user mobile number into props */}
-                <ProfileDetails
-                  setModal={handleDetailModal}
-                />
+                <Login setModal={HandleModal} />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {openDetailPage && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none"
+        >
+          <div className="relative w-auto my-6 mx-auto max-w-4xl">
+            <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
+              <div className="relative flex-auto">
+                <ProfileDetails setModal={handleDetailModal} />
               </div>
             </div>
           </div>
