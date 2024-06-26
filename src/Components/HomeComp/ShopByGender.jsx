@@ -36,9 +36,7 @@ function ShopByGender() {
               className='rounded-t'
             />
             <div onClick={()=> {
-              
               navigate(`/Tag/${collection.name}`)
-
             }} className='flex justify-between items-center h-14 px-2'>
               <h1 className=' text-xl font-semibold text-primary-color'>
                 {collection.name}
