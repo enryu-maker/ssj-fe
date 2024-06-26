@@ -18,10 +18,8 @@ const CheckoutPage = () => {
     city: "",
     state: "",
     phoneNumber: "",
-    paymentMethod: "card", // Default payment method
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
+    paymentMethod: "online", // Default payment method
+    
   });
 
   const handleChange = (e) => {
@@ -56,9 +54,6 @@ const CheckoutPage = () => {
       address: `${address}, ${city}, ${state} - ${zipCode}`,
       phoneNumber,
       paymentMethod,
-      cardNumber: paymentMethod === "card" ? cardNumber : null,
-      expiryDate: paymentMethod === "card" ? expiryDate : null,
-      cvv: paymentMethod === "card" ? cvv : null,
     };
 
     // try {
@@ -235,48 +230,11 @@ const CheckoutPage = () => {
                 onChange={handleChange}
                 className="border border-gray-300 p-2 rounded w-full"
               >
-                <option value="card">Credit/Debit Card</option>
+                <option value="card">Online</option>
                 <option value="cod">Cash on Delivery</option>
               </select>
             </div>
-            {formData.paymentMethod === "card" && (
-              <>
-                <div>
-                  <label htmlFor="cardNumber" className="font-semibold">Card Number</label>
-                  <input
-                    type="text"
-                    id="cardNumber"
-                    name="cardNumber"
-                    value={formData.cardNumber}
-                    onChange={handleChange}
-                    className="border border-gray-300 p-2 rounded w-full"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="expiryDate" className="font-semibold">Expiry Date</label>
-                  <input
-                    type="text"
-                    id="expiryDate"
-                    name="expiryDate"
-                    value={formData.expiryDate}
-                    onChange={handleChange}
-                    className="border border-gray-300 p-2 rounded w-full"
-                    placeholder="MM/YYYY"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="cvv" className="font-semibold">CVV</label>
-                  <input
-                    type="text"
-                    id="cvv"
-                    name="cvv"
-                    value={formData.cvv}
-                    onChange={handleChange}
-                    className="border border-gray-300 p-2 rounded w-full"
-                  />
-                </div>
-              </>
-            )}
+            
           </div>
           <button
             type="button"
