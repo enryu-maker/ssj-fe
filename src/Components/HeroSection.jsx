@@ -39,7 +39,7 @@ const HeroSection = () => {
         modules={[Autoplay, Pagination]}
         className='mySwiper md:h-[90vh]'
       >
-        {banners.map((banner, index) => (
+        {Array.isArray(banners).map((banner, index) => (
           <SwiperSlide key={index}>
             <img
               src={banner.image} // Adjust according to your API response structure
