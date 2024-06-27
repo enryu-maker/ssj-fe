@@ -39,7 +39,7 @@ function ShopByCategory() {
         className='object-cover'
       />
       <div className='grid md:grid-cols-6 grid-cols-2 gap-5 px-10 mt-5 '>
-        {Array.isArray(Categories).map((category, index) => (
+        {Categories.map((category, index) => (
           <CategoryCard
             key={index}
             {...category}
