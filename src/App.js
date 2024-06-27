@@ -54,7 +54,7 @@ function App() {
           <Route path="/collections" element={<Collections />} />
           <Route path="/collections/:collectionId" element={<CollectionProduct />} />
           <Route path="/sub-category/:categoryId" element={<Categories />} />
-          <Route path="/Tag/:Tagmname" element={<TagsProduct />} />
+          <Route path="/Tag/:tagName" element={<TagsProduct />} />
         </Routes>
         <Footer />
       </Router>

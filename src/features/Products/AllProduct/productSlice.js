@@ -116,7 +116,6 @@ const productsSlice = createSlice({
 export const selectProducts = (state) => state.products.products;
 export const selectSingleProduct = (state) => state.products.singleProduct;
 export const selectProductByTag = (state) => state.products.TagsProduct;
-console.log(selectProductByTag);
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 
