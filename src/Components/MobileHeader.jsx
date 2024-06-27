@@ -34,6 +34,7 @@ function MobileHeader() {
   const dispatch = useDispatch();
   const mainCategories = useSelector(selectMainCategories);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const cart = useSelector((state) => state.cart);
   const user = useSelector(selectUser);
 
   useEffect(() => {
@@ -109,8 +110,9 @@ function MobileHeader() {
               className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110 relative"
             >
               <IoCartOutline className="w-6 h-6 md:w-8 md:h-8" />
-              <span className="absolute left-3 md:left-5 -top-1 md:-top-2 w-3 h-3 md:w-4 md:h-4 bg-primary-color text-white flex items-center justify-center rounded-full text-xs">
-                2
+             
+              <span className="absolute left-3 md:left-5 -top-1 md:-top-2 w-3 h-3 md:w-4 md:h-4 bg-primary-color text-white flex items-center justify-center rounded-full text-xs ">
+              {cart.cartItems.length} 
               </span>
             </Link>
           </div>
@@ -126,7 +128,7 @@ function MobileHeader() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="absolute top-2 right-3 md:right-6"
+            className="absolute top-4 right-3 md:right-6"
           >
             <motion.button
               whileHover={{ scale: 1.1 }}
@@ -249,7 +251,7 @@ function MobileHeader() {
                                 onClick={handleNavModal}
                               >
                                 <Link
-                                  to={`/subcategory/${subcategory.slug}`}
+                                  to={`/sub-category/${subcategory.id}`}
                                   className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-md"
                                 >
                                   {subcategory.name}

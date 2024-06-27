@@ -296,13 +296,13 @@ const Header = () => {
                     </h1>
                     <div className="mt-5 flex flex-col gap-3 items-start">
                       {mainCategory.sub_category.map((subCategory) => (
-                        <a
+                        <Link
                           key={subCategory.id}
-                          href={`#/${subCategory.name.toLowerCase()}`} // Assuming link is derived from name
+                          to={`/sub-category/${subCategory.id}`} // Assuming link is derived from name
                           className="text-sm font-extralight hover:text-primary-color"
                         >
                           {subCategory.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
