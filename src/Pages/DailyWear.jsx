@@ -21,11 +21,11 @@ const DailyWear = () => {
           <img
             src='https://staticimg.tanishq.co.in/microsite/dailywear/assets-new/images/new-arrivals/under50k-desktop.jpg'
             alt=''
-            className='rounded-md md:w-[326px] md:h-[326px] w-[391px] h-[391px]'
+            className='rounded-md md:w-[326px] md:h-[326px] w-full h-[300px] object-cover'
           />
         </div>
         <div className='md:row-span-2 col-span-2 ...'>
-          <div className='flex flex-col gap-2 items-center justify-center md:w-[326px] md:h-[326px] w-[391px] h-[391px] shadow-sm border border-primary-color rounded-md'>
+          <div className='flex flex-col gap-2 items-center justify-center md:w-[326px] w-full md:h-[326px] h-[300px] shadow-sm border border-primary-color rounded-md'>
             <h1 className='text-center text-5xl font-semibold text-primary-color'>
               5,028
             </h1>
