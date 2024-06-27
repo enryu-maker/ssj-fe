@@ -319,7 +319,7 @@ const Header = () => {
 
         {/* Bestsellers and Collections Links */}
         <Link
-          to="/bestsellers"
+          to="/Tag/Bestseller"
           className="uppercase text-sm cursor-pointer underlineAni"
         >
           Bestsellers

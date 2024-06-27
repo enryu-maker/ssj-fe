@@ -63,7 +63,7 @@ export const MoreLink = [
   },
   {
     name: 'BOOK AN APPOINTMENT',
-    link: '/contacts',
+    link: '#contacts',
   },
   {
     name: 'ENCIRCLE',
