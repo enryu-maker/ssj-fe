@@ -1,7 +1,7 @@
 {
   "name": "ssj-fe",
   "version": "0.1.0",
-
+  "homepage": "https://ssj-fe-six.vercel.app",
   "private": true,
   "proxy": "http://api.saishraddhajewellers.com",
   "dependencies": {
