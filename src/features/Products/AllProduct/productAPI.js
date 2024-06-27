@@ -23,7 +23,28 @@ import axios from "axios";
         throw new Error(error.message);
       }
     };
+
+//  most gifted product
+    export const GetGiftedProduct = async () => {
+      try {
+        const response = await axios.get(`/web/most-gifted/`);
+        return response.data; // Assuming response.data contains the single product object
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    };
+
+//  TopSeller product
+    export const GetTopSellerProduct = async () => {
+      try {
+        const response = await axios.get(`/web/top-seller/`);
+        return response.data; // Assuming response.data contains the single product object
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    };
     
+    // get product by Tags
     export const GetProductByTags = async (tagName) => {
       try {
         const response = await axios.get(`/product/tags?tags=${tagName}`);

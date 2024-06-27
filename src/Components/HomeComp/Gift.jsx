@@ -3,21 +3,21 @@ import Divider from "../../assets/divider.png";
 import ProductCard from "../ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchAllProductsAsync,
-  selectProducts,
+  fetchGiftedProductsAsync,
+  selectGiftedProducts,
   selectProductsError,
   selectProductsLoading,
 } from "../../features/Products/AllProduct/productSlice";
 
 function Gift() {
   const dispatch = useDispatch();
-  const products = useSelector(selectProducts);
+  const products = useSelector(selectGiftedProducts);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
   console.log(products);
 
   useEffect(() => {
-    dispatch(fetchAllProductsAsync());
+    dispatch(fetchGiftedProductsAsync());
   }, [dispatch]);
 
   return (
@@ -34,7 +34,7 @@ function Gift() {
       <div className="flex md:flex-row flex-col gap-2 px-5 mt-5 ">
         {products.map(
           (product, index) =>
-            index <= 3 && <ProductCard key={index} {...product} />
+            index <= 3 && <ProductCard key={index} {...product.product} />
         )}
       </div>
     </div>

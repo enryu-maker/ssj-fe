@@ -2,18 +2,18 @@ import React, { useEffect } from 'react';
 import Divider from '../../assets/divider.png';
 import ProductCard from '../ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllProductsAsync, selectProducts, selectProductsError, selectProductsLoading } from '../../features/Products/AllProduct/productSlice';
+import {  fetchTopSellerProductsAsync, selectProductsError, selectProductsLoading, selectTopSellerProducts } from '../../features/Products/AllProduct/productSlice';
 
 function TopSellers() {
 
   const dispatch = useDispatch();
-  const products = useSelector(selectProducts);
+  const products = useSelector(selectTopSellerProducts);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
-  console.log(products);
+ 
 
   useEffect(() => {
-    dispatch(fetchAllProductsAsync());
+    dispatch(fetchTopSellerProductsAsync());
   }, [dispatch]);
 
 
@@ -46,7 +46,7 @@ function TopSellers() {
             index <= 3 && (
               <ProductCard
                 key={index}
-                {...product}
+                {...product.product}
               />
             )
         )}

@@ -37,7 +37,7 @@ export const fetchCollectionByIdAsync = createAsyncThunk(
 
 const initialState = {
   data: [],
-  collection: null,
+  collection: [],
   status: "idle",
   loading: false,
   error: null,

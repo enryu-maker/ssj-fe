@@ -281,7 +281,7 @@ const Header = () => {
           mainCategories.map((category) => (
             <div
             key={category.id}
-            className="relative parent cursor-pointer group list-none z-50"
+            className="relative parent cursor-pointer group list-none"
             onMouseEnter={() => setActiveCategory(category.id)}
             onMouseLeave={() => setActiveCategory(null)}
           >

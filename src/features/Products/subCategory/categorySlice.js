@@ -36,7 +36,7 @@ export const fetchCategoryByIdAsync = createAsyncThunk(
 
 const initialState = {
   data: [],
-  category: null,
+  category: [],
   status: "idle",
   loading: false,
   error: null,

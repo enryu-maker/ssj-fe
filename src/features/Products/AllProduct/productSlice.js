@@ -1,14 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   GetAllProducts,
+  GetGiftedProduct,
   GetProductByTags,
   GetSingleProduct,
+  GetTopSellerProduct,
 } from "./productAPI";
 
 const initialState = {
   products: [],
-  singleProduct: null,
-  tagsProduct: null,
+  singleProduct: [],
+  tagsProduct: [],
+  GiftedProduct: [],
+  TopSellerProduct: [],
   status: "idle",
   loading: false,
   error: null,
@@ -22,6 +26,36 @@ export const fetchAllProductsAsync = createAsyncThunk(
   async ({ page = 1, subCategory = "" }, { rejectWithValue }) => {
     try {
       const response = await GetAllProducts(page, subCategory);
+      if (!response) {
+        throw new Error("Invalid response from server");
+      }
+      return response; // Assuming the API response structure has a 'data' property
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+// Async thunk to fetch gifted products using axios
+export const fetchGiftedProductsAsync = createAsyncThunk(
+  "products/fetchGiftedProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await GetGiftedProduct();
+      if (!response) {
+        throw new Error("Invalid response from server");
+      }
+      return response; // Assuming the API response structure has a 'data' property
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+// Async thunk to fetch all products using axios
+export const fetchTopSellerProductsAsync = createAsyncThunk(
+  "products/fetchTopSellerProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await GetTopSellerProduct();
       if (!response) {
         throw new Error("Invalid response from server");
       }
@@ -122,7 +156,35 @@ const productsSlice = createSlice({
         state.status = "failed";
         state.loading = false;
         state.error = action.error.message;
-      });
+      })
+      .addCase(fetchGiftedProductsAsync.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(fetchGiftedProductsAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.GiftedProduct = action.payload;
+      })
+      .addCase(fetchGiftedProductsAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchTopSellerProductsAsync.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(fetchTopSellerProductsAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.TopSellerProduct = action.payload;
+      })
+      .addCase(fetchTopSellerProductsAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.loading = false;
+        state.error = action.error.message;
+      })
   },
 });
 
@@ -131,6 +193,8 @@ export const { setPage, setSubCategory } = productsSlice.actions;
 export const selectProducts = (state) => state.products.products;
 export const selectSingleProduct = (state) => state.products.singleProduct;
 export const selectProductByTag = (state) => state.products.tagsProduct;
+export const selectGiftedProducts = (state) => state.products.GiftedProduct;
+export const selectTopSellerProducts = (state) => state.products.TopSellerProduct;
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 export const selectCurrentPage = (state) => state.products.currentPage;
