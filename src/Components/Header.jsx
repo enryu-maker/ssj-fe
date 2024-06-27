@@ -15,7 +15,9 @@ import { FaFacebookF, FaInstagram } from "react-icons/fa6";
 import { AiOutlineYoutube } from "react-icons/ai";
 import { FaWhatsapp } from "react-icons/fa";
 import Marquee from "react-fast-marquee";
-import { MoreLink } from "../data";
+import {
+  MoreLink,
+} from "../data";
 import MobileHeader from "./MobileHeader";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileDetails from "../Pages/ProfileDetails";
@@ -274,43 +276,43 @@ const Header = () => {
         >
           All jewellery
         </Link>
-        <div className="flex gap-10">
-          {mainCategories?.map((mainCategory, index) => (
-            // TODO: add categories routig
-            <div
-              key={index}
-              className="relative parent cursor-pointer group list-none z-50"
-              onMouseEnter={() => setActiveCategory(mainCategory.id)}
-              onMouseLeave={() => setActiveCategory(null)}
-            >
-              <div className="flex uppercase text-sm cursor-pointer underlineAni">
-                {mainCategory.name}
-              </div>
-              {activeCategory === mainCategory.id && (
-                <div className="absolute top-5 left-0 w-[400px] text-sm p-3 bg-white shadow-md rounded-md">
-                  <div className="grid grid-cols-2 gap-5">
-                    <div>
-                      <h1 className="text-xl font-semibold text-primary-color uppercase">
-                        {mainCategory.name}
-                      </h1>
-                      <div className="mt-5 flex flex-col gap-3 items-start">
-                        {mainCategory.sub_category.map((subCategory) => (
-                          <Link
-                            key={subCategory.id}
-                            to={`/sub-category/${subCategory.id}`} // Assuming link is derived from name
-                            className="text-sm font-extralight hover:text-primary-color"
-                          >
-                            {subCategory.name}
-                          </Link>
-                        ))}
-                      </div>
+        
+        {mainCategories?.map((mainCategory, index) => (
+          // TODO: add categories routig
+          <div
+            key={index}
+            className="relative parent cursor-pointer group list-none z-50"
+            onMouseEnter={() => setActiveCategory(mainCategory.id)}
+            onMouseLeave={() => setActiveCategory(null)}
+          >
+            <div className="flex uppercase text-sm cursor-pointer underlineAni">
+              {mainCategory.name}
+            </div>
+            {activeCategory === mainCategory.id && (
+              <div className="absolute top-5 left-0 w-[400px] text-sm p-3 bg-white shadow-md rounded-md">
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <h1 className="text-xl font-semibold text-primary-color uppercase">
+                      {mainCategory.name}
+                    </h1>
+                    <div className="mt-5 flex flex-col gap-3 items-start">
+                      {mainCategory.sub_category.map((subCategory) => (
+                        <Link
+                          key={subCategory.id}
+                          to={`/sub-category/${subCategory.id}`} // Assuming link is derived from name
+                          className="text-sm font-extralight hover:text-primary-color"
+                        >
+                          {subCategory.name}
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
+              </div>
+            )}
+          </div>
+        ))}
+
         {/* Bestsellers and Collections Links */}
         <Link
           to="/bestsellers"
