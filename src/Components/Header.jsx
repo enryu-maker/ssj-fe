@@ -276,10 +276,10 @@ const Header = () => {
         >
           All jewellery
         </Link>
-        {mainCategories.map((mainCategory) => (
+        {mainCategories?.map((mainCategory, index) => (
           // TODO: add categories routig
           <div
-            key={mainCategory.id}
+            key={index}
             className="relative parent cursor-pointer group list-none z-50"
             onMouseEnter={() => setActiveCategory(mainCategory.id)}
             onMouseLeave={() => setActiveCategory(null)}
