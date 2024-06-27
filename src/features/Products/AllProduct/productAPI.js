@@ -1,14 +1,20 @@
 import axios from "axios";
 
-export const GetAllProducts = async () => {
-      try {
-        const response = await axios.get('/product/');
-        return response.data;
-      } catch (error) {
-        throw new Error(error.message);
-      }
+  export const GetAllProducts = async (page = 1, subCategory = '') => {
+    try {
+      const response = await axios.get('/product/', {
+        params: {
+          page,
+          sub_category: subCategory
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error fetching all products: ${error.message}`);
     }
- 
+  }
+
+//  single product
     export const GetSingleProduct = async (productId) => {
       try {
         const response = await axios.get(`/product/${productId}/`);
