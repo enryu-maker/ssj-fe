@@ -22,6 +22,7 @@ import WishList from "./Pages/WishList";
 import CheckoutPage from "./Pages/CheckoutPage";
 import Categories from "./Pages/Categories";
 import TagProducts from "./Pages/TagProducts";
+import NotFoundPage from "./Pages/NotFoundPage";
 
 function App() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -33,6 +34,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route path="/contacts" element={<Contact />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
