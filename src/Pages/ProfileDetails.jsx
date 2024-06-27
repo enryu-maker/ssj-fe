@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IoLogOutOutline } from "react-icons/io5";
-import { RxCross2 } from "react-icons/rx";
+import { IoClose, IoLogOutOutline } from "react-icons/io5";
 import { motion } from "framer-motion"; // Import motion from framer-motion
 import { fetchUserProfile, selectUser, signOutUser } from "../features/Auth/authSlice";
 
@@ -22,97 +21,66 @@ const ProfileDetails = ({ setModal }) => {
   }
 
   return (
-    <>
-      <div className="grid md:grid-cols-2 md:grid-rows-1 grid-rows-2 font-Raleway place-content-center md:h-full h-[60vh]">
-        {/* Close Button with Rotation Animation */}
-        <div className="absolute right-0">
-          <motion.button
-            whileHover={{ rotate: -90 }}
-            whileTap={{ scale: 0.85 }}
-            className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-            onClick={setModal}
-          >
-            <RxCross2 className="md:text-primary-color text-red-500" />
-          </motion.button>
+    <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+      <motion.div
+        className="bg-white rounded-lg p-8 max-w-md w-full"
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        transition={{ type: "spring", stiffness: 120 }}
+        exit={{ x: "100%", transition: { ease: "easeInOut" } }}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Profile Details</h2>
+          <button onClick={setModal}>
+            <IoClose className="text-gray-500 cursor-pointer" />
+          </button>
         </div>
-
-        {/* Profile Image with Scale Animation */}
-        <motion.div
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <img
-            src={profile?.photo}
-            alt="Profile"
-            className="md:rounded-l-lg md:rounded-t-none rounded-t-lg h-full w-full object-cover"
-          />
-        </motion.div>
-
-        {/* Profile Details with Fade-in Animation */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="flex flex-col gap-5 items-center justify-center px-5 py-10"
-        >
-          <div className="flex flex-col items-center justify-center">
+        <div className="space-y-4">
+          <div className="relative overflow-hidden rounded-full border-4 border-white">
+            <img
+              src={profile.photo}
+              alt="Profile"
+              className="h-full w-full object-cover rounded-full"
+            />
+          </div>
+          <div className="flex flex-col gap-5 items-center justify-center px-5 py-10">
             <motion.h1
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
               className="text-3xl font-semibold text-primary-color"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
             >
               Profile Details
             </motion.h1>
-          </div>
-          <div className="flex flex-col gap-10 justify-center">
             <motion.h1
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              className="text-xl text-primary-color"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
-              className="text-2xl text-primary-color"
             >
-              Name: <span className="text-black">{profile?.name}</span>
+              Name: <span className="text-black">{profile.name}</span>
             </motion.h1>
             <motion.h1
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              className="text-xl text-primary-color"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
-              className="text-2xl text-primary-color"
             >
-              Email: <span className="text-black">{profile?.email}</span>
+              Email: <span className="text-black">{profile.email}</span>
             </motion.h1>
-          </div>
-
-          {/* Logout Button with Scale Animation */}
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-            className="flex justify-around w-full mt-5"
-          >
-            <button
+            <motion.button
               className="flex items-center gap-2 uppercase bg-primary-color text-white rounded-md p-2"
               onClick={handleLogout}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
-              <motion.span
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                Logout
-              </motion.span>
-              <motion.span
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <IoLogOutOutline className="text-2xl" />
-              </motion.span>
-            </button>
-          </motion.div>
-        </motion.div>
-      </div>
-    </>
+              Logout
+              <IoLogOutOutline className="text-2xl" />
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 

@@ -8,7 +8,7 @@ import {
 const initialState = {
   products: [],
   singleProduct: null,
-  TagsProduct: [],
+  tagsProduct: null,
   status: "idle",
   loading: false,
   error: null,
@@ -58,7 +58,7 @@ export const fetchProductByTagsAsync = createAsyncThunk(
       if (!response || !response.data) {
         throw new Error("Invalid response from server");
       }
-      return await response.JSON();
+      return response;
       // return response; // Assuming the API response structure has a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);
@@ -116,7 +116,7 @@ const productsSlice = createSlice({
       .addCase(fetchProductByTagsAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.loading = false;
-        state.TagsProduct = action.payload;
+        state.tagsProduct = action.payload;
       })
       .addCase(fetchProductByTagsAsync.rejected, (state, action) => {
         state.status = "failed";
@@ -130,7 +130,7 @@ export const { setPage, setSubCategory } = productsSlice.actions;
 
 export const selectProducts = (state) => state.products.products;
 export const selectSingleProduct = (state) => state.products.singleProduct;
-export const selectProductByTag = (state) => state.products.TagsProduct;
+export const selectProductByTag = (state) => state.products.tagsProduct;
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 export const selectCurrentPage = (state) => state.products.currentPage;

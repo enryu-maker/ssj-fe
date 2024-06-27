@@ -4,6 +4,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInWithGoogle, selectUser, selectAuthError, selectLoading, setUser } from '../features/Auth/authSlice';
 import ProfileDetails from './ProfileDetails';
+import { FaGoogle } from 'react-icons/fa'; // Import Google icon
 
 function Login({ setModal }) {
   const dispatch = useDispatch();
@@ -51,14 +52,15 @@ function Login({ setModal }) {
             />
           </div>
           <div className="flex flex-col gap-5 items-center justify-center p-5">
-            <h1 className="text-3xl font-semibold text-primary-color">Login Or Signup</h1>
+          
             <div className="flex justify-center items-center">
               <button
                 onClick={handleSignInWithGoogle}
-                className="p-2 bg-primary-color text-white rounded-md"
+                className="flex items-center p-2 bg-white text-primary-color rounded-md shadow-md hover:shadow-lg"
                 disabled={loading}
               >
-                {loading ? 'Signing in...' : 'Sign in with Google'}
+                <FaGoogle className="text-xl mr-2" />
+                <span>{loading ? 'Signing in...' : 'Sign in with Google'}</span>
               </button>
             </div>
             {authError && <p className="text-red-500">{authError}</p>}
