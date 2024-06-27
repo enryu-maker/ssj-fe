@@ -276,27 +276,27 @@ const Header = () => {
         >
           All jewellery
         </Link>
-        
-        {mainCategories?.map((mainCategory, index) => (
-          // TODO: add categories routig
-          <div
-            key={index}
+
+        {Array.isArray(mainCategories) && mainCategories.length > 0 ? (
+          mainCategories.map((category) => (
+            <div
+            key={category.id}
             className="relative parent cursor-pointer group list-none z-50"
-            onMouseEnter={() => setActiveCategory(mainCategory.id)}
+            onMouseEnter={() => setActiveCategory(category.id)}
             onMouseLeave={() => setActiveCategory(null)}
           >
             <div className="flex uppercase text-sm cursor-pointer underlineAni">
-              {mainCategory.name}
+              {category.name}
             </div>
-            {activeCategory === mainCategory.id && (
+            {activeCategory === category.id && (
               <div className="absolute top-5 left-0 w-[400px] text-sm p-3 bg-white shadow-md rounded-md">
                 <div className="grid grid-cols-2 gap-5">
                   <div>
                     <h1 className="text-xl font-semibold text-primary-color uppercase">
-                      {mainCategory.name}
+                      {category.name}
                     </h1>
                     <div className="mt-5 flex flex-col gap-3 items-start">
-                      {mainCategory.sub_category.map((subCategory) => (
+                      {category.sub_category.map((subCategory) => (
                         <Link
                           key={subCategory.id}
                           to={`/sub-category/${subCategory.id}`} // Assuming link is derived from name
@@ -311,7 +311,11 @@ const Header = () => {
               </div>
             )}
           </div>
-        ))}
+          ))
+        ) : (
+          <div>Loading categories...</div>
+        )}
+      
 
         {/* Bestsellers and Collections Links */}
         <Link
