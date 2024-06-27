@@ -15,7 +15,6 @@ const Categories = () => {
   const category = useSelector(selectCategory);
   const loading = useSelector(selectCategoryLoading);
   const error = useSelector(selectCategoryError);
-  console.log(category);
 
   useEffect(() => {
     dispatch(fetchCategoryByIdAsync(categoryId));

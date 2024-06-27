@@ -289,7 +289,7 @@ const Header = () => {
               {category.name}
             </div>
             {activeCategory === category.id && (
-              <div className="absolute top-5 left-0 w-[400px] text-sm p-3 bg-white shadow-md rounded-md">
+              <div className="absolute top-5 left-0 w-[400px] text-sm p-3 bg-white shadow-md rounded-md z-50">
                 <div className="grid grid-cols-2 gap-5">
                   <div>
                     <h1 className="text-xl font-semibold text-primary-color uppercase">

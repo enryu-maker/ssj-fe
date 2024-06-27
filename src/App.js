@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Header from "./Components/Header";
 import Contact from "./Pages/Contact";
@@ -23,9 +23,7 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import Categories from "./Pages/Categories";
 import TagProducts from "./Pages/TagProducts";
 
-
 function App() {
-
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
   return (
@@ -51,12 +49,11 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/wishlist" element={<WishList />} />
           <Route path="/products" element={<AllJewellery />} />
-          <Route exact path="/product/:productId" element={<ProductDetail />} />
+          <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="/collections/:collectionId" element={<CollectionProduct />} />
           <Route path="/sub-category/:categoryId" element={<Categories />} />
           <Route path="/Tag/:tagName" element={<TagProducts />} />
-          
         </Routes>
         <Footer />
       </Router>
