@@ -1,10 +1,9 @@
+import api from "../../../helper/AxiosInstance";
 
-import axios from 'axios';
 
 export const getCollections = async () => {
-  
   try {
-    const response = await axios.get('/web/collections');
+    const response = await api.get('/web/collections');
     return response.data;
   } catch (error) {
     if (error.response) {
@@ -20,11 +19,10 @@ export const getCollections = async () => {
 };
 
 export const getCollectionById = async (collectionId) => {
-    try {
-      const response = await axios.get(`/web/collections/${collectionId}/`);
-      return response.data;
-    } catch (error) {
-      throw new  Error(error.message);
-    }
+  try {
+    const response = await api.get(`/web/collections/${collectionId}/`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
   }
-
+};

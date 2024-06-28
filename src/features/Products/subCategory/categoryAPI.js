@@ -1,10 +1,9 @@
+import api from "../../../helper/AxiosInstance";
 
-import axios from 'axios';
 
 export const getCategory = async () => {
-  
   try {
-    const response = await axios.get('/product/sub-category/');
+    const response = await api.get('/product/sub-category/');
     return response.data;
   } catch (error) {
     if (error.response) {
@@ -20,11 +19,10 @@ export const getCategory = async () => {
 };
 
 export const getCategoryById = async (categoryId) => {
-    try {
-      const response = await axios.get(`/product/sub-category/${categoryId}/`);
-      return response.data;
-    } catch (error) {
-      throw new  Error(error.message);
-    }
+  try {
+    const response = await api.get(`/product/sub-category/${categoryId}/`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
   }
-
+};

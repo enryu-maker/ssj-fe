@@ -1,14 +1,12 @@
-import axios from 'axios';
+import api from "../../helper/AxiosInstance";
 
 
 export function createUser(userData) {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await axios.post('/auth/login/', userData, {
-        headers: { 'Content-Type': 'application/json' }
-      });
+      const response = await api.post('/auth/login/', userData);
 
-      if (response.ok) {
+      if (!response.status === 200) { // Check for HTTP 200 status
         throw new Error('Network response was not ok');
       }
 
@@ -19,15 +17,13 @@ export function createUser(userData) {
   });
 }
 
-
-
 // Function to get user profile
 export const getProfile = async () => {
   const token = sessionStorage.getItem('access_token');
   try {
-    const response = await axios.get('/profile/', {
+    const response = await api.get('/profile/', {
       headers: {
-        'Authorization': `Bearer ${token}`, 
+        'Authorization': `Bearer ${token}`,
       },
     });
     return response.data;
@@ -43,6 +39,3 @@ export const getProfile = async () => {
     }
   }
 };
-
-
-
