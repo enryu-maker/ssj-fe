@@ -17,9 +17,10 @@ export const GetAllProducts = async (page = 1, subCategory = '') => {
 
 // Single product
 export const GetSingleProduct = async (productId) => {
+  
   try {
     const response = await api.get(`/product/${productId}/`);
-    return response.data; // Assuming response.data contains the single product object
+    return response; // Assuming response.data contains the single product object
   } catch (error) {
     throw new Error(error.message);
   }
@@ -29,7 +30,7 @@ export const GetSingleProduct = async (productId) => {
 export const GetGiftedProduct = async () => {
   try {
     const response = await api.get('/web/most-gifted/');
-    return response.data; // Assuming response.data contains the single product object
+    return response; // Assuming response.data contains the single product object
   } catch (error) {
     throw new Error(error.message);
   }
@@ -39,7 +40,7 @@ export const GetGiftedProduct = async () => {
 export const GetTopSellerProduct = async () => {
   try {
     const response = await api.get('/web/top-seller/');
-    return response.data; // Assuming response.data contains the single product object
+    return response; // Assuming response.data contains the single product object
   } catch (error) {
     throw new Error(error.message);
   }
@@ -53,7 +54,7 @@ export const GetProductByTags = async (tagName) => {
         tags: tagName,
       },
     });
-    return response.data; // Assuming response.data contains the products array or an object
+    return response; // Assuming response.data contains the products array or an object
   } catch (error) {
     throw new Error(error.message); // Throw an error if request fails
   }

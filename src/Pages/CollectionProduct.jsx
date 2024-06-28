@@ -12,7 +12,7 @@ const CollectionProduct = () => {
   const collection = useSelector(selectCollection);
   const loading = useSelector(selectCollectionsLoading);
   const error = useSelector(selectCollectionsError);
-  console.log(collection);
+  console.log(collection);  
 
   useEffect(() => {
     dispatch(fetchCollectionByIdAsync(collectionId));

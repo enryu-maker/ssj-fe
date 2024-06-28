@@ -70,6 +70,7 @@ export const fetchTopSellerProductsAsync = createAsyncThunk(
 export const fetchSingleProductAsync = createAsyncThunk(
   "products/fetchSingleProduct",
   async (productId, { rejectWithValue }) => {
+    
     try {
       const response = await GetSingleProduct(productId);
       if (!response || response.status !== 200 || !response.data) {
