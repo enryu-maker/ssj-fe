@@ -4,7 +4,7 @@ import api from "../../../helper/AxiosInstance";
 export const getCategory = async () => {
   try {
     const response = await api.get('/product/sub-category/');
-    return response.data;
+    return response;
   } catch (error) {
     if (error.response) {
       throw new Error(error.response.data.message || 'Network response was not ok');
@@ -21,7 +21,8 @@ export const getCategory = async () => {
 export const getCategoryById = async (categoryId) => {
   try {
     const response = await api.get(`/product/sub-category/${categoryId}/`);
-    return response.data;
+    console.log(response);
+    return response;
   } catch (error) {
     throw new Error(error.message);
   }

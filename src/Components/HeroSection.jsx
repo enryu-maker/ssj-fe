@@ -5,7 +5,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-import axios from 'axios';
+import api from '../helper/AxiosInstance';
 
 const HeroSection = () => {
   const [banners, setBanners] = useState([]);
@@ -13,7 +13,7 @@ const HeroSection = () => {
   useEffect(() => {
     const fetchBannerImages = async () => {
       try {
-        const response = await axios.get('/web/banners/');
+        const response = await api.get('/web/banners/');
         const bannersData = response.data; // Adjust according to your API response structure
         setBanners(bannersData);
       } catch (error) {

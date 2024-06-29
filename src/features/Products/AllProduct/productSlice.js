@@ -29,7 +29,7 @@ export const fetchAllProductsAsync = createAsyncThunk(
       if (!response) {
         throw new Error("Invalid response from server");
       }
-      return response; // Assuming the API response structure has a 'data' property
+      return response.data; // Assuming the API response structure has a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -44,7 +44,7 @@ export const fetchGiftedProductsAsync = createAsyncThunk(
       if (!response) {
         throw new Error("Invalid response from server");
       }
-      return response; // Assuming the API response structure has a 'data' property
+      return response.data; // Assuming the API response structure has a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -59,7 +59,7 @@ export const fetchTopSellerProductsAsync = createAsyncThunk(
       if (!response) {
         throw new Error("Invalid response from server");
       }
-      return response; // Assuming the API response structure has a 'data' property
+      return response.data; // Assuming the API response structure has a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -93,7 +93,7 @@ export const fetchProductByTagsAsync = createAsyncThunk(
       if (!response) {
         throw new Error("Invalid response from server");
       }
-      return response;
+      return response.data;
       // return response; // Assuming the API response structure has a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);

@@ -28,6 +28,8 @@ const AllJewellery = () => {
   const currentPage = useSelector(selectCurrentPage);
   const subCategory = useSelector(selectSubCategory);
 
+  console.log(products);
+
   useEffect(() => {
     dispatch(fetchAllProductsAsync({ page: currentPage, subCategory }));
   }, [dispatch, currentPage, subCategory]);

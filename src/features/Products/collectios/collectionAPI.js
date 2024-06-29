@@ -4,7 +4,7 @@ import api from "../../../helper/AxiosInstance";
 export const getCollections = async () => {
   try {
     const response = await api.get('/web/collections');
-    return response.data;
+    return response;
   } catch (error) {
     if (error.response) {
       throw new Error(error.response.data.message || 'Network response was not ok');
@@ -21,7 +21,7 @@ export const getCollections = async () => {
 export const getCollectionById = async (collectionId) => {
   try {
     const response = await api.get(`/web/collections/${collectionId}/`);
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error(error.message);
   }

@@ -11,7 +11,7 @@ export const fetchCollectionsAsync = createAsyncThunk(
       if (!response) {
         throw new Error("Invalid response from server");
       }
-      return response; // Return only the data part of the response
+      return response.data; // Return only the data part of the response
      
     } catch (error) {
       return rejectWithValue(error.message);
@@ -28,7 +28,7 @@ export const fetchCollectionByIdAsync = createAsyncThunk(
       if (!response) {
         throw new Error("Invalid response from server");
       }
-      return response;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

@@ -9,7 +9,7 @@ export const GetAllProducts = async (page = 1, subCategory = '') => {
         sub_category: subCategory,
       },
     });
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error(`Error fetching all products: ${error.message}`);
   }
