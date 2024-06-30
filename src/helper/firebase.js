@@ -3,15 +3,15 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC7V1Si2QIMS_6T2Z8EsIeodcUoHiInuVA",
-  authDomain: "ssje-70123.firebaseapp.com",
-  projectId: "ssje-70123",
-  storageBucket: "ssje-70123.appspot.com",
-  messagingSenderId: "332083138844",
-  appId: "1:332083138844:web:67517fda89a30aeab1ead9",
-  measurementId: "G-9ZRW11MDC4"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyCEGUh3BotOa86fcbDWcR2s5YZbVJq-gWY",
+    authDomain: "sai-shraddha-jewellers-c8965.firebaseapp.com",
+    projectId: "sai-shraddha-jewellers-c8965",
+    storageBucket: "sai-shraddha-jewellers-c8965.appspot.com",
+    messagingSenderId: "31490919994",
+    appId: "1:31490919994:web:3c00ca2c8a614b95a66f03",
+    measurementId: "G-3J1M09R4SF"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

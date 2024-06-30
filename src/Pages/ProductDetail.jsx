@@ -16,7 +16,7 @@ function ProductDetail() {
   const thisProduct = useSelector(selectSingleProduct);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
-
+  const [index,setIndex] = useState(0)
   const [activeImg, setActiveImage] = useState('');
   const [selectedWeight, setSelectedWeight] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
@@ -27,23 +27,25 @@ function ProductDetail() {
 
   useEffect(() => {
     if (thisProduct) {
-      setActiveImage(thisProduct.image);
-      if (thisProduct.size_chart && thisProduct.size_chart.length > 0) {
-        setSelectedWeight(thisProduct.size_chart[0]?.size?.[0]?.weight || '');
-        setSelectedPrice(thisProduct.size_chart[0]?.total_price || '');
+      console.log(thisProduct)
+      setActiveImage(thisProduct?.image);
+      if (thisProduct?.size_chart && thisProduct?.size_chart?.length > 0) {
+        setSelectedWeight(thisProduct?.size_chart[0]?.size?.[0]?.weight || '');
+        setSelectedPrice(thisProduct?.size_chart[0]?.total_price || '');
       }
     }
   }, [thisProduct]);
 
   const images = [
     thisProduct?.image,
-    ...(thisProduct?.other_images ? thisProduct.other_images.map(img => img.images) : [])
+    ...(thisProduct?.other_images ? thisProduct?.other_images?.map(img => img?.images) : [])
   ];
 
   // Handle weight change
-  const handleWeightChange = (weight, price) => {
+  const handleWeightChange = (weight, price,index) => {
+    setIndex(index)
     setSelectedWeight(weight);
-    setSelectedPrice(price);
+    setSelectedPrice(price)
     setOpenWeight(false);
   };
 
@@ -76,7 +78,7 @@ function ProductDetail() {
               className="w-full aspect-square object-cover rounded-xl"
             />
             <div className="flex md:flex-row flex-wrap justify-between gap-2 h-24">
-              {images.map((img, index) => (
+              {images?.map((img, index) => (
                 <img
                   key={index}
                   src={img}
@@ -93,13 +95,13 @@ function ProductDetail() {
                 <IoHeartOutline className="w-8 h-8 text-primary-color" />
               </button>
             </div>
-            <h1 className="text-2xl font-medium">{thisProduct.name}</h1>
+            <h1 className="text-2xl font-medium">{thisProduct?.name}</h1>
             <div className="mt-2 border border-primary-color" />
-            <p className="font-light text-sm mt-5">{thisProduct.description}</p>
+            <p className="font-light text-sm mt-5">{thisProduct?.description}</p>
             <div className="mt-5 flex flex-col">
               <h1 className="text-2xl font-semibold text-black">
                 <span className="text-sm text-black">Offer Price</span> ₹
-                {selectedPrice}
+                {Math.round(parseInt(selectedPrice))}
               </h1>
               <p className="text-sm">
                 Price Inclusive of all taxes. See full{" "}
@@ -124,11 +126,11 @@ function ProductDetail() {
                 </div>
                 {openWeight && (
                   <div className="absolute md:bottom-0 md:w-32 w-full bg-white shadow-lg rounded-md p-2 mt-2">
-                    {thisProduct.size_chart?.map((size, index) => (
+                    {thisProduct?.size_chart?.map((size, index) => (
                       <p
                         key={index}
                         className="cursor-pointer hover:bg-gray-200 p-2 rounded"
-                        onClick={() => handleWeightChange(size.size?.[0]?.weight, size.total_price)}
+                        onClick={() => handleWeightChange(size.size?.[0]?.weight, size?.total_price,index)}
                       >
                         {size.size?.[0]?.weight}
                       </p>
@@ -139,11 +141,11 @@ function ProductDetail() {
             </div>
             <div className="flex gap-5 mt-5">
               <div className="flex justify-center items-center gap-5">
-                {thisProduct.size_chart?.[0]?.size.map((item) => (
+                {thisProduct.size_chart?.[index]?.size.map((item) => (
                   <h1 key={item.material.name} className="font-medium text-md">
-                    {item.material.name}: 
+                    {item?.material?.name}: 
                     <span className="ml-2 text-lg text-primary-color">
-                      {item.material.purity} Karat
+                      {item?.material?.purity} Karat
                     </span>
                   </h1>
                 ))}

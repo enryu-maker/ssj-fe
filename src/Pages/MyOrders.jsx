@@ -47,7 +47,7 @@ const MyOrders = () => {
 
       {!loading && !error && orders.length > 0 && (
         <div className="grid grid-cols-1 gap-4">
-          {orders.map((order) => (
+          {orders?.map((order) => (
             <motion.div 
               key={order.id} 
               className="bg-white rounded-lg shadow-md p-4"
@@ -56,7 +56,7 @@ const MyOrders = () => {
               transition={{ duration: 0.3 }}
             >
               <h3 className="text-lg font-semibold mb-2">Order #{order.id}</h3>
-              {order.items.map((item) => (
+              {order?.items?.map((item) => (
                 <motion.div 
                   key={item.id} 
                   className="flex flex-col sm:flex-row items-center justify-between border-b pb-2 mb-2"

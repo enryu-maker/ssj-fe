@@ -86,18 +86,18 @@ const CheckoutPage = () => {
         <div className="bg-white rounded-lg shadow-md p-4">
           <h2 className="text-lg font-semibold mb-4">Order Items</h2>
           <div className="space-y-4">
-            {cart.cartItems.map((cartItem) => (
+            {cart?.cartItems?.map((cartItem) => (
               <div key={cartItem.id} className="flex items-center justify-between border-b pb-2">
                 <div className="flex items-center space-x-4">
                   <img src={cartItem.image} alt={cartItem.name} className="w-16 h-16 rounded-md object-cover" />
                   <div>
                     <p className="font-semibold">{cartItem.name}</p>
-                    {cartItem.size_chart && cartItem.size_chart[0] && (
+                    {cartItem?.size_chart && cartItem?.size_chart[0] && (
                       <p className="text-sm text-gray-500">
-                        Weight: {cartItem.size_chart[0].size[0].weight} grams
+                        Weight: {cartItem?.size_chart[0]?.size[0]?.weight} grams
                       </p>
                     )}
-                    <p className="text-lg font-semibold">₹ {cartItem.size_chart[0].total_price.toFixed(2)}</p>
+                    <p className="text-lg font-semibold">₹ {cartItem?.size_chart[0]?.total_price?.toFixed(2)}</p>
                   </div>
                 </div>
                 <button

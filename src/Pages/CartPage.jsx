@@ -45,7 +45,7 @@ const CartPage = () => {
       ) : (
         <div className="flex flex-col md:flex-row items-center justify-around font-Raleway px-5">
           <div className="flex flex-col gap-5 py-10 overflow-y-auto md:max-w-2xl md:w-full">
-            {cart.cartItems.map((cartItem) => (
+            {cart?.cartItems?.map((cartItem) => (
               <motion.div
                 key={cartItem.id}
                 className="flex flex-col md:flex-row gap-5 items-start"
@@ -68,10 +68,10 @@ const CartPage = () => {
                   {cartItem.selectedWeight && cartItem.selectedPrice ? (
                     <>
                       <span className="text-gray-400">
-                        Weight: {cartItem.selectedWeight} grams
+                        Weight: {cartItem?.selectedWeight} grams
                       </span>
                       <p className="text-xl font-semibold">
-                        ₹ {cartItem.selectedPrice.toFixed(2)}
+                        ₹ {cartItem?.selectedPrice?.toFixed(2)}
                       </p>
                     </>
                   ) : (
@@ -139,7 +139,7 @@ const CartPage = () => {
             <div className="flex flex-col justify-between gap-5">
               <div className="flex justify-between">
                 <p className="text-sm">Sub Total</p>
-                <p className="text-sm">₹ {subtotal.toFixed(2)}</p>
+                <p className="text-sm">₹ {subtotal?.toFixed(2)}</p>
               </div>
               <div className="flex justify-between">
                 <p className="text-sm">Discount</p>
@@ -154,7 +154,7 @@ const CartPage = () => {
                   TOTAL (Incl of all Taxes.)
                 </p>
                 <p className="text-lg font-semibold text-primary-color">
-                  ₹ {subtotal.toFixed(2)}
+                  ₹ {subtotal?.toFixed(2)}
                 </p>
               </div>
               <div className="flex justify-between gap-2">

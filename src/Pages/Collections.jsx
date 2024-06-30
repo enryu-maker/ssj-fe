@@ -21,7 +21,7 @@ const Collections = () => {
         {loading && <h1>Loading...</h1>}
         {error && <h1>{error}</h1>}
         <div className='grid md:grid-cols-3 flex-col gap-5 px-5 mt-5 '>
-        {collections.map((collection) => (
+        {collections?.map((collection) => (
           <div  key={collection.id}>
             <CollectionCard {...collection} />
           </div>

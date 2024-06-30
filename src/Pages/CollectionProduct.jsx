@@ -38,7 +38,7 @@ const CollectionProduct = () => {
     <div>
       <h1 className='md:text-4xl text-2xl text-center font-semibold text-primary-color uppercase'>{collection.name}</h1>
       <div className="grid md:grid-cols-4 gap-5 p-5 mt-5">
-        {collection.batch.map(item => (
+        {collection?.batch?.map(item => (
           <div key={item.id} className="product-card">
             <ProductCard {...item.product} />
           </div>

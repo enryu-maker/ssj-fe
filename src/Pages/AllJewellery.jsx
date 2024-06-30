@@ -95,7 +95,7 @@ const AllJewellery = () => {
         </div>
         <div className="md:flex hidden items-center gap-2 flex-wrap">
           {/* Category buttons can also be shown here */}
-          {['Chains', 'Earrings', 'Necklace', 'Rings', 'Mangalsutras'].map((category) => (
+          {['Chains', 'Earrings', 'Necklace', 'Rings', 'Mangalsutras']?.map((category) => (
             <button
               key={category}
               className={`border border-primary-color px-5 py-3  text-center ${subCategory === category ? 'bg-primary-color text-white' : ''}`}
@@ -118,7 +118,7 @@ const AllJewellery = () => {
           </div>
           {showOptions && (
             <div className="absolute top-full left-0 right-0 mt-1 bg-white shadow-md rounded-md">
-              {options.map((option) => (
+              {options?.map((option) => (
                 <div
                   key={option}
                   className="p-2 cursor-pointer hover:bg-gray-100"
@@ -133,7 +133,7 @@ const AllJewellery = () => {
       </div>
       <div className="grid md:grid-cols-4 gap-5 p-5 mt-5">
         {products.length > 0 ? (
-          products.map((product) => (
+          products?.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))
         ) : (
