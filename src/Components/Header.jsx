@@ -40,11 +40,8 @@ const Header = () => {
   const user = useSelector(selectUser);
   const cart = useSelector((state) => state.cart);
   const wishlist = useSelector((state) => state.wishlist);
-
-  // TODO: Map the data in header
   const mainCategories = useSelector(selectMainCategories);
 
-  console.log(mainCategories);
 
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
@@ -80,22 +77,32 @@ const Header = () => {
         </div>
 
         <div className="flex space-x-5">
-          <button>
-            <FaFacebookF className="w-5 h-5 text-primary-color" />
-          </button>
-          <button>
-            <FaInstagram className="w-5 h-5 text-primary-color" />
-          </button>
-          <button>
-            <AiOutlineYoutube className="w-6 h-6 text-primary-color" />
-          </button>
-          <button>
-            <FaWhatsapp className="w-5 h-5 text-primary-color" />
-          </button>
-          <button>
-            <MdOutlineEmail className="w-6 h-6 text-primary-color" />
-          </button>
-        </div>
+      <a href="https://www.facebook.com/saishraddhajewellersofficial/" target="_blank" rel="noopener noreferrer">
+        <button>
+          <FaFacebookF className="w-5 h-5 text-primary-color" />
+        </button>
+      </a>
+      <a href="https://www.instagram.com/saishraddhajewellersofficial/" target="_blank" rel="noopener noreferrer">
+        <button>
+          <FaInstagram className="w-5 h-5 text-primary-color" />
+        </button>
+      </a>
+      <a href="https://www.youtube.com/channel/UCkkAllN-8Xr3n4aRjBxpfIA" target="_blank" rel="noopener noreferrer">
+        <button>
+          <AiOutlineYoutube className="w-6 h-6 text-primary-color" />
+        </button>
+      </a>
+      <a href="https://wa.me/+918446349063" target="_blank" rel="noopener noreferrer">
+        <button>
+          <FaWhatsapp className="w-5 h-5 text-primary-color" />
+        </button>
+      </a>
+      <a href="mailto:saishraddhajewellers@gmail.com">
+        <button>
+          <MdOutlineEmail className="w-6 h-6 text-primary-color" />
+        </button>
+      </a>
+    </div>
       </div>
       <div className="md:flex hidden items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  ">
         <div>
