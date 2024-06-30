@@ -38,13 +38,14 @@ const HeroSection = () => {
         }}
         navigation={true}
         modules={[Autoplay, Pagination]}
-        className='mySwiper md:h-[90vh]'
+        className='mySwiper h-auto w-full md:h-[90vh]'
       >
-        {banners.map((banner, index) => (
+        {banners?.map((banner, index) => (
           <SwiperSlide key={index}>
             <img
               src={banner.image} // Adjust according to your API response structure
               alt={banner.context || `Banner ${index + 1}`}
+              className='w-full h-full object-fill '
             />
             <div className='absolute font-Raleway left-10 right-10 md:top-44 top-10'>
               <p className='mt-5 md:text-4xl text-3xl font-light md:w-96 text-left text-white'>
