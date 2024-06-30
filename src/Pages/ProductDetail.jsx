@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { IoHeartOutline } from "react-icons/io5";
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { fetchSingleProductAsync, selectProductsError, selectProductsLoading, selectSingleProduct } from "../features/Products/AllProduct/productSlice";
 import { addToCart } from "../features/cart/cartSlice";
-import { useNavigate } from 'react-router-dom';
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 
 function ProductDetail() {
@@ -20,6 +19,7 @@ function ProductDetail() {
 
   const [activeImg, setActiveImage] = useState('');
   const [selectedWeight, setSelectedWeight] = useState('');
+  const [selectedPrice, setSelectedPrice] = useState('');
 
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId));
@@ -28,7 +28,10 @@ function ProductDetail() {
   useEffect(() => {
     if (thisProduct) {
       setActiveImage(thisProduct.image);
-      setSelectedWeight(thisProduct.size_chart?.[0]?.size?.[0]?.weight || '');
+      if (thisProduct.size_chart && thisProduct.size_chart.length > 0) {
+        setSelectedWeight(thisProduct.size_chart[0]?.size?.[0]?.weight || '');
+        setSelectedPrice(thisProduct.size_chart[0]?.total_price || '');
+      }
     }
   }, [thisProduct]);
 
@@ -37,9 +40,21 @@ function ProductDetail() {
     ...(thisProduct?.other_images ? thisProduct.other_images.map(img => img.images) : [])
   ];
 
+  // Handle weight change
+  const handleWeightChange = (weight, price) => {
+    setSelectedWeight(weight);
+    setSelectedPrice(price);
+    setOpenWeight(false);
+  };
+
   // Adding product to the cart
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
+  const handleAddToCart = () => {
+    const productWithDetails = {
+      ...thisProduct,
+      selectedWeight,
+      selectedPrice
+    };
+    dispatch(addToCart(productWithDetails));
     navigate('/cart');
   };
 
@@ -84,7 +99,7 @@ function ProductDetail() {
             <div className="mt-5 flex flex-col">
               <h1 className="text-2xl font-semibold text-black">
                 <span className="text-sm text-black">Offer Price</span> ₹
-                {thisProduct.size_chart?.[0]?.total_price}
+                {selectedPrice}
               </h1>
               <p className="text-sm">
                 Price Inclusive of all taxes. See full{" "}
@@ -109,16 +124,13 @@ function ProductDetail() {
                 </div>
                 {openWeight && (
                   <div className="absolute md:bottom-0 md:w-32 w-full bg-white shadow-lg rounded-md p-2 mt-2">
-                    {thisProduct.size_chart?.map((weight, index) => (
+                    {thisProduct.size_chart?.map((size, index) => (
                       <p
                         key={index}
                         className="cursor-pointer hover:bg-gray-200 p-2 rounded"
-                        onClick={() => {
-                          setSelectedWeight(weight.name);
-                          setOpenWeight(false);
-                        }}
+                        onClick={() => handleWeightChange(size.size?.[0]?.weight, size.total_price)}
                       >
-                        {weight.name}
+                        {size.size?.[0]?.weight}
                       </p>
                     ))}
                   </div>
@@ -127,25 +139,18 @@ function ProductDetail() {
             </div>
             <div className="flex gap-5 mt-5">
               <div className="flex justify-center items-center gap-5">
-              {/* Gold Purity: 24 Karat */}
-                {/* TODO: when wight change dynamically change the purity Or material */}
-                  {
-                    thisProduct.size_chart?.[0]?.size.map((item) => (
-                      <>
-                      <h1 className="font-medium text-md">{item.material.name}: 
-                        <span className=" ml-2 text-lg text-primary-color">
-                          {item.material.purity} Karat
-                        </span>
-                      </h1>
-                      
-                      </>
-                    ))
-                  }
-                
+                {thisProduct.size_chart?.[0]?.size.map((item) => (
+                  <h1 key={item.material.name} className="font-medium text-md">
+                    {item.material.name}: 
+                    <span className="ml-2 text-lg text-primary-color">
+                      {item.material.purity} Karat
+                    </span>
+                  </h1>
+                ))}
               </div>
             </div>
             <div className="flex flex-col md:flex-row gap-5 mt-5">
-              <button onClick={() => handleAddToCart(thisProduct)} className="border border-black w-full p-3 rounded-md cursor-pointer">
+              <button onClick={handleAddToCart} className="border border-black w-full p-3 rounded-md cursor-pointer">
                 Add To Cart
               </button>
               <button className="border bg-primary-color w-full p-3 rounded-md text-white hover:bg-red-700">

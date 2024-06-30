@@ -13,8 +13,8 @@ const CartPage = () => {
 
   // Calculate subtotal
   const subtotal = cart.cartItems.reduce((total, cartItem) => {
-    if (cartItem.size_chart && cartItem.size_chart[0]) {
-      return total + cartItem.size_chart[0].total_price * (cartItem.cartQuantity || 1);
+    if (cartItem.selectedPrice) {
+      return total + cartItem.selectedPrice * (cartItem.cartQuantity || 1);
     }
     return total;
   }, 0);
@@ -65,13 +65,13 @@ const CartPage = () => {
                       {cartItem.name}
                     </h2>
                   </div>
-                  {cartItem.size_chart && cartItem.size_chart[0] ? (
+                  {cartItem.selectedWeight && cartItem.selectedPrice ? (
                     <>
                       <span className="text-gray-400">
-                        Weight: {cartItem.size_chart[0].size[0].weight} grams
+                        Weight: {cartItem.selectedWeight} grams
                       </span>
                       <p className="text-xl font-semibold">
-                        ₹ {cartItem.size_chart[0].total_price.toFixed(2)}
+                        ₹ {cartItem.selectedPrice.toFixed(2)}
                       </p>
                     </>
                   ) : (
@@ -181,4 +181,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-

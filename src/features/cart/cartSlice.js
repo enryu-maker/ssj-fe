@@ -14,9 +14,11 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
+      const { id, selectedWeight, selectedPrice } = action.payload;
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.id === id && item.selectedWeight === selectedWeight && item.selectedPrice === selectedPrice
       );
+
       if (itemIndex >= 0) {
         state.cartItems[itemIndex].cartQuantity += 1;
         toast.info(
