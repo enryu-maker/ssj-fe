@@ -7,12 +7,10 @@ export const fetchCollectionsAsync = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await getCollections();
-      console.log(response); // Log the response to see its structure
       if (!response) {
         throw new Error("Invalid response from server");
       }
-      return response.data; // Return only the data part of the response
-     
+      return response; // Return only the data part of the response
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -24,11 +22,10 @@ export const fetchCollectionByIdAsync = createAsyncThunk(
   async (collectionId, { rejectWithValue }) => {
     try {
       const response = await getCollectionById(collectionId);
-      console.log(response);
       if (!response) {
         throw new Error("Invalid response from server");
       }
-      return response.data;
+      return response; // Return only the data part of the response
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -37,7 +34,7 @@ export const fetchCollectionByIdAsync = createAsyncThunk(
 
 const initialState = {
   data: [],
-  collection: [],
+  collection: null,
   status: "idle",
   loading: false,
   error: null,
