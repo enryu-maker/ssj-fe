@@ -3,6 +3,7 @@ import { signInWithPopup, signOut } from 'firebase/auth';
 import { auth, provider } from '../../helper/firebase';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import api from '../../helper/AxiosInstance';
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -16,7 +17,7 @@ export const createUser = createAsyncThunk(
   'auth/createUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/auth/login/', userData, {
+      const response = await api.post('/auth/login/', userData, {
         headers: { 'Content-Type': 'application/json' },
       });
       return response.data;
@@ -63,7 +64,7 @@ export const fetchUserProfile = createAsyncThunk(
     }
 
     try {
-      const response = await axios.get('/profile/', {
+      const response = await api.get('/profile/', {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;

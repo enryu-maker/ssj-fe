@@ -7,6 +7,7 @@ import ProfileDetails from './ProfileDetails';
 import { FaGoogle } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import LoginVideo from '../assets/LoginPage.mp4'
+import { IoClose } from 'react-icons/io5';
 
 const Login = ({ setModal }) => {
   const dispatch = useDispatch();
@@ -44,10 +45,10 @@ const Login = ({ setModal }) => {
           <motion.button
             whileHover={{ rotate: -90 }}
             whileTap={{ scale: 0.85 }}
-            className="absolute top-4 right-4 p-1 bg-transparent border-0 text-black text-3xl leading-none font-semibold outline-none focus:outline-none"
+            className="absolute top-1 right-1 -p-1 bg-transparent border-0 text-black text-3xl leading-none font-semibold outline-none focus:outline-none"
             onClick={setModal}
-          >
-            <RxCross2 className="text-primary-color" />
+          > 
+            <IoClose className="text-gray-500 cursor-pointer" />
           </motion.button>
           <motion.div
             className="flex-1 max-w-md p-4"
