@@ -5,34 +5,35 @@ import { LiaUserEditSolid } from "react-icons/lia";
 import { motion } from "framer-motion";
 import { fetchUserProfile, selectUser, signOutUser, updateUserProfile } from "../features/Auth/authSlice";
 import Spinner from '../Components/Spinner';
+import Avatar from '../assets/avatar.jpeg'; // Default fallback image
 
 const ProfileDetails = ({ setModal }) => {
   const dispatch = useDispatch();
   const profile = useSelector(selectUser);
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState(profile ? profile.name : '');
-  const [email, setEmail] = useState(profile ? profile.email : '');
-  const [mobile, setMobile] = useState(profile ? profile.mobile : '');
-  const [panCard, setPanCard] = useState(profile ? profile.panCard : '');
-  const [address, setAddress] = useState(profile ? profile.address : '');
-  const [gst, setGst] = useState(profile ? profile.gst : '');
-  const [imagePreview, setImagePreview] = useState(profile ? profile.photo : '');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [panCard, setPanCard] = useState('');
+  const [address, setAddress] = useState('');
+  const [gst, setGst] = useState('');
+  const [imagePreview, setImagePreview] = useState(Avatar); // Default to Avatar
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchUserProfile()); // Fetch user details when component mounts
+    dispatch(fetchUserProfile());
   }, [dispatch]);
 
   useEffect(() => {
     if (profile) {
-      setName(profile.name);
-      setEmail(profile.email);
-      setMobile(profile.mobile);
-      setPanCard(profile.panCard);
-      setAddress(profile.address);
-      setGst(profile.gst);
-      setImagePreview(profile.photo);
+      setName(profile.name || '');
+      setEmail(profile.email || '');
+      setMobile(profile.mobile_number || '');
+      setPanCard(profile.pan_no || '');
+      setAddress(profile.address || '');
+      setGst(profile.gst_no || '');
+      setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar); // Ensure path is correct
     }
   }, [profile]);
 
@@ -45,20 +46,33 @@ const ProfileDetails = ({ setModal }) => {
   };
 
   const handleSave = () => {
-    const updatedProfile = { name, email, mobile, panCard, address, gst, photo: imagePreview };
-    // dispatch(updateUserProfile(updatedProfile));
-    setIsEditing(false);
+    if (validate()) {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('address', address);
+      formData.append('pan_no', panCard);
+      formData.append('gst_no', gst);
+      formData.append('mobile_number', mobile);
+
+      // Append the image file or use existing photo URL if no new file is selected
+      if (image) {
+        formData.append('photo', image); 
+      } 
+
+      dispatch(updateUserProfile(formData));
+      setIsEditing(false);
+    }
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setIsLoading(true); // Show loading spinner
+      setIsLoading(true);
       setImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
-        setIsLoading(false); // Hide loading spinner
+        setIsLoading(false);
       };
       reader.readAsDataURL(file);
     }
@@ -66,18 +80,22 @@ const ProfileDetails = ({ setModal }) => {
 
   const handleCancel = () => {
     setIsEditing(false);
-    // Reset fields to original profile data
-    setName(profile.name);
-    setEmail(profile.email);
-    setMobile(profile.mobile);
-    setPanCard(profile.panCard);
-    setAddress(profile.address);
-    setGst(profile.gst);
-    setImagePreview(profile.photo);
+    setName(profile.name || '');
+    setEmail(profile.email || '');
+    setMobile(profile.mobile_number || '');
+    setPanCard(profile.pan_no || '');
+    setAddress(profile.address || '');
+    setGst(profile.gst_no || '');
+    setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar); // Ensure path is correct
+  };
+
+  const validate = () => {
+    // Add validation logic if needed
+    return true;
   };
 
   if (!profile) {
-    return null; // Render nothing if profile data is not available yet
+    return <div>Loading...</div>;
   }
 
   return (
@@ -104,6 +122,7 @@ const ProfileDetails = ({ setModal }) => {
                 src={imagePreview}
                 alt="Profile"
                 className="w-full h-full object-cover rounded-full"
+                onError={(e) => e.target.src = Avatar} // Fallback to Avatar if image fails to load
               />
             )}
             {isEditing && (
@@ -150,25 +169,24 @@ const ProfileDetails = ({ setModal }) => {
                   value={gst}
                   onChange={(e) => setGst(e.target.value)}
                   className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
-                  placeholder="GST (Optional)"
+                  placeholder="GST"
                 />
-                <input
-                  type="text"
+                <textarea
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
                   placeholder="Address"
                 />
-                <div className="flex gap-4 justify-center flex-wrap mt-6">
+                <div className="flex justify-center gap-4">
                   <button
                     onClick={handleSave}
-                    className="bg-primary-color text-white px-4 py-2 rounded-md shadow-lg hover:bg-primary-color-dark transition duration-300"
+                    className="bg-primary-color text-white px-4 py-2 rounded-md hover:bg-primary-color-dark transition-colors duration-300"
                   >
                     Save
                   </button>
                   <button
                     onClick={handleCancel}
-                    className="bg-gray-300 text-black px-4 py-2 rounded-md shadow-lg hover:bg-gray-400 transition duration-300"
+                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition-colors duration-300"
                   >
                     Cancel
                   </button>
@@ -232,9 +250,9 @@ const ProfileDetails = ({ setModal }) => {
                     GST: <span className="font-semibold">{gst}</span>
                   </motion.h2>
                 )}
-                <div className="flex gap-4 justify-center flex-wrap mt-6">
+                <div className="flex justify-center gap-4">
                   <motion.button
-                    className="flex items-center gap-2 bg-primary-color text-white rounded-md px-4 py-2 shadow-lg hover:bg-primary-color-dark transition duration-300"
+                    className="bg-primary-color text-white px-4 py-2 rounded-md hover:bg-primary-color-dark transition-colors duration-300"
                     onClick={handleEdit}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -243,7 +261,7 @@ const ProfileDetails = ({ setModal }) => {
                     <LiaUserEditSolid className="text-xl md:text-2xl" />
                   </motion.button>
                   <motion.button
-                    className="flex items-center gap-2 bg-primary-color text-white rounded-md px-4 py-2 shadow-lg hover:bg-primary-color-dark transition duration-300"
+                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-300"
                     onClick={handleLogout}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { auth, provider } from '../../helper/firebase';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import api from '../../helper/AxiosInstance';
 
@@ -33,8 +32,8 @@ export const signInWithGoogle = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const result = await signInWithPopup(auth, provider);
-      const { displayName, email, photoURL } = result.user;
-      const user = { name: displayName, email, photo: photoURL };
+      const { displayName, email } = result.user;
+      const user = { name: displayName, email };
 
       // Send user data to your API
       const apiResponse = await dispatch(createUser(user));
@@ -67,6 +66,34 @@ export const fetchUserProfile = createAsyncThunk(
       const response = await api.get('/profile/', {
         headers: { Authorization: `Bearer ${token}` },
       });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Async thunk to update user profile with FormData
+export const updateUserProfile = createAsyncThunk(
+  'auth/updateUserProfile',
+  async (profileData, { rejectWithValue }) => {
+    try {
+      // Create FormData object
+      const formData = new FormData();
+      for (const key in profileData) {
+        if (profileData[key]) {
+          formData.append(key, profileData[key]);
+        }
+      }
+      
+      // Send FormData in POST request
+      const response = await api.post('/auth/edit-profile/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+      });
+      
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -149,6 +176,17 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
