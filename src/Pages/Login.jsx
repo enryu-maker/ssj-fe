@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { RxCross2 } from 'react-icons/rx';
+import { IoClose } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInWithGoogle, selectUser, selectAuthError, selectLoading, setUser } from '../features/Auth/authSlice';
 import ProfileDetails from './ProfileDetails';
 import { FaGoogle } from 'react-icons/fa';
 import PropTypes from 'prop-types';
-import LoginVideo from '../assets/LoginPage.mp4'
-import { IoClose } from 'react-icons/io5';
+import LoginVideo from '../assets/LoginPage.mp4';
 
 const Login = ({ setModal }) => {
   const dispatch = useDispatch();
@@ -58,10 +57,12 @@ const Login = ({ setModal }) => {
           >
             <video
               src={LoginVideo}
-              className="rounded-lg w-full h-1/2"
+              className="rounded-lg w-full h-auto"
               autoPlay
               loop
               muted
+              playsInline
+              style={{ pointerEvents: 'none' }} // Prevent video interaction
             />
           </motion.div>
           <motion.div
