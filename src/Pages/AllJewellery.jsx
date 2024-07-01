@@ -140,7 +140,7 @@ const AllJewellery = () => {
           <div>No products found.</div>
         )}
       </div>
-      <div className="flex justify-between items-center mt-5">
+      <div className="flex justify-between items-center mt-5 gap-5">
         <button
           className="border border-black p-2 md:w-1/6 w-full rounded-md disabled:cursor-not-allowed hover:bg-primary-color hover:text-white"
           onClick={() => handlePageChange(currentPage - 1)}
