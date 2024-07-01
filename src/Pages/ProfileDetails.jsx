@@ -4,7 +4,7 @@ import { IoClose, IoLogOutOutline } from "react-icons/io5";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { motion } from "framer-motion";
 import { fetchUserProfile, selectUser, signOutUser, updateUserProfile } from "../features/Auth/authSlice";
-import Spinner from '../Components/Spinner'; 
+import Spinner from '../Components/Spinner';
 
 const ProfileDetails = ({ setModal }) => {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const ProfileDetails = ({ setModal }) => {
   const [mobile, setMobile] = useState(profile ? profile.mobile : '');
   const [panCard, setPanCard] = useState(profile ? profile.panCard : '');
   const [address, setAddress] = useState(profile ? profile.address : '');
+  const [gst, setGst] = useState(profile ? profile.gst : '');
   const [imagePreview, setImagePreview] = useState(profile ? profile.photo : '');
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +31,7 @@ const ProfileDetails = ({ setModal }) => {
       setMobile(profile.mobile);
       setPanCard(profile.panCard);
       setAddress(profile.address);
+      setGst(profile.gst);
       setImagePreview(profile.photo);
     }
   }, [profile]);
@@ -43,7 +45,7 @@ const ProfileDetails = ({ setModal }) => {
   };
 
   const handleSave = () => {
-    const updatedProfile = { name, email, mobile, panCard, address, photo: imagePreview };
+    const updatedProfile = { name, email, mobile, panCard, address, gst, photo: imagePreview };
     // dispatch(updateUserProfile(updatedProfile));
     setIsEditing(false);
   };
@@ -70,6 +72,7 @@ const ProfileDetails = ({ setModal }) => {
     setMobile(profile.mobile);
     setPanCard(profile.panCard);
     setAddress(profile.address);
+    setGst(profile.gst);
     setImagePreview(profile.photo);
   };
 
@@ -144,6 +147,13 @@ const ProfileDetails = ({ setModal }) => {
                 />
                 <input
                   type="text"
+                  value={gst}
+                  onChange={(e) => setGst(e.target.value)}
+                  className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
+                  placeholder="GST (Optional)"
+                />
+                <input
+                  type="text"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
@@ -210,6 +220,16 @@ const ProfileDetails = ({ setModal }) => {
                     transition={{ delay: 1.2, duration: 0.5 }}
                   >
                     Address: <span className="font-semibold">{address}</span>
+                  </motion.h2>
+                )}
+                {gst && (
+                  <motion.h2
+                    className="text-md md:text-lg lg:text-xl text-gray-700 mt-2 text-center"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.4, duration: 0.5 }}
+                  >
+                    GST: <span className="font-semibold">{gst}</span>
                   </motion.h2>
                 )}
                 <div className="flex gap-4 justify-center flex-wrap mt-6">
