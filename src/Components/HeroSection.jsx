@@ -45,7 +45,7 @@ const HeroSection = () => {
             <img
               src={banner.image} // Adjust according to your API response structure
               alt={banner.context || `Banner ${index + 1}`}
-              className='w-full h-full object-fill '
+              className='w-full h-full object-fill'
             /> 
           </SwiperSlide>
         ))}
