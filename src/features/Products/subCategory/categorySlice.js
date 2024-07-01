@@ -7,7 +7,6 @@ export const fetchCategoryAsync = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await getCategory();
-      console.log(response); // Log the response to see its structure
       if (!response) {
         throw new Error("Invalid response from server");
       }
@@ -23,7 +22,6 @@ export const fetchCategoryByIdAsync = createAsyncThunk(
   async (categoryId, { rejectWithValue }) => {
     try {
       const response = await getCategoryById(categoryId);
-      console.log(response.data);
       if (!response) {
         throw new Error("Invalid response from server");
       }
