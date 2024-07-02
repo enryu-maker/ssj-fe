@@ -162,7 +162,7 @@ const Header = () => {
             <div>
               <ul className="relative parent cursor-pointer md:flex items-center  hidden   ">
                 <Link
-                  to="#/"
+                  to="/dashboard/profile"
                   style={{ color: "#994e4f" }}
                   className=" flex flex-col items-center uppercase underlineAni text-sm delay-100 transition-all ease-linear hover:scale-[1.1] "
                 >
@@ -175,14 +175,14 @@ const Header = () => {
                     {/* TODO: check user details completed or not show the button vice versa */}
 
                     <>
-                      <button
-                        onClick={handleDetailModal}
-                        className="  uppercase bg-primary-color text-white rounded-md w-3/4 p-2 "
+                      <Link
+                        to={'/dashboard/profile'}
+                        className="  uppercase bg-primary-color text-white text-center rounded-md w-3/4 p-2 "
                       >
                         Show Profile
-                      </button>
+                      </Link>
                       <Link
-                        to={"/my-orders"}
+                        to={"/dashboard/orders"}
                         className="  uppercase bg-primary-color text-white  text-center rounded-md w-3/4 p-2 "
                       >
                         My Order
@@ -251,7 +251,7 @@ const Header = () => {
             </ul>
           )}
           <Link
-            to="/wishlist"
+            to="/dashboard/wishlist"
             className="flex flex-col items-center uppercase text-sm text-primary-color delay-100 transition-all ease-linear hover:scale-[1.1] "
           >
             <IoHeartOutline className="w-6 h-6 text-primary-color" />

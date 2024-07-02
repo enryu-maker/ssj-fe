@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Header from "./Components/Header";
 import Contact from "./Pages/Contact";
@@ -15,7 +15,6 @@ import RefundPolicy from "./Pages/RefundPolicy";
 import AboutUs from "./Pages/AboutUs";
 import { selectIsAuthenticated } from "./features/Auth/authSlice";
 import { useSelector } from "react-redux";
-import MyOrders from "./Pages/MyOrders";
 import Collections from "./Pages/Collections";
 import CollectionProduct from "./Pages/CollectionProduct";
 import WishList from "./Pages/WishList";
@@ -23,6 +22,7 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import Categories from "./Pages/Categories";
 import TagProducts from "./Pages/TagProducts";
 import NotFoundPage from "./Pages/NotFoundPage";
+import Dashboard from './Pages/Dashboard';
 
 function App() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -43,10 +43,10 @@ function App() {
           <Route path="/dailywear" element={<DailyWear />} />
           <Route path="/stores" element={<Stores />} />
           {isAuthenticated && (
-            <Route path="/my-orders" element={<MyOrders />} />
+            <Route path="/dashboard/*" element={<Dashboard />} />
           )}
           {isAuthenticated && (
-           <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
           )}
           <Route path="/cart" element={<CartPage />} />
           <Route path="/wishlist" element={<WishList />} />

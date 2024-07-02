@@ -17,18 +17,14 @@ import {
   selectUser,
   signOutUser,
 } from "../features/Auth/authSlice";
-import Login from "../Pages/Login";
-import { HiOutlineUser } from "react-icons/hi2";
-import ProfileDetails from "../Pages/ProfileDetails";
 import {
   fetchMainCategoryAsync,
   selectMainCategories,
 } from "../features/Products/mainCategory/mainCategoriesSlice";
+import { HiOutlineUser } from "react-icons/hi2";
 
 function MobileHeader() {
   const [openNavModal, setNavModal] = useState(false);
-  const [LoginModal, setLoginModal] = useState(false);
-  const [openDetailPage, setDetailPage] = useState(false);
   const [selectedMainCategory, setSelectedMainCategory] = useState(null);
 
   const dispatch = useDispatch();
@@ -47,20 +43,17 @@ function MobileHeader() {
 
   const handleLogout = () => {
     dispatch(signOutUser());
-  };
-
-  const HandleModal = () => {
-    setLoginModal(!LoginModal);
-  };
-
-  const handleDetailModal = () => {
-    setDetailPage(!openDetailPage);
+    handleNavModal(); // Close the modal on logout
   };
 
   const handleMainCategoryClick = (mainCategory) => {
     setSelectedMainCategory(
       selectedMainCategory === mainCategory ? null : mainCategory
     );
+  };
+
+  const handleLinkClick = () => {
+    handleNavModal(); // Close the modal on link click
   };
 
   return (
@@ -100,7 +93,7 @@ function MobileHeader() {
             </Link>
 
             <Link
-              to="/wishlist"
+              to="/dashboard/wishlist"
               className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110"
             >
               <IoHeartOutline className="w-6 h-6 md:w-8 md:h-8" />
@@ -168,15 +161,14 @@ function MobileHeader() {
                   </motion.span>
                   {isAuthenticated && user ? (
                     <div className="flex items-center gap-4">
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={handleDetailModal}
+                      <Link
+                        to="/dashboard/profile"
+                        onClick={handleLinkClick}
                         className="flex flex-col items-center uppercase text-primary-color p-2 md:p-3"
                       >
                         <HiOutlineUser className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
                         Profile
-                      </motion.button>
+                      </Link>
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -189,28 +181,23 @@ function MobileHeader() {
                     </div>
                   ) : (
                     <div className="flex gap-5">
-                      <>
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          onClick={HandleModal}
-                          className="text-primary-color"
-                        >
-                          LOG IN
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          onClick={HandleModal}
-                          className="text-primary-color"
-                        >
-                          SIGN UP
-                        </motion.button>
-                      </>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="text-primary-color"
+                      >
+                        <Link to="/login">LOG IN</Link>
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="text-primary-color"
+                      >
+                        <Link to="/signup">SIGN UP</Link>
+                      </motion.button>
                     </div>
                   )}
                 </div>
- {/*  TODO: Add redirect to like shop by category */}
                 <ul className="space-y-5 text-black">
                   <motion.li
                     initial={{ opacity: 0, y: -10 }}
@@ -219,7 +206,7 @@ function MobileHeader() {
                   >
                     <Link
                       to={"/products"}
-                      onClick={handleNavModal}
+                      onClick={handleLinkClick}
                       className="flex flex-col items-start text-primary-color text-md md:text-base"
                     >
                       All Products
@@ -248,7 +235,7 @@ function MobileHeader() {
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.3 }}
-                                onClick={handleNavModal}
+                                onClick={handleLinkClick}
                               >
                                 <Link
                                   to={`/sub-category/${subcategory.id}`}
@@ -267,7 +254,7 @@ function MobileHeader() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    onClick={handleNavModal}
+                    onClick={handleLinkClick}
                   >
                     <Link to="/my-orders">My Orders</Link>
                   </motion.li>
@@ -275,7 +262,7 @@ function MobileHeader() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    onClick={handleNavModal}
+                    onClick={handleLinkClick}
                   >
                     <Link to="/digitalgold">Digital Gold</Link>
                   </motion.li>
@@ -283,7 +270,7 @@ function MobileHeader() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    onClick={handleNavModal}
+                    onClick={handleLinkClick}
                   >
                     <Link to="/faqs">FAQs</Link>
                   </motion.li>
@@ -293,40 +280,6 @@ function MobileHeader() {
           )}
         </AnimatePresence>
       </div>
-
-      {LoginModal && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none"
-        >
-          <div className="relative w-auto my-6 mx-auto max-w-4xl">
-            <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
-              <div className="relative flex-auto">
-                <Login setModal={HandleModal} />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
-
-      {openDetailPage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none"
-        >
-          <div className="relative w-auto my-6 mx-auto max-w-4xl">
-            <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
-              <div className="relative flex-auto">
-                <ProfileDetails setModal={handleDetailModal} />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
     </>
   );
 }
