@@ -33,7 +33,8 @@ const ProfileDetails = ({ setModal }) => {
       setPanCard(profile.pan_no || '');
       setAddress(profile.address || '');
       setGst(profile.gst_no || '');
-      setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar); // Ensure path is correct
+      // Update imagePreview with a fallback URL
+      setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar);
     }
   }, [profile]);
 
@@ -46,22 +47,16 @@ const ProfileDetails = ({ setModal }) => {
   };
 
   const handleSave = () => {
-    if (validate()) {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('address', address);
-      formData.append('pan_no', panCard);
-      formData.append('gst_no', gst);
-      formData.append('mobile_number', mobile);
-
-      // Append the image file or use existing photo URL if no new file is selected
-      if (image) {
-        formData.append('photo', image); 
-      } 
-
-      dispatch(updateUserProfile(formData));
-      setIsEditing(false);
-    }
+    const updatedProfile = { 
+      name, 
+      photo: imagePreview, 
+      address, 
+      pan_no: panCard, 
+      gst_no: gst, 
+      mobile_number: mobile 
+    };
+    dispatch(updateUserProfile(updatedProfile));
+    setIsEditing(false);
   };
 
   const handleImageChange = (e) => {
@@ -71,7 +66,7 @@ const ProfileDetails = ({ setModal }) => {
       setImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result);
+        setImagePreview(reader.result); // Set the preview URL
         setIsLoading(false);
       };
       reader.readAsDataURL(file);
@@ -80,18 +75,14 @@ const ProfileDetails = ({ setModal }) => {
 
   const handleCancel = () => {
     setIsEditing(false);
+    // Reset form values to original profile data
     setName(profile.name || '');
     setEmail(profile.email || '');
     setMobile(profile.mobile_number || '');
     setPanCard(profile.pan_no || '');
     setAddress(profile.address || '');
     setGst(profile.gst_no || '');
-    setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar); // Ensure path is correct
-  };
-
-  const validate = () => {
-    // Add validation logic if needed
-    return true;
+    setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar);
   };
 
   if (!profile) {
@@ -177,7 +168,7 @@ const ProfileDetails = ({ setModal }) => {
                   className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
                   placeholder="Address"
                 />
-                <div className="flex justify-center gap-4">
+                <div className="flex gap-4">
                   <button
                     onClick={handleSave}
                     className="bg-primary-color text-white px-4 py-2 rounded-md hover:bg-primary-color-dark transition-colors duration-300"
@@ -250,7 +241,7 @@ const ProfileDetails = ({ setModal }) => {
                     GST: <span className="font-semibold">{gst}</span>
                   </motion.h2>
                 )}
-                <div className="flex justify-center gap-4">
+                <div className="flex gap-4">
                   <motion.button
                     className="bg-primary-color text-white px-4 py-2 rounded-md hover:bg-primary-color-dark transition-colors duration-300"
                     onClick={handleEdit}
