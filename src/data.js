@@ -29,28 +29,20 @@ export const ShopByGenderData = [
 
 export const UsefulLinks = [
   {
-    name: 'Delivery Information',
-    link: '',
+    name: 'All jewellery',
+    link: '/products',
   },
   {
-    name: 'International Shipping',
-    link: '',
+    name: 'Collections',
+    link: '/collections',
   },
   {
-    name: 'Payment Options',
-    link: '',
-  },
-  {
-    name: 'Track your Order',
-    link: '',
-  },
-  {
-    name: 'Returns',
-    link: '',
+    name: 'Orders',
+    link: '/dashboard/orders',
   },
   {
     name: 'Find a Store',
-    link: '',
+    link: '/stores',
   },
 ];
 
@@ -86,16 +78,8 @@ export const Information = [
     link: '',
   },
   {
-    name: 'Blog',
-    link: '',
-  },
-  {
-    name: 'Offers & Contest Details',
-    link: '',
-  },
-  {
     name: 'Help & FAQs',
-    link: '',
+    link: '/contacts',
   },
   {
     name: 'About SSJ',

@@ -7,7 +7,7 @@ import {
   IoSearchOutline,
 } from "react-icons/io5";
 import { GoArrowLeft } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import DailyWear from "../assets/EarringsIcon.svg";
 import Logo from "../assets/Logo.png";
@@ -22,8 +22,10 @@ import {
   selectMainCategories,
 } from "../features/Products/mainCategory/mainCategoriesSlice";
 import { HiOutlineUser } from "react-icons/hi2";
+import Login from "../Pages/Login";
 
 function MobileHeader() {
+  const [LoginModal, setLoginModal] = useState(false);
   const [openNavModal, setNavModal] = useState(false);
   const [selectedMainCategory, setSelectedMainCategory] = useState(null);
 
@@ -32,18 +34,31 @@ function MobileHeader() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const cart = useSelector((state) => state.cart);
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
-  }, [dispatch]);
+  }, [dispatch, openNavModal]); // Update useEffect dependencies
 
-  const handleNavModal = () => {
-    setNavModal(!openNavModal);
+  useEffect(() => {
+    if (isAuthenticated) {
+      setNavModal(false); // Close nav modal on login
+    }
+  }, [isAuthenticated]);
+
+  const HandleModal = () => {
+    setLoginModal(!LoginModal);
+  };
+
+  const handleNavModal = (state) => {
+    setNavModal(state !== undefined ? state : !openNavModal);
   };
 
   const handleLogout = () => {
     dispatch(signOutUser());
-    handleNavModal(); // Close the modal on logout
+    handleNavModal(false); // Close the modal on logout
+    navigate("/");
+    
   };
 
   const handleMainCategoryClick = (mainCategory) => {
@@ -53,7 +68,7 @@ function MobileHeader() {
   };
 
   const handleLinkClick = () => {
-    handleNavModal(); // Close the modal on link click
+    handleNavModal(false); // Close the modal on link click
   };
 
   return (
@@ -69,7 +84,7 @@ function MobileHeader() {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={handleNavModal}
+              onClick={() => handleNavModal()}
             >
               <CiMenuFries className="w-8 h-8 md:w-10 md:h-10 cursor-pointer" />
             </motion.button>
@@ -89,7 +104,11 @@ function MobileHeader() {
               to="/dailywear"
               className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110"
             >
-              <img src={DailyWear} alt="" className="w-6 h-6 md:w-8 md:h-8" />
+              <img
+                src={DailyWear}
+                alt=""
+                className="w-6 h-6 md:w-8 md:h-8"
+              />
             </Link>
 
             <Link
@@ -103,9 +122,9 @@ function MobileHeader() {
               className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110 relative"
             >
               <IoCartOutline className="w-6 h-6 md:w-8 md:h-8" />
-             
-              <span className="absolute left-3 md:left-5 -top-1 md:-top-2 w-3 h-3 md:w-4 md:h-4 bg-primary-color text-white flex items-center justify-center rounded-full text-xs ">
-              {cart.cartItems.length} 
+
+              <span className="absolute left-3 md:left-5 -top-1 md:-top-2 w-3 h-3 md:w-4 md:h-4 bg-primary-color text-white flex items-center justify-center rounded-full text-xs">
+                {cart.cartItems.length}
               </span>
             </Link>
           </div>
@@ -144,7 +163,7 @@ function MobileHeader() {
               <motion.button
                 whileHover={{ rotate: -360 }}
                 whileTap={{ scale: 0.85 }}
-                onClick={handleNavModal}
+                onClick={() => handleNavModal(false)}
                 className="absolute top-4 md:top-8 right-8 md:right-12"
               >
                 <GoArrowLeft className="text-3xl md:text-4xl text-primary-color" />
@@ -185,15 +204,17 @@ function MobileHeader() {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         className="text-primary-color"
+                        onClick={HandleModal}
                       >
-                        <Link to="/login">LOG IN</Link>
+                        LOG IN
                       </motion.button>
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         className="text-primary-color"
+                        onClick={HandleModal}
                       >
-                        <Link to="/signup">SIGN UP</Link>
+                        SIGN UP
                       </motion.button>
                     </div>
                   )}
@@ -280,6 +301,24 @@ function MobileHeader() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Modal Login */}
+      {LoginModal && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none"
+        >
+          <div className="relative w-auto my-6 mx-auto max-w-md">
+            <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
+              <div className="relative flex-auto">
+                <Login setModal={HandleModal} />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </>
   );
 }

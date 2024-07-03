@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile, selectUser, updateUserProfile } from "../features/Auth/authSlice";
-import Avatar from '../assets/avatar.jpeg'; // Default fallback image
+import Avatar from '../assets/avatar.jpeg'; // Ensure this path is correct for your Avatar image
 
 const ProfileDetails = () => {
   const dispatch = useDispatch();
@@ -30,6 +30,8 @@ const ProfileDetails = () => {
       setPanCard(profile.pan_no || '');
       setAddress(profile.address || '');
       setGst(profile.gst_no || '');
+
+      // Set imagePreview to Avatar if no profile photo is available
       setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar);
     }
   }, [profile]);
@@ -43,7 +45,7 @@ const ProfileDetails = () => {
       newErrors.mobile = "Please enter a valid 10-digit mobile number.";
     }
 
-    if (!panPattern.test(panCard)) {
+    if (panPattern.test(panCard)) {
       newErrors.panCard = "Please enter a valid PAN card number.";
     }
 
@@ -85,15 +87,17 @@ const ProfileDetails = () => {
   };
 
   const handleCancel = () => {
-    setIsEditing(false);
     setName(profile.name || '');
     setEmail(profile.email || '');
     setMobile(profile.mobile_number || '');
     setPanCard(profile.pan_no || '');
     setAddress(profile.address || '');
     setGst(profile.gst_no || '');
+
+    // Reset imagePreview to Avatar if no profile photo is available
     setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar);
-    setErrors({}); // Clear errors on cancel
+
+    setErrors({}); // Clear errors
   };
 
   const handleEdit = () => {
@@ -130,35 +134,64 @@ const ProfileDetails = () => {
                   )}
                 </div>
                 <div className="flex flex-col md:w-1/2 space-y-4">
-                  {[
-                    { label: "Name", value: name, setter: setName },
-                    { label: "Email", value: email, setter: () => {}, readonly: true }, // Email is readonly
-                    { label: "Mobile", value: mobile, setter: setMobile, error: errors.mobile },
-                    { label: "PAN Card", value: panCard, setter: setPanCard, error: errors.panCard },
-                    { label: "Address", value: address, setter: setAddress },
-                    { label: "GST", value: gst, setter: setGst },
-                  ].map(({ label, value, setter, readonly, error }, index) => (
-                    <div className="flex flex-col" key={index}>
-                      <label className="text-gray-700 mb-2 text-lg">{label}</label>
-                      {readonly ? (
-                        <div className="border border-gray-300 p-3 rounded-md bg-gray-100 text-gray-700 text-lg w-full">
-                          <span>{value}</span>
-                        </div>
-                      ) : (
-                        <div>
-                          <input
-                            type="text"
-                            value={value}
-                            onChange={(e) => setter(e.target.value)}
-                            readOnly={label === "Email"} // Make email field readonly
-                            className={`border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 text-lg w-full ${error ? 'border-red-500' : ''}`} // Make other fields full width
-                            placeholder={label}
-                          />
-                          {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-                        </div>
-                      )}
+                  <div className="flex flex-col">
+                    <label className="text-gray-700 mb-2 text-lg">Name</label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 text-lg w-full"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-gray-700 mb-2 text-lg">Email</label>
+                    <div className="border border-gray-300 p-3 rounded-md bg-gray-100 text-gray-700 text-lg w-full">
+                      <span>{email}</span>
                     </div>
-                  ))}
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-gray-700 mb-2 text-lg">Mobile</label>
+                    <input
+                      type="text"
+                      value={mobile}
+                      onChange={(e) => setMobile(e.target.value)}
+                      className={`border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 text-lg w-full ${errors.mobile ? 'border-red-500' : ''}`}
+                      placeholder="Mobile"
+                    />
+                    {errors.mobile && <p className="text-red-500 text-sm mt-1">{errors.mobile}</p>}
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-gray-700 mb-2 text-lg">PAN Card</label>
+                    <input
+                      type="text"
+                      value={panCard}
+                      onChange={(e) => setPanCard(e.target.value)}
+                      className={`border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 text-lg w-full ${errors.panCard ? 'border-red-500' : ''}`}
+                      placeholder="PAN Card"
+                    />
+                    {errors.panCard && <p className="text-red-500 text-sm mt-1">{errors.panCard}</p>}
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-gray-700 mb-2 text-lg">Address</label>
+                    <input
+                      type="text"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      className="border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 text-lg w-full"
+                      placeholder="Address"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-gray-700 mb-2 text-lg">GST</label>
+                    <input
+                      type="text"
+                      value={gst}
+                      onChange={(e) => setGst(e.target.value)}
+                      className="border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 text-lg w-full"
+                      placeholder="GST"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row justify-end space-x-0 md:space-x-4 mt-6 sm:mt-8">
@@ -179,16 +212,28 @@ const ProfileDetails = () => {
           ) : (
             <div className="flex flex-col-reverse md:flex-row gap-6">
               <div className="flex flex-col space-y-4 md:w-1/2">
-                <p className="text-gray-700 text-lg"><strong>Name:</strong> {profile.name || '-'}</p>
-                <p className="text-gray-700 text-lg"><strong>Email:</strong> {profile.email || '-'}</p>
-                <p className="text-gray-700 text-lg"><strong>Mobile:</strong> {profile.mobile_number || '-'}</p>
-                <p className="text-gray-700 text-lg"><strong>PAN Card:</strong> {profile.pan_no || '-'}</p>
-                <p className="text-gray-700 text-lg"><strong>Address:</strong> {profile.address || '-'}</p>
-                <p className="text-gray-700 text-lg"><strong>GST:</strong> {profile.gst_no || '-'}</p>
+                {profile.name && (
+                  <p className="text-gray-700 text-lg"><strong>Name:</strong> {profile.name}</p>
+                )}
+                {profile.email && (
+                  <p className="text-gray-700 text-lg"><strong>Email:</strong> {profile.email}</p>
+                )}
+                {profile.mobile_number && (
+                  <p className="text-gray-700 text-lg"><strong>Mobile:</strong> {profile.mobile_number}</p>
+                )}
+                {profile.pan_no && (
+                  <p className="text-gray-700 text-lg"><strong>PAN Card:</strong> {profile.pan_no}</p>
+                )}
+                {profile.address && (
+                  <p className="text-gray-700 text-lg"><strong>Address:</strong> {profile.address}</p>
+                )}
+                {profile.gst_no && (
+                  <p className="text-gray-700 text-lg"><strong>GST:</strong> {profile.gst_no}</p>
+                )}
               </div>
               <div className="flex justify-center items-center md:w-1/2">
                 <img
-                  src={imagePreview}
+                  src={profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar}
                   alt="Profile"
                   className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover"
                 />

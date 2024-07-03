@@ -7,7 +7,7 @@ import {
   IoSearchOutline,
 } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Login from "../Pages/Login";
 import { MdOutlinePhone, MdOutlineEmail } from "react-icons/md";
@@ -41,6 +41,7 @@ const Header = () => {
   const cart = useSelector((state) => state.cart);
   const wishlist = useSelector((state) => state.wishlist);
   const mainCategories = useSelector(selectMainCategories);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(signOutUser());
+    navigate("/");
   };
 
   const HandleModal = () => {
