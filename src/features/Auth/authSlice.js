@@ -78,25 +78,28 @@ export const updateUserProfile = createAsyncThunk(
   'auth/updateUserProfile',
   async (profileData, { rejectWithValue }) => {
     try {
-      // Create FormData object
-      const formData = new FormData();
-      for (const key in profileData) {
-        if (profileData[key]) {
-          formData.append(key, profileData[key]);
-        }
-      }
-      
       // Send FormData in POST request
-      const response = await api.post('/auth/edit-profile/', formData, {
+      const response = await api.post('/auth/edit-profile/', profileData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         },
       });
-      
+
+      // Display success toast
+      toast.success('Profile updated successfully!', { position: 'bottom-left' });
+
+      // Debugging: log response
+      console.log('Response:', response.data);
+
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      // Display error toast
+      toast.error('Failed to update profile!', { position: 'bottom-left' });
+
+      // Debugging: log error details
+      console.error('Update profile error:', error.response ? error.response.data : error.message);
+      return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
 );
