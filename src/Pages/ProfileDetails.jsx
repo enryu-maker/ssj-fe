@@ -13,7 +13,7 @@ const ProfileDetails = () => {
   const [panCard, setPanCard] = useState('');
   const [address, setAddress] = useState('');
   const [gst, setGst] = useState('');
-  const [imagePreview, setImagePreview] = useState(Avatar); // Default to Avatar
+  const [imagePreview, setImagePreview] = useState(null); // Initialize as null
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({}); // Object to hold validation errors
@@ -45,7 +45,7 @@ const ProfileDetails = () => {
       newErrors.mobile = "Please enter a valid 10-digit mobile number.";
     }
 
-    if (panPattern.test(panCard)) {
+    if (!panPattern.test(panCard)) {
       newErrors.panCard = "Please enter a valid PAN card number.";
     }
 
@@ -130,7 +130,7 @@ const ProfileDetails = () => {
                       <div className="loader"></div>
                     </div>
                   ) : (
-                    <img src={imagePreview} alt="Profile Preview" className="mt-4 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover" />
+                    <img src={imagePreview || Avatar} alt="Profile Preview" className="mt-4 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover" />
                   )}
                 </div>
                 <div className="flex flex-col md:w-1/2 space-y-4">
@@ -233,7 +233,7 @@ const ProfileDetails = () => {
               </div>
               <div className="flex justify-center items-center md:w-1/2">
                 <img
-                  src={profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar}
+                  src={imagePreview || Avatar}
                   alt="Profile"
                   className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover"
                 />
