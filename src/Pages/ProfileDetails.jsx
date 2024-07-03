@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IoLogOutOutline } from "react-icons/io5";
-import { LiaUserEditSolid } from "react-icons/lia";
-import { fetchUserProfile, selectUser, signOutUser, updateUserProfile } from "../features/Auth/authSlice";
+import { fetchUserProfile, selectUser, updateUserProfile } from "../features/Auth/authSlice";
 import Avatar from '../assets/avatar.jpeg'; // Default fallback image
-import Spinner from '../Components/Spinner';
 
 const ProfileDetails = () => {
   const dispatch = useDispatch();
@@ -35,10 +32,6 @@ const ProfileDetails = () => {
       setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar);
     }
   }, [profile]);
-
-  const handleLogout = () => {
-    dispatch(signOutUser());
-  };
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -83,142 +76,102 @@ const ProfileDetails = () => {
   };
 
   if (!profile) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return <div className="flex justify-center items-center h-screen text-lg text-gray-600">Loading...</div>;
   }
 
   return (
     <div className="w-full min-h-screen bg-gray-100 flex flex-col items-center pt-12 px-4 md:px-8 lg:px-12">
-      <div className="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6 md:p-8 lg:p-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Profile Image Section */}
-          <div className="flex justify-center items-center">
-            <div className="relative flex items-center justify-center overflow-hidden rounded-full border-4 border-primary-color w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 bg-gray-200">
-              {isLoading ? (
-                <Spinner />
-              ) : (
-                <img
-                  src={imagePreview}
-                  alt="Profile"
-                  className="w-full h-full object-cover rounded-full"
-                  onError={(e) => e.target.src = Avatar}
-                />
-              )}
-              {isEditing && (
-                <label className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black bg-opacity-40 rounded-full">
+      <div className="max-w-4xl w-full bg-white rounded-lg p-8">
+        <h1 className="text-3xl font-semibold text-primary-color mb-8">Account Overview</h1>
+        <div className="bg-white p-8 rounded-lg">
+          <h2 className="text-2xl font-semibold mb-6">Personal Information</h2>
+          {isEditing ? (
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  { label: "Name", value: name, setter: setName },
+                  { label: "Email", value: email, setter: () => {}, readonly: true },
+                  { label: "Mobile", value: mobile, setter: setMobile },
+                  { label: "PAN Card", value: panCard, setter: setPanCard },
+                  { label: "Address", value: address, setter: setAddress },
+                  { label: "GST", value: gst, setter: setGst },
+                ].map(({ label, value, setter, readonly }, index) => (
+                  <div className="flex flex-col" key={index}>
+                    <label className="text-gray-700 mb-2 text-lg">{label}</label>
+                    {readonly ? (
+                      <div className="border border-gray-300 p-3 w-full rounded-md bg-gray-100 text-gray-700 text-lg">
+                        <span>{value}</span>
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        value={value}
+                        onChange={(e) => setter(e.target.value)}
+                        className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 text-lg"
+                        placeholder={label}
+                      />
+                    )}
+                  </div>
+                ))}
+                <div className="flex flex-col">
+                  <label className="text-gray-700 mb-2 text-lg">Profile Image</label>
                   <input
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer"
+                    className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300"
                   />
-                  <LiaUserEditSolid className="text-3xl text-white" />
-                </label>
-              )}
+                  {isLoading ? (
+                    <div className="flex justify-center items-center mt-2">
+                      <div className="loader"></div>
+                    </div>
+                  ) : (
+                    <img src={imagePreview} alt="Profile Preview" className="mt-4 w-32 h-32 rounded-full object-cover" />
+                  )}
+                </div>
+              </div>
+              <div className="flex justify-end space-x-4 mt-8">
+                <button
+                  onClick={handleCancel}
+                  className="bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-700 transition-colors duration-300 text-lg"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSave}
+                  className="bg-primary-color text-white py-2 px-6 rounded-md hover:bg-primary-dark transition-colors duration-300 text-lg"
+                >
+                  Save
+                </button>
+              </div>
             </div>
-          </div>
-          {/* Profile Details Section */}
-          <div className="flex flex-col justify-center">
-            {isEditing ? (
-              <>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
-                  placeholder="Name"
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <p className="text-gray-700 text-lg"><strong>Name:</strong> {profile.name || '-'}</p>
+                <p className="text-gray-700 text-lg"><strong>Email:</strong> {profile.email || '-'}</p>
+                <p className="text-gray-700 text-lg"><strong>Mobile:</strong> {profile.mobile_number || '-'}</p>
+                <p className="text-gray-700 text-lg"><strong>PAN Card:</strong> {profile.pan_no || '-'}</p>
+                <p className="text-gray-700 text-lg"><strong>Address:</strong> {profile.address || '-'}</p>
+                <p className="text-gray-700 text-lg"><strong>GST:</strong> {profile.gst_no || '-'}</p>
+              </div>
+              <div className="flex justify-center items-center">
+                <img
+                  src={imagePreview}
+                  alt="Profile"
+                  className="w-32 h-32 rounded-full object-cover"
                 />
-                <div className="border border-gray-300 p-3 w-full rounded-md bg-gray-100 text-gray-700 mb-4">
-                  <span>{email}</span>
-                </div>
-                <input
-                  type="tel"
-                  value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
-                  className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
-                  placeholder="Mobile"
-                />
-                <input
-                  type="text"
-                  value={panCard}
-                  onChange={(e) => setPanCard(e.target.value)}
-                  className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
-                  placeholder="PAN Card"
-                />
-                <input
-                  type="text"
-                  value={gst}
-                  onChange={(e) => setGst(e.target.value)}
-                  className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
-                  placeholder="GST"
-                />
-                <textarea
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="border border-gray-300 p-3 w-full rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 mb-4"
-                  placeholder="Address"
-                />
-                <div className="flex gap-4 mt-6">
-                  <button
-                    onClick={handleSave}
-                    className="bg-primary-color text-white px-4 py-2 rounded-md hover:bg-primary-color-dark transition-colors duration-300"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={handleCancel}
-                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition-colors duration-300"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-primary-color mb-2">
-                  {name}
-                </h1>
-                <h2 className="text-sm md:text-md lg:text-lg text-gray-700 mb-2">
-                  Email: <span className="font-semibold">{email}</span>
-                </h2>
-                {mobile && (
-                  <h2 className="text-sm md:text-md lg:text-lg text-gray-700 mb-2">
-                    Mobile: <span className="font-semibold">{mobile}</span>
-                  </h2>
-                )}
-                {panCard && (
-                  <h2 className="text-sm md:text-md lg:text-lg text-gray-700 mb-2">
-                    PAN Card: <span className="font-semibold">{panCard}</span>
-                  </h2>
-                )}
-                {address && (
-                  <h2 className="text-sm md:text-md lg:text-lg text-gray-700 mb-2">
-                    Address: <span className="font-semibold">{address}</span>
-                  </h2>
-                )}
-                {gst && (
-                  <h2 className="text-sm md:text-md lg:text-lg text-gray-700 mb-2">
-                    GST: <span className="font-semibold">{gst}</span>
-                  </h2>
-                )}
-                <div className="flex flex-col md:flex-row gap-4 mt-6 text-center">
-                  <button
-                    onClick={handleEdit}
-                    className="bg-primary-color text-white  px-4 py-2 rounded-md hover:bg-primary-color-dark transition-colors duration-300 flex items-center"
-                  >
-                    Edit
-                    <LiaUserEditSolid className="ml-2 text-lg" />
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-300 flex items-center"
-                  >
-                    Logout
-                    <IoLogOutOutline className="ml-2 text-lg" />
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
+              </div>
+            </div>
+          )}
+          {!isEditing && (
+            <button
+              onClick={handleEdit}
+              className="mt-8 bg-primary-color text-white py-2 px-6 rounded-md hover:bg-primary-dark transition-colors duration-300 text-lg"
+            >
+              Edit Details
+            </button>
+          )}
         </div>
       </div>
     </div>
