@@ -16,6 +16,7 @@ const ProfileDetails = () => {
   const [imagePreview, setImagePreview] = useState(Avatar); // Default to Avatar
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({}); // Object to hold validation errors
 
   useEffect(() => {
     dispatch(fetchUserProfile());
@@ -33,11 +34,26 @@ const ProfileDetails = () => {
     }
   }, [profile]);
 
-  const handleEdit = () => {
-    setIsEditing(true);
+  const validateInputs = () => {
+    const newErrors = {};
+    const mobilePattern = /^[6-9]\d{9}$/; // Mobile number should be a 10-digit number starting with 6-9
+    const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/; // PAN card format (e.g., ABCDE1234F)
+
+    if (!mobilePattern.test(mobile)) {
+      newErrors.mobile = "Please enter a valid 10-digit mobile number.";
+    }
+
+    if (!panPattern.test(panCard)) {
+      newErrors.panCard = "Please enter a valid PAN card number.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Return true if no errors
   };
 
   const handleSave = () => {
+    if (!validateInputs()) return; // Stop if validation fails
+
     const formData = new FormData();
     formData.append('name', name);
     formData.append('email', email); // Ensure email is included
@@ -77,6 +93,11 @@ const ProfileDetails = () => {
     setAddress(profile.address || '');
     setGst(profile.gst_no || '');
     setImagePreview(profile.photo ? `https://api.saishraddhajewellers.com${profile.photo}` : Avatar);
+    setErrors({}); // Clear errors on cancel
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
   };
 
   if (!profile) {
@@ -111,27 +132,25 @@ const ProfileDetails = () => {
                 <div className="flex flex-col md:w-1/2 space-y-6">
                   {[
                     { label: "Name", value: name, setter: setName },
-                    { label: "Email", value: email, setter: () => {}, readonly: true },
-                    { label: "Mobile", value: mobile, setter: setMobile },
-                    { label: "PAN Card", value: panCard, setter: setPanCard },
+                    { label: "Email", value: email, setter: setEmail },
+                    { label: "Mobile", value: mobile, setter: setMobile, error: errors.mobile },
+                    { label: "PAN Card", value: panCard, setter: setPanCard, error: errors.panCard },
                     { label: "Address", value: address, setter: setAddress },
                     { label: "GST", value: gst, setter: setGst },
-                  ].map(({ label, value, setter, readonly }, index) => (
+                  ].map(({ label, value, setter, error }, index) => (
                     <div className="flex flex-col" key={index}>
                       <label className="text-gray-700 mb-2 text-lg">{label}</label>
-                      {readonly ? (
-                        <div className="border border-gray-300 p-3 rounded-md bg-gray-100 text-gray-700 text-lg">
-                          <span>{value}</span>
-                        </div>
-                      ) : (
+                      <div>
                         <input
                           type="text"
                           value={value}
                           onChange={(e) => setter(e.target.value)}
-                          className="border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 text-lg"
+                          className={`border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-primary-color transition-colors duration-300 text-lg ${error ? 'border-red-500' : ''}`}
                           placeholder={label}
+                          readOnly={label === "Email" && !isEditing}
                         />
-                      )}
+                        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+                      </div>
                     </div>
                   ))}
                 </div>
