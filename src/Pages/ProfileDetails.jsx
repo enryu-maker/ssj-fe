@@ -45,7 +45,7 @@ const ProfileDetails = () => {
       newErrors.mobile = "Please enter a valid 10-digit mobile number.";
     }
 
-    if (!panPattern.test(panCard)) {
+    if (panPattern.test(panCard)) {
       newErrors.panCard = "Please enter a valid PAN card number.";
     }
 
