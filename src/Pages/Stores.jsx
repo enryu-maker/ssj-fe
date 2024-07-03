@@ -7,17 +7,17 @@ const Stores = () => {
   return (
     <div className='flex flex-col gap-5 font-Raleway min-h-screen'>
       <div className='flex md:flex-row flex-col gap-2 justify-around font-Raleway mt-5 px-5'>
-        <Link className='border border-primary-color rounded-md py-2 px-5'>
-          All Diamonds
+        <Link to={'/sub-category/6'} className='border border-primary-color rounded-md py-2 px-5'>
+          Mangalsutras
         </Link>
-        <Link className='border border-primary-color rounded-md py-2 px-5'>
+        <Link to={'/sub-category/4'} className='border border-primary-color rounded-md py-2 px-5'>
           Popular Pendants
         </Link>
-        <Link className='border border-primary-color rounded-md py-2 px-5'>
-          Diamond Earrings
+        <Link to={'/sub-category/3'} className='border border-primary-color rounded-md py-2 px-5'>
+           Earrings
         </Link>
         <Link
-          to={'/shop/jewellery'}
+          to={'/products'}
           className='border border-primary-color rounded-md py-2 px-5'>
           All jewellery
         </Link>
@@ -54,11 +54,7 @@ const Stores = () => {
           ))}
         </div>
       </div>
-      <div className='flex space-x-5 text-primary-color tracking-widest mt-5'>
-        <Marquee>
-          Login to website 50% off making Sai Shraddha Jewellers PVT LTD
-        </Marquee>
-      </div>
+      
     </div>
   );
 };
