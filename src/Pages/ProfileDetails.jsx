@@ -126,7 +126,7 @@ const ProfileDetails = () => {
                       <div className="loader"></div>
                     </div>
                   ) : (
-                    <img src={imagePreview} alt="Profile Preview" className="mt-4 w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover" />
+                    <img src={imagePreview} alt="Profile Preview" className="mt-4 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover" />
                   )}
                 </div>
                 <div className="flex flex-col md:w-1/2 space-y-4">
@@ -190,7 +190,7 @@ const ProfileDetails = () => {
                 <img
                   src={imagePreview}
                   alt="Profile"
-                  className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"
+                  className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover"
                 />
               </div>
             </div>
