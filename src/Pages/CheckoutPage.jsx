@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { removeFromCart } from "../features/cart/cartSlice";
+import { clearCart, removeFromCart } from "../features/cart/cartSlice";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { toast } from "react-toastify";
 
@@ -13,13 +13,13 @@ const CheckoutPage = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
-    address: "",
+    street: "",
     zipCode: "",
     city: "",
     state: "",
+    country: "",
     phoneNumber: "",
     paymentMethod: "online", // Default payment method
-    
   });
 
   const handleChange = (e) => {
@@ -35,34 +35,67 @@ const CheckoutPage = () => {
   };
 
   const handlePlaceOrder = async () => {
-    const { fullName, email, address, zipCode, city, state, phoneNumber, paymentMethod, cardNumber, expiryDate, cvv } = formData;
+    const {
+      fullName,
+      email,
+      street,
+      zipCode,
+      city,
+      state,
+      country,
+      phoneNumber,
+      paymentMethod,
+    } = formData;
 
     // Form validation
-    if (!fullName || !email || !address || !zipCode || !city || !state || !phoneNumber) {
+    if (!fullName || !email || !street || !zipCode || !city || !state || !country || !phoneNumber) {
       toast.error("Please fill in all required fields.", {
         position: 'top-center',
-      })
-      
+      });
       return;
     }
 
+    // Calculate total amount
+    const totalAmount = cart.cartItems.reduce((total, cartItem) => {
+      if (cartItem.size_chart && cartItem.size_chart[0]) {
+        return total + cartItem.size_chart[0].total_price * (cartItem.cartQuantity || 1);
+      }
+      return total;
+    }, 0);
+
     // Prepare order details
     const orderDetails = {
-      items: cart.cartItems,
-      fullName, 
-      email,
-      address: `${address}, ${city}, ${state} - ${zipCode}`,
-      phoneNumber,
+      items: cart.cartItems.map((cartItem) => ({
+        product_id: cartItem.id,
+        size_id: cartItem.size_chart[0]?.size[0]?.id,
+        quantity: cartItem.cartQuantity || 1,
+      })),
+      address: {
+        street,
+        city,
+        state,
+        country,
+        zipcode: zipCode,
+      },
+      contact_details: {
+        name: fullName,
+        contact_number: phoneNumber,
+        email,
+      },
       paymentMethod,
+      total: totalAmount, // Add total amount
     };
 
-    // try {
-    //   await dispatch(placeOrderAsync(orderDetails)).unwrap();
-    //   navigate('/checkout-success'); // Navigate to a success page or any other page you want
-    // } catch (error) {
-    //   console.error("Failed to place order: ", error);
-    //   alert("Failed to place order. Please try again later.");
-    // }
+    console.log(orderDetails);
+
+    try {
+      // await dispatch(placeOrderAsync(orderDetails)).unwrap();
+      dispatch(clearCart());
+      navigate('/order-success'); // Navigate to a success page or any other page you want
+    } catch (error) {
+      console.error("Failed to place order: ", error);
+      alert("Failed to place order. Please try again later.");
+    }
   };
 
   // Calculate subtotal
@@ -145,7 +178,7 @@ const CheckoutPage = () => {
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="fullname" className="font-semibold">Full Name</label>
+              <label htmlFor="fullName" className="font-semibold">Full Name</label>
               <input
                 type="text"
                 id="fullName"
@@ -159,20 +192,20 @@ const CheckoutPage = () => {
               <label htmlFor="email" className="font-semibold">Email</label>
               <input
                 type="email"
-                id="Email"
-                name="Email"
+                id="email"
+                name="email"
                 value={formData.email}
                 onChange={handleChange}
                 className="border border-gray-300 p-2 rounded w-full"
               />
             </div>
             <div>
-              <label htmlFor="address" className="font-semibold">Address</label>
+              <label htmlFor="street" className="font-semibold">Street</label>
               <input
                 type="text"
-                id="address"
-                name="address"
-                value={formData.address}
+                id="street"
+                name="street"
+                value={formData.street}
                 onChange={handleChange}
                 className="border border-gray-300 p-2 rounded w-full"
               />
@@ -211,6 +244,17 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
+              <label htmlFor="country" className="font-semibold">Country</label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                className="border border-gray-300 p-2 rounded w-full"
+              />
+            </div>
+            <div>
               <label htmlFor="phoneNumber" className="font-semibold">Phone Number</label>
               <input
                 type="tel"
@@ -221,28 +265,15 @@ const CheckoutPage = () => {
                 className="border border-gray-300 p-2 rounded w-full"
               />
             </div>
-            <div>
-              <label htmlFor="paymentMethod" className="font-semibold">Payment Method</label>
-              <select
-                id="paymentMethod"
-                name="paymentMethod"
-                value={formData.paymentMethod}
-                onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
-              >
-                <option value="card">Online</option>
-                <option value="cod">Cash on Delivery</option>
-              </select>
-            </div>
-            
           </div>
-          <button
-            type="button"
-            onClick={handlePlaceOrder}
-            className="bg-primary-color text-white py-2 px-4 rounded hover:bg-red-700 mt-4"
-          >
-            Place Order
-          </button>
+          <div className="flex justify-end mt-6">
+            <button
+              onClick={handlePlaceOrder}
+              className="bg-primary-color text-white px-4 py-2 rounded"
+            >
+              Place Order
+            </button>
+          </div>
         </div>
       </div>
     </div>

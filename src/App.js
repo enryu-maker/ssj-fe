@@ -23,6 +23,7 @@ import Categories from "./Pages/Categories";
 import TagProducts from "./Pages/TagProducts";
 import NotFoundPage from "./Pages/NotFoundPage";
 import Dashboard from './Pages/Dashboard';
+import OrderSuccessPage from "./Pages/OrderSuccessPage";
 
 function App() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -47,6 +48,9 @@ function App() {
           )}
           {isAuthenticated && (
             <Route path="/checkout" element={<CheckoutPage />} />
+          )}
+          {isAuthenticated && (
+            <Route path="/order-success" element={<OrderSuccessPage />} />
           )}
           <Route path="/cart" element={<CartPage />} />
           <Route path="/wishlist" element={<WishList />} />
