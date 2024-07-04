@@ -82,7 +82,7 @@ const CheckoutPage = () => {
         contact_number: phoneNumber,
         email,
       },
-      paymentMethod,
+      payment_method:paymentMethod,
       total: totalAmount, // Add total amount
     };
 
