@@ -10,11 +10,6 @@ import { HiOutlineUser } from "react-icons/hi2";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Login from "../Pages/Login";
-import { MdOutlinePhone, MdOutlineEmail } from "react-icons/md";
-import { FaFacebookF, FaInstagram } from "react-icons/fa6";
-import { AiOutlineYoutube } from "react-icons/ai";
-import { FaWhatsapp } from "react-icons/fa";
-import Marquee from "react-fast-marquee";
 import {
   MoreLink,
 } from "../data";
@@ -42,6 +37,8 @@ const Header = () => {
   const wishlist = useSelector((state) => state.wishlist);
   const mainCategories = useSelector(selectMainCategories);
   const navigate = useNavigate();
+
+  console.log(mainCategories);
 
 
   useEffect(() => {

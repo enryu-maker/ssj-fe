@@ -31,7 +31,7 @@ function Gift() {
       <img src={Divider} alt="" className=" object-cover" />
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      <div className="flex md:flex-row flex-col gap-2 px-5 mt-5 ">
+      <div className="grid grid-cols-2 md:flex gap-5 p-5 ">
         {products.map(
           (product, index) =>
             index <= 3 && <ProductCard key={index} {...product.product} />

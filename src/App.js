@@ -26,7 +26,6 @@ import OrderSuccessPage from './Pages/OrderSuccessPage';
 import NotAuthenticatedPage from './Pages/NotAuthenticatedPage';
 import PrivateRoute from './helper/PrivateRoute';
 
-
 function App() {
   return (
     <div className="h-full w-full">
