@@ -66,7 +66,7 @@ function ProductDetail() {
   };
 
   return (
-    <div className="grid md:grid-cols-2 gap-5 px-20 font-Raleway mt-5">
+    <div className="grid md:grid-cols-2 gap-5 px-20 font-Raleway mt-5 min-h-screen place-items-center">
       {loading && <h1>Loading...</h1>}
       {error && <h1>Error: {error}</h1>}
       {thisProduct && (
@@ -89,7 +89,7 @@ function ProductDetail() {
               ))}
             </div>
           </div>
-          <div className="flex flex-col mt-5">
+          <div className="flex flex-col md:mt-0 mt-24">
             <div className="flex justify-end">
               <button onClick={() => handleAddToWishlist(thisProduct)} className="flex flex-col items-center uppercase text-sm text-primary-color transition-all ease-linear hover:scale-110">
                 <IoHeartOutline className="w-8 h-8 text-primary-color" />
