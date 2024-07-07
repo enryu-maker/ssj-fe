@@ -34,7 +34,7 @@ export const UsefulLinks = [
   },
   {
     name: 'Collections',
-    link: '/collections',
+    link: '#collections',
   },
   {
     name: 'Orders',
@@ -79,11 +79,11 @@ export const Information = [
   },
   {
     name: 'Help & FAQs',
-    link: '/contacts',
+    link: '#contacts',
   },
   {
     name: 'About SSJ',
-    link: '/about-us',
+    link: '#about-us',
   },
 ];
 export const StoreInCities = [
