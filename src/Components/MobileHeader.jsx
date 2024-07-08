@@ -28,6 +28,7 @@ function MobileHeader() {
   const [LoginModal, setLoginModal] = useState(false);
   const [openNavModal, setNavModal] = useState(false);
   const [selectedMainCategory, setSelectedMainCategory] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const dispatch = useDispatch();
   const mainCategories = useSelector(selectMainCategories);
@@ -39,6 +40,14 @@ function MobileHeader() {
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
   }, [dispatch, openNavModal]); // Update useEffect dependencies
+
+  // search query
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
+    }
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -133,6 +142,7 @@ function MobileHeader() {
           <input
             type="text"
             name="search"
+            onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search for Gold Jewellery, Diamond…"
             className="w-full p-2 md:p-3 rounded-md border-none focus:outline-none"
           />
@@ -145,6 +155,7 @@ function MobileHeader() {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={handleSearch}
             >
               <IoSearchOutline className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
             </motion.button>
