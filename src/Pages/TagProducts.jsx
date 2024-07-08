@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 import { fetchProductByTagsAsync, selectProductByTag, selectProductsLoading, selectProductsError } from '../features/Products/AllProduct/productSlice';
 import { useLocation } from 'react-router-dom';
 import ProductCard from '../Components/ProductCard';
@@ -33,15 +34,35 @@ const TagsProduct = () => {
 
   return (
     <div className='mt-5'>
-      <h1 className='md:text-4xl text-2xl text-center font-semibold text-primary-color uppercase'>{tagName}</h1>
+      <motion.h1
+        className='md:text-4xl text-2xl text-center font-semibold text-primary-color uppercase'
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {tagName}
+      </motion.h1>
       {productsByTag.length === 0 ? (
-        <div className='text-center mt-5'>No products found </div>
+        <motion.div
+          className='text-center mt-5'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          Products coming soon
+        </motion.div>
       ) : (
         <div className="grid md:grid-cols-4 gap-5 p-5 mt-5">
           {productsByTag.map(product => (
-            <div key={product.id} className="product-card">
+            <motion.div
+              key={product.id}
+              className="product-card"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
               <ProductCard {...product} />
-            </div>
+            </motion.div>
           ))}
         </div>
       )}

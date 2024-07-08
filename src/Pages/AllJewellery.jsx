@@ -132,7 +132,7 @@ const AllJewellery = () => {
             <ProductCard key={product.id} {...product} />
           ))
         ) : (
-          <div>No products found.</div>
+          <div>Product Coming soon.</div>
         )}
       </div>
       <div className="flex flex-wrap justify-between items-center mt-5 gap-5">

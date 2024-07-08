@@ -25,6 +25,7 @@ import Dashboard from './Pages/Dashboard';
 import OrderSuccessPage from './Pages/OrderSuccessPage';
 import NotAuthenticatedPage from './Pages/NotAuthenticatedPage';
 import PrivateRoute from './helper/PrivateRoute';
+import SearchPage from './Pages/SearchPage';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="/sub-category/:categoryId" element={<Categories />} />
           <Route path="/Tag/:tagName" element={<TagProducts />} />
           <Route path="/not-auth" element={<NotAuthenticatedPage />} />
+          <Route path="/search" element={<SearchPage />} />
 
           {/* Protected Routes */}
           <Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />

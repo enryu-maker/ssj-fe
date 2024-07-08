@@ -29,6 +29,7 @@ const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
   const [openDetailPage, setDetailPage] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -44,6 +45,15 @@ const Header = () => {
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
   }, [dispatch]);
+
+  
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
+    }
+  };
 
   const handleLogout = () => {
     dispatch(signOutUser());
@@ -69,23 +79,25 @@ const Header = () => {
             <img src={Logo} alt="Logo" className="w-28 h-28" />
           </Link>
         </div>
-        <div className="w-[40rem] relative px-5 ">
-          {/* search bar */}
-          <input
-            type="text"
-            name="search"
-            placeholder="Search for Gold Jewellery, Diamond…"
-            className=" w-full p-2 rounded-md border-none focus:outline-none"
-          />
-          <div className="flex items-center gap-5 absolute top-2 right-10 ">
-            {/* <button>
-              <CiMicrophoneOn className='w-6 h-6 text-primary-color' />
-            </button> */}
-            <button>
-              <IoSearchOutline className="w-6 h-6 text-primary-color" />
-            </button>
-          </div>
+        <div className="w-[40rem] relative px-5">
+      {/* Wrap the input and button in a form */}
+      <form onSubmit={handleSearch} className="relative">
+        {/* search bar */}
+        <input
+          type="text"
+          name="search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search for Gold Jewellery, Diamond…"
+          className="w-full p-2 rounded-md border-none focus:outline-none"
+        />
+        <div className="flex items-center gap-5 absolute top-2 right-10">
+          <button type="submit">
+            <IoSearchOutline className="w-6 h-6 text-primary-color" />
+          </button>
         </div>
+      </form>
+    </div>
         <div className="flex items-center gap-10 font-[400] ">
           {/* Icons */}
           <Link
