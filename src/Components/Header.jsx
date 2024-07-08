@@ -60,49 +60,7 @@ const Header = () => {
 
   return (
     <>
-      {/* <div className="md:flex hidden items-center justify-around font-Raleway h-[35px] sticky top-0 z-50 bg-secondary-color w-full  ">
-        <div className="flex space-x-5">
-          <button>
-            <MdOutlinePhone className="w-5 h-5 text-primary-color" />
-          </button>
-          <p className=" text-sm font-bold text-primary-color tracking-widest">
-            +91 84463 49063
-          </p>
-        </div>
-        <div className="flex space-x-5 text-primary-color w-[50%] tracking-widest">
-          <Marquee>
-            Login to website 50% off making Sai Shraddha Jewellers PVT LTD
-          </Marquee>
-        </div>
-
-        <div className="flex space-x-5">
-      <a href="https://www.facebook.com/saishraddhajewellersofficial/" target="_blank" rel="noopener noreferrer">
-        <button>
-          <FaFacebookF className="w-5 h-5 text-primary-color" />
-        </button>
-      </a>
-      <a href="https://www.instagram.com/saishraddhajewellersofficial/" target="_blank" rel="noopener noreferrer">
-        <button>
-          <FaInstagram className="w-5 h-5 text-primary-color" />
-        </button>
-      </a>
-      <a href="https://www.youtube.com/channel/UCkkAllN-8Xr3n4aRjBxpfIA" target="_blank" rel="noopener noreferrer">
-        <button>
-          <AiOutlineYoutube className="w-6 h-6 text-primary-color" />
-        </button>
-      </a>
-      <a href="https://wa.me/+918446349063" target="_blank" rel="noopener noreferrer">
-        <button>
-          <FaWhatsapp className="w-5 h-5 text-primary-color" />
-        </button>
-      </a>
-      <a href="mailto:saishraddhajewellers@gmail.com">
-        <button>
-          <MdOutlineEmail className="w-6 h-6 text-primary-color" />
-        </button>
-      </a>
-    </div>
-      </div> */}
+      
       <div className="md:flex hidden items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  ">
         <div>
           {/* logo */}
