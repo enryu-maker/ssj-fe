@@ -39,14 +39,10 @@ const ProfileDetails = () => {
   const validateInputs = () => {
     const newErrors = {};
     const mobilePattern = /^[6-9]\d{9}$/; // Mobile number should be a 10-digit number starting with 6-9
-    const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/; // PAN card format (e.g., ABCDE1234F)
+    
 
     if (!mobilePattern.test(mobile)) {
       newErrors.mobile = "Please enter a valid 10-digit mobile number.";
-    }
-
-    if (panPattern.test(panCard)) {
-      newErrors.panCard = "Please enter a valid PAN card number.";
     }
 
     setErrors(newErrors);
