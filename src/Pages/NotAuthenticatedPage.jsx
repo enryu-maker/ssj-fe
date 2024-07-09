@@ -1,9 +1,8 @@
-// src/components/NotAuthenticatedPage.jsx
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiLock } from 'react-icons/fi'; // Import an icon from react-icons
-import Login from './Login'; // Adjust the import path as needed
+import { FiLock } from 'react-icons/fi'; 
+import Login from './Login'; 
 
 const NotAuthenticatedPage = () => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
