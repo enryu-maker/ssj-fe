@@ -1,10 +1,21 @@
-import React, { useEffect } from 'react';
-import { NavLink, Route, Routes, useMatch, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faBoxOpen, faHeart, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import ProfileDetails from './ProfileDetails';
 import MyOrders from './MyOrders';
 import WishList from './WishList';
+import { useDispatch } from 'react-redux';
+import { signOutUser } from '../features/Auth/authSlice';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(signOutUser());
+    navigate("/");
+  };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
@@ -14,27 +25,37 @@ const Dashboard = () => {
           <NavLink
             to="/dashboard/profile"
             className={({ isActive }) =>
-              `block text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-gray-500' : 'text-gray-800 hover:bg-secondary-color hover:text-white'}`
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-gray-500' : 'text-gray-800 hover:bg-secondary-color hover:text-white'}`
             }
           >
+            <FontAwesomeIcon icon={faUser} className="mr-2" />
             Overview
           </NavLink>
           <NavLink
             to="/dashboard/orders"
             className={({ isActive }) =>
-              `block text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-gray-500' : 'text-gray-800 hover:bg-secondary-color hover:text-white'}`
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-gray-500' : 'text-gray-800 hover:bg-secondary-color hover:text-white'}`
             }
           >
+            <FontAwesomeIcon icon={faBoxOpen} className="mr-2" />
             Order History
           </NavLink>
           <NavLink
             to="/dashboard/wishlist"
             className={({ isActive }) =>
-              `block text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-gray-500' : 'text-gray-800 hover:bg-secondary-color hover:text-white'}`
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-gray-500' : 'text-gray-800 hover:bg-secondary-color hover:text-white'}`
             }
           >
+            <FontAwesomeIcon icon={faHeart} className="mr-2" />
             Wishlist
           </NavLink>
+          <button
+            onClick={handleLogout}
+            className="flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 text-gray-800 hover:bg-secondary-color hover:text-white"
+          >
+            <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
+            Logout
+          </button>
         </div>
       </nav>
       <main className="flex-1 p-6 md:p-10">
