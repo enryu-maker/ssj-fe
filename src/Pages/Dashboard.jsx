@@ -25,7 +25,7 @@ const Dashboard = () => {
           <NavLink
             to="/dashboard/profile"
             className={({ isActive }) =>
-              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-gray-500' : 'text-gray-800 hover:bg-secondary-color hover:text-white'}`
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-slate-500' : 'text-gray-800 hover:bg-secondary-color hover:text-slate-500'}`
             }
           >
             <FontAwesomeIcon icon={faUser} className="mr-2" />
@@ -34,7 +34,7 @@ const Dashboard = () => {
           <NavLink
             to="/dashboard/orders"
             className={({ isActive }) =>
-              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-gray-500' : 'text-gray-800 hover:bg-secondary-color hover:text-white'}`
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-slate-500' : 'text-gray-800 hover:bg-secondary-color hover:text-slate-500'}`
             }
           >
             <FontAwesomeIcon icon={faBoxOpen} className="mr-2" />
@@ -43,7 +43,7 @@ const Dashboard = () => {
           <NavLink
             to="/dashboard/wishlist"
             className={({ isActive }) =>
-              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-gray-500' : 'text-gray-800 hover:bg-secondary-color hover:text-white'}`
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-slate-500' : 'text-gray-800 hover:bg-secondary-color hover:text-slate-500'}`
             }
           >
             <FontAwesomeIcon icon={faHeart} className="mr-2" />
@@ -51,7 +51,7 @@ const Dashboard = () => {
           </NavLink>
           <button
             onClick={handleLogout}
-            className="flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 text-gray-800 hover:bg-secondary-color hover:text-white"
+            className="flex items-center w-full text-lg font-medium rounded-md p-3 transition-colors duration-300 text-gray-800 hover:bg-secondary-color hover:text-slate-500"
           >
             <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
             Logout
