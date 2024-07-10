@@ -71,19 +71,19 @@ function ProductDetail() {
       {error && <h1>Error: {error}</h1>}
       {thisProduct && (
         <>
-          <div className="flex flex-col gap-6 lg:w-3/4 sm:w-full">
+          <div className="flex flex-col gap-5 lg:w-3/4 sm:w-full">
             <img
               src={activeImg}
               alt={thisProduct.name}
               className="w-full aspect-square object-cover rounded-xl"
             />
-            <div className="flex md:flex-row flex-wrap justify-between gap-2 h-24">
+            <div className="flex md:flex-row flex-wrap justify-between gap-2 h-24 mb-8">
               {images?.map((img, index) => (
                 <img
                   key={index}
                   src={img}
                   alt={thisProduct.name}
-                  className="w-24 h-24 rounded-md cursor-pointer"
+                  className="w-20 h-20 rounded-md cursor-pointer"
                   onClick={() => setActiveImage(img)}
                 />
               ))}

@@ -42,11 +42,13 @@ const HeroSection = () => {
       >
         {banners?.map((banner, index) => (
           <SwiperSlide key={index}>
-            <img
-              src={banner.image} // Adjust according to your API response structure
-              alt={banner.context || `Banner ${index + 1}`}
-              className='w-full h-full object-fill'
-            /> 
+            <a href={banner.context || '#'} target="_blank" rel="noopener noreferrer">
+              <img
+                src={banner.image} // Adjust according to your API response structure
+                alt={banner.context || `Banner ${index + 1}`}
+                className='w-full h-full object-fill'
+              />
+            </a>
           </SwiperSlide>
         ))}
       </Swiper>
