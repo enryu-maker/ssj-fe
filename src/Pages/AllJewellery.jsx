@@ -100,7 +100,7 @@ const AllJewellery = () => {
             </button>
           ))}
         </div>
-        <div className="relative z-10">
+        <div className="relative z-30">
           <div
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => setShowOptions(!showOptions)}

@@ -309,7 +309,7 @@ const Header = () => {
         </Link>
 
         {/* More Links */}
-        <ul className="relative parent cursor-pointer flex items-center gap-5">
+        <ul className="relative parent cursor-pointer flex items-center gap-5 z-50">
           <div className="uppercase text-sm cursor-pointer underlineAni">
             More
           </div>
