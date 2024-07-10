@@ -141,7 +141,7 @@ const Header = () => {
                 <div className="absolute top-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:flex hidden gap-5 m-1  items-center justify-center flex-col w-[280px]  h-56  text-sm p-1  md:hidden child bg-white shadow-md rounded-md	">
                   <div className="flex flex-col gap-2 items-center justify-center font-semibold ">
                     <h1 className="text-2xl uppercase">My Profile</h1>
-                    {/* TODO: check user details completed or not show the button vice versa */}
+                  
 
                     <>
                       <Link
@@ -367,7 +367,7 @@ const Header = () => {
           <div className="relative w-auto my-6 mx-auto max-w-4xl">
             <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
               <div className="relative flex-auto">
-                {/* TODO: pass user mobile number into props */}
+             
                 <ProfileDetails setModal={handleDetailModal} />
               </div>
             </div>
