@@ -11,7 +11,7 @@ import {
   setPage,
   setSubCategory,
   selectCurrentPage,
-  selectSubCategory
+  selectSubCategory,
 } from '../features/Products/AllProduct/productSlice';
 import FilterModal from '../Components/FilterModal';
 
@@ -19,6 +19,7 @@ const AllJewellery = () => {
   const [sortBy, setSortBy] = useState('Best Matches');
   const [showOptions, setShowOptions] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [sorting, setSorting] = useState(false);
 
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
@@ -31,11 +32,13 @@ const AllJewellery = () => {
     dispatch(fetchAllProductsAsync({ page: currentPage, subCategory }));
   }, [dispatch, currentPage, subCategory]);
 
-  const options = ['Price: Low to High', 'Price: High to Low'];
+  const options = ['Best Matches', 'Price: Low to High', 'Price: High to Low'];
 
   const handleSelectOption = (option) => {
     setSortBy(option);
     setShowOptions(false);
+    setSorting(true);
+    setTimeout(() => setSorting(false), 500); // Simulate sorting delay
   };
 
   const handleCategoryChange = (category) => {
@@ -58,13 +61,26 @@ const AllJewellery = () => {
     setShowModal(!showModal);
   };
 
+  const sortProducts = (products, sortBy) => {
+    switch (sortBy) {
+      case 'Price: Low to High':
+        return [...products].sort((a, b) => a.price - b.price);
+      case 'Price: High to Low':
+        return [...products].sort((a, b) => b.price - a.price);
+      default:
+        return products;
+    }
+  };
+
+  const sortedProducts = sortProducts(products, sortBy);
+
   const loadingVariants = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     exit: { opacity: 0 },
   };
 
-  if (loading) {
+  if (loading || sorting) {
     return (
       <motion.div
         className="flex justify-center items-center h-screen"
@@ -86,19 +102,26 @@ const AllJewellery = () => {
     <div className="px-4 md:px-10 mt-5">
       <div className="flex flex-wrap items-center justify-between gap-5">
         <div className="flex items-center gap-2">
-          <IoFilterOutline className="text-primary-color font-extrabold cursor-pointer" onClick={toggleModal} />
+          <IoFilterOutline
+            className="text-primary-color font-extrabold cursor-pointer"
+            onClick={toggleModal}
+          />
           <h1 className="text-primary-color">FILTER</h1>
         </div>
         <div className="hidden md:flex items-center gap-2">
-          {['Chains', 'Earrings', 'Necklace', 'Rings', 'Mangalsutras'].map((category) => (
-            <button
-              key={category}
-              className={`border border-primary-color px-5 py-3 text-center ${subCategory === category ? 'bg-primary-color text-white' : ''}`}
-              onClick={() => handleCategoryChange(category)}
-            >
-              {category}
-            </button>
-          ))}
+          {['Chains', 'Earrings', 'Necklace', 'Rings', 'Mangalsutras'].map(
+            (category) => (
+              <button
+                key={category}
+                className={`border border-primary-color px-5 py-3 text-center ${
+                  subCategory === category ? 'bg-primary-color text-white' : ''
+                }`}
+                onClick={() => handleCategoryChange(category)}
+              >
+                {category}
+              </button>
+            )
+          )}
         </div>
         <div className="relative z-30">
           <div
@@ -127,8 +150,8 @@ const AllJewellery = () => {
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-5 p-5 mt-5">
-        {products.length > 0 ? (
-          products.map((product) => (
+        {sortedProducts.length > 0 ? (
+          sortedProducts.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))
         ) : (
@@ -151,7 +174,11 @@ const AllJewellery = () => {
           Next
         </button>
       </div>
-      <FilterModal isOpen={showModal} closeModal={toggleModal} handleCategoryChange={handleCategoryChange} />
+      <FilterModal
+        isOpen={showModal}
+        closeModal={toggleModal}
+        handleCategoryChange={handleCategoryChange}
+      />
     </div>
   );
 };
