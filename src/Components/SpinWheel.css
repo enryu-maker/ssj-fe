@@ -1,0 +1,27 @@
+/* Firecracker animation */
+@keyframes firecracker {
+    0% {
+      transform: scale(0) rotate(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.5) rotate(180deg);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(0) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  
+  .firecracker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, #ff0000, #ff9a00, #ff0000);
+    border-radius: 50%;
+    animation: firecracker 2s ease-out forwards;
+  }
+  

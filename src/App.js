@@ -26,6 +26,8 @@ import OrderSuccessPage from './Pages/OrderSuccessPage';
 import NotAuthenticatedPage from './Pages/NotAuthenticatedPage';
 import PrivateRoute from './helper/PrivateRoute';
 import SearchPage from './Pages/SearchPage';
+import SpinWheel from './Components/SpinWheel';
+import SpinWheelPage from './Pages/SpinWheelPage';
 
 function App() {
   return (
@@ -52,6 +54,7 @@ function App() {
           <Route path="/Tag/:tagName" element={<TagProducts />} />
           <Route path="/not-auth" element={<NotAuthenticatedPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/spin-wheel" element={<SpinWheelPage />} />
 
           {/* Protected Routes */}
           <Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />
