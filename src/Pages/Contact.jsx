@@ -2,20 +2,37 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../helper/AxiosInstance';
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone_number: '', message: '' });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can add your form submission logic here
-    toast.success("Form submitted successfully!", {
-      position: "bottom-left",
-    });
+    setIsLoading(true);
+    try {
+      const response = await api.post('/web/contact/', form);
+
+      if (response.status === 201) {
+        toast.success("Form submitted successfully!", {
+          position: "bottom-left",
+        });
+        setForm({ name: '', email: '', phone_number: '', message: '' }); // Clear the form
+      } else {
+        throw new Error(`Unexpected response code: ${response.status}`);
+      }
+    } catch (error) {
+      toast.error(`Error: ${error.response?.data?.message || error.message}`, {
+        position: "bottom-left",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const containerVariants = {
@@ -86,8 +103,8 @@ const Contact = () => {
           <span className='text-lg font-medium'>Phone Number</span>
           <input 
             type='tel'
-            name='phone'
-            value={form.phone}
+            name='phone_number'
+            value={form.phone_number}
             onChange={handleChange}
             className='p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color' 
           />
@@ -106,8 +123,9 @@ const Contact = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           type='submit'
+          disabled={isLoading}
         >
-          Submit
+          {isLoading ? 'Submitting...' : 'Submit'}
         </motion.button>
       </motion.form>
     </div>
