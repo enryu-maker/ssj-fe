@@ -65,13 +65,14 @@ function ProductDetail() {
       selectedPrice,
     };
     dispatch(addToCart(productWithDetails));
-    navigate("/cart" , { state: { product: productWithDetails } });
+    navigate("/cart", { state: { product: productWithDetails } });
   };
 
   const handleAddToWishlist = (product) => {
     dispatch(addToWishlist(product));
   };
 
+  // Calculate price breakup
   const priceBreakup =
     thisProduct?.size_chart?.map((item) => ({
       component: "Base Component",
@@ -97,11 +98,12 @@ function ProductDetail() {
     }, 0)
     .toFixed(2);
 
-  const gst = (subtotal * 0.03).toFixed(2);
-  const grandTotal = (parseFloat(subtotal) + parseFloat(gst)).toFixed(2);
+   // Get making charges from the product data
+   const makingChargesRaw = thisProduct?.size_chart?.[0]?.size?.[0]?.making_charges;
+   const makingCharges = Number(makingChargesRaw) || 0;
+  const grandTotal = (parseFloat(subtotal).toFixed(2));
 
   return (
-    <>
     <div className="flex flex-col items-center font-Raleway mt-5 min-h-screen px-5 sm:px-10 md:px-20">
       {loading && <h1>Loading...</h1>}
       {error && <h1>Error: {error}</h1>}
@@ -209,7 +211,10 @@ function ProductDetail() {
                 >
                   Add To Cart
                 </button>
-                <button  onClick={handleAddToCart} className="border bg-primary-color w-full p-3 rounded-md text-white transition-transform duration-300 hover:bg-red-700">
+                <button
+                  onClick={handleAddToCart}
+                  className="border bg-primary-color w-full p-3 rounded-md text-white transition-transform duration-300 hover:bg-red-700"
+                >
                   Buy Now
                 </button>
               </div>
@@ -227,7 +232,7 @@ function ProductDetail() {
               </div>
             </div>
           </div>
-          {/* price Breakup */}
+          {/* Price Breakup */}
           <div className="w-full lg:w-4/5 xl:w-3/5 mt-8 px-4 md:px-6 lg:px-8 xl:px-12">
             <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-primary-color mb-4 md:mb-6">
               Price Breakup
@@ -261,20 +266,20 @@ function ProductDetail() {
                   <span></span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg border-b border-gray-200 font-semibold">
-                  <span>Subtotal</span>
+                  <span>Grand Total</span>
                   <span></span>
                   <span></span>
                   <span></span>
                   <span>Rs {subtotal}</span>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg border-b border-gray-200 font-semibold">
-                  <span>GST (3%)</span>
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
+                  <span>Making Charges</span>
                   <span></span>
                   <span></span>
                   <span></span>
-                  <span>Rs {gst}</span>
+                  <span>Rs {makingCharges.toFixed(2)}</span>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg font-semibold">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
                   <span>Grand Total</span>
                   <span></span>
                   <span></span>
@@ -288,11 +293,9 @@ function ProductDetail() {
       )}
       {/* Related Products */}
       <div className="w-full mt-10 overflow-x-auto scrollbar-hide">
-            <SuggestedProducts currentProductId={thisProduct.id} />
-          </div>
+        <SuggestedProducts currentProductId={thisProduct.id} />
+      </div>
     </div>
-
-    </>
   );
 }
 
