@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearCart, removeFromCart } from "../features/cart/cartSlice";
+
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { toast } from "react-toastify";
+import { createOrder } from "../features/orders/orderSlice";
 
 const CheckoutPage = () => {
   const cart = useSelector((state) => state.cart);
@@ -82,14 +84,16 @@ const CheckoutPage = () => {
         contact_number: phoneNumber,
         email,
       },
-      payment_method:paymentMethod,
+      payment_method: paymentMethod,
       total: totalAmount, // Add total amount
     };
 
-    console.log(orderDetails);
-
     try {
-      // await dispatch(placeOrderAsync(orderDetails)).unwrap();
+      const actionResult = await dispatch(createOrder(orderDetails)).unwrap();
+      console.log(actionResult);
+      toast.success("Order placed successfully!", {
+        position: 'top-center',
+      });
       dispatch(clearCart());
       navigate('/order-success'); // Navigate to a success page or any other page you want
     } catch (error) {
@@ -281,3 +285,4 @@ const CheckoutPage = () => {
 };
 
 export default CheckoutPage;
+

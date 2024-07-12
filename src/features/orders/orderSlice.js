@@ -8,32 +8,31 @@ const initialState = {
   error: null,
 };
 
-// Function to create a user in your API
+// Create Order API Call
 export const createOrder = createAsyncThunk(
-  'auth/createUser',
+  'order/createOrder',
   async (orderData, { rejectWithValue }) => {
-    const token = sessionStorage.getItem('access_token');
+    const token = sessionStorage.getItem('accessToken');
+    console.log('Token in API call:', token); // Verify token
+
     try {
-      const response = await api.post('/auth/login/', orderData, {
+      const response = await api.post('/order/place-order/', orderData, {
         headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+          'Authorization': `Bearer ${token}`,
+        },
       });
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      console.error('Error in API call:', error.response?.data || error.message); // Log full error
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
 
-
-
-// Slice definition
 const orderSlice = createSlice({
   name: 'order',
   initialState,
-  reducers: {
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createOrder.pending, (state) => {
@@ -41,22 +40,15 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.loading = false;
-        state.orders = action.payload; 
-        toast.success('Order created successfully!', { position: 'bottom-left' });
+        state.orders = action.payload;
+        toast.success('Order placed successfully!', { position: 'bottom-left' });
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
-      
+        toast.error(`Failed to place order: ${action.payload}`, { position: 'bottom-left' });
+      });
   },
 });
 
-
-
-export const selectOrder = (state) => state.order.orders;
-export const selectAuthError = (state) => state.order.error;
-export const selectLoading = (state) => state.order.loading;
-
 export default orderSlice.reducer;
-

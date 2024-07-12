@@ -4,6 +4,7 @@ import {
   GetGiftedProduct,
   GetMaterialRate,
   GetProductByTags,
+  GetRelatedProduct,
   GetSingleProduct,
   GetTopSellerProduct,
 } from "./productAPI";
@@ -14,6 +15,7 @@ const initialState = {
   tagsProduct: [],
   GiftedProduct: [],
   TopSellerProduct: [],
+  RelatedProduct: [], // Added state for related products
   status: "idle",
   loading: false,
   error: null,
@@ -36,6 +38,7 @@ export const fetchAllProductsAsync = createAsyncThunk(
     }
   }
 );
+
 // Async thunk to fetch gifted products using axios
 export const fetchGiftedProductsAsync = createAsyncThunk(
   "products/fetchGiftedProducts",
@@ -51,7 +54,8 @@ export const fetchGiftedProductsAsync = createAsyncThunk(
     }
   }
 );
-// Async thunk to fetch all products using axios
+
+// Async thunk to fetch top seller products using axios
 export const fetchTopSellerProductsAsync = createAsyncThunk(
   "products/fetchTopSellerProducts",
   async (_, { rejectWithValue }) => {
@@ -71,7 +75,6 @@ export const fetchTopSellerProductsAsync = createAsyncThunk(
 export const fetchSingleProductAsync = createAsyncThunk(
   "products/fetchSingleProduct",
   async (productId, { rejectWithValue }) => {
-    
     try {
       const response = await GetSingleProduct(productId);
       if (!response || response.status !== 200 || !response.data) {
@@ -84,7 +87,7 @@ export const fetchSingleProductAsync = createAsyncThunk(
   }
 );
 
-// Async thunk to fetch a single product using axios
+// Async thunk to fetch products by tags using axios
 export const fetchProductByTagsAsync = createAsyncThunk(
   "products/fetchProductByTags",
   async (Tagname, { rejectWithValue }) => {
@@ -95,19 +98,34 @@ export const fetchProductByTagsAsync = createAsyncThunk(
         throw new Error("Invalid response from server");
       }
       return response.data;
-      // return response; // Assuming the API response structure has a 'data' property
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Async thunk to fetch Material price using axios
+// Async thunk to fetch material rate using axios
 export const fetchMaterialRateAsync = createAsyncThunk(
   "products/fetchMaterialRate",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await GetMaterialRate()
+      const response = await GetMaterialRate();
+      if (!response) {
+        throw new Error("Invalid response from server");
+      }
+      return response.data; // Assuming the API response structure has a 'data' property
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Async thunk to fetch related products using axios
+export const fetchRelatedProductAsync = createAsyncThunk(
+  "products/fetchRelatedProduct",
+  async (ProductId, { rejectWithValue }) => {
+    try {
+      const response = await GetRelatedProduct(ProductId);
       if (!response) {
         throw new Error("Invalid response from server");
       }
@@ -227,6 +245,22 @@ const productsSlice = createSlice({
         state.status = "failed";
         state.loading = false;
         state.error = action.error.message;
+      })
+
+      // Fetch Related Products
+      .addCase(fetchRelatedProductAsync.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(fetchRelatedProductAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.RelatedProduct = action.payload; // Update with the fetched related products
+      })
+      .addCase(fetchRelatedProductAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
@@ -238,11 +272,11 @@ export const selectSingleProduct = (state) => state.products.singleProduct;
 export const selectProductByTag = (state) => state.products.tagsProduct;
 export const selectGiftedProducts = (state) => state.products.GiftedProduct;
 export const selectTopSellerProducts = (state) => state.products.TopSellerProduct;
-export const selectMaterialPrice = (state) => state.products.MaterialPrice; // Added selector
+export const selectRelatedProducts = (state) => state.products.RelatedProduct; // Added selector
+export const selectMaterialPrice = (state) => state.products.MaterialPrice;
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 export const selectCurrentPage = (state) => state.products.currentPage;
 export const selectSubCategory = (state) => state.products.subCategory;
 
 export default productsSlice.reducer;
-

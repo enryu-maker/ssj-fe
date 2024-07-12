@@ -60,6 +60,16 @@ export const GetProductByTags = async (tagName) => {
   }
 };
 
+// Get related Product
+export const GetRelatedProduct = async (ProductId) => {
+  try {
+    const response = await api.get(`/product/recommend-product/${ProductId}/`);
+    return response; // Assuming response.data contains the products array or an object
+  } catch (error) {
+    throw new Error(error.message); // Throw an error if request fails
+  }
+};
+
 // Gel Material Price API
 export const GetMaterialRate = async () => {
   

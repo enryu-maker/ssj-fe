@@ -14,6 +14,7 @@ import {
 } from "../features/Products/AllProduct/productSlice";
 import { addToCart } from "../features/cart/cartSlice";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
+import SuggestedProducts from "../Components/SuggestedProducts";
 
 function ProductDetail() {
   const [openWeight, setOpenWeight] = useState(false);
@@ -64,7 +65,7 @@ function ProductDetail() {
       selectedPrice,
     };
     dispatch(addToCart(productWithDetails));
-    navigate("/cart");
+    navigate("/cart" , { state: { product: productWithDetails } });
   };
 
   const handleAddToWishlist = (product) => {
@@ -100,6 +101,7 @@ function ProductDetail() {
   const grandTotal = (parseFloat(subtotal) + parseFloat(gst)).toFixed(2);
 
   return (
+    <>
     <div className="flex flex-col items-center font-Raleway mt-5 min-h-screen px-5 sm:px-10 md:px-20">
       {loading && <h1>Loading...</h1>}
       {error && <h1>Error: {error}</h1>}
@@ -207,7 +209,7 @@ function ProductDetail() {
                 >
                   Add To Cart
                 </button>
-                <button className="border bg-primary-color w-full p-3 rounded-md text-white transition-transform duration-300 hover:bg-red-700">
+                <button  onClick={handleAddToCart} className="border bg-primary-color w-full p-3 rounded-md text-white transition-transform duration-300 hover:bg-red-700">
                   Buy Now
                 </button>
               </div>
@@ -284,7 +286,13 @@ function ProductDetail() {
           </div>
         </>
       )}
+      {/* Related Products */}
+      <div className="w-full mt-10 overflow-x-auto scrollbar-hide">
+            <SuggestedProducts currentProductId={thisProduct.id} />
+          </div>
     </div>
+
+    </>
   );
 }
 

@@ -38,3 +38,14 @@
   z-index: 10;
   transition: all 0.25s ease-in-out 0.25s;
 }
+
+/* Global styles or CSS module */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
