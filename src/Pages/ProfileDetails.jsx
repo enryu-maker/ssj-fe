@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile, selectUser, updateUserProfile } from "../features/Auth/authSlice";
 import Avatar from '../assets/avatar.jpeg'; // Ensure this path is correct for your Avatar image
+import { Link } from "react-router-dom";
 
 const ProfileDetails = () => {
   const dispatch = useDispatch();
@@ -244,6 +245,12 @@ const ProfileDetails = () => {
               Edit Details
             </button>
           )}
+           <Link
+              to={"/spin-wheel"}
+              className="mt-6 sm:mt-8 bg-primary-color text-white py-2 px-6 rounded-md hover:bg-primary-dark transition-colors duration-300 w-full sm:w-auto text-lg"
+            >
+              Spin
+            </Link>
         </div>
       </div>
     </div>

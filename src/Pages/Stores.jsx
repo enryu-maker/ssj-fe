@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { StoreInCities } from '../data';
-import Marquee from 'react-fast-marquee';
+import api from '../helper/AxiosInstance';
 
 const Stores = () => {
+  const [Store, setStore] = useState([])
+
+  useEffect(()=>{
+    const FetchingStores = async() =>{
+     const response = await api.get('/store/')
+     setStore(response.data)
+    }
+    FetchingStores()
+    
+  },[]);
+
+
   return (
     <div className='flex flex-col gap-5 font-Raleway min-h-screen'>
       <div className='flex md:flex-row flex-col gap-2 justify-around font-Raleway mt-5 px-5'>
@@ -35,17 +46,17 @@ const Stores = () => {
           Popular Cities
         </h1>
         <div className='flex md:flex-row flex-col justify-center items-centers gap-5 mt-5 w-full px-5'>
-          {StoreInCities.map((item, index) => (
+          {Store.map((item, index) => (
             <div
               key={index}
               className='flex flex-col items-center shadow-lg rounded-md md:hover:scale-110 hover:scale-105 transition-all ease-linear '>
               <h2 className=' bg-gradient-to-r from-rose-200 to-pink-50 w-full h-10 rounded-t-md flex items-center p-2 text-sm'>
-                {item.store}
+                {item.store_count}
               </h2>
               <img
-                src={item.img}
+                src={item.city_image}
                 alt=''
-                className='w-36 h-36 px-5'
+                className='w-40 h-36 p-5'
               />
               <h1 className=' text-primary-color font-medium mb-2'>
                 {item.city}

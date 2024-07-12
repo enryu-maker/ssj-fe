@@ -5,7 +5,7 @@ import { clearCart, removeFromCart } from "../features/cart/cartSlice";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { toast } from "react-toastify";
-import { createOrder } from "../features/orders/orderSlice";
+import { CreateOrder } from "../features/Products/Orders/orderSlice";
 
 const CheckoutPage = () => {
   const cart = useSelector((state) => state.cart);
@@ -87,9 +87,11 @@ const CheckoutPage = () => {
       payment_method: paymentMethod,
       total: totalAmount, // Add total amount
     };
+    console.log(orderDetails);
 
     try {
-      const actionResult = await dispatch(createOrder(orderDetails)).unwrap();
+      const actionResult = await dispatch(CreateOrder(orderDetails)).unwrap();
+     
       console.log(actionResult);
       toast.success("Order placed successfully!", {
         position: 'top-center',

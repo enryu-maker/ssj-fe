@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import api from '../../../helper/AxiosInstance';
 
 const initialState = {
     orders: [], // Make sure this is initialized as an empty array
@@ -77,22 +78,40 @@ export const fetchOrders = createAsyncThunk(
   }
 );
 
+// Async thunk to fetch orders from the API
+export const CreateOrder = createAsyncThunk(
+  'orders/CreateOrders',
+  async (OrderDetails, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      console.log(token);
+      const response = await api.post('/order/place-order/', OrderDetails, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const ordersSlice = createSlice({
   name: 'orders',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchOrders.pending, (state) => {
+      .addCase(CreateOrder.pending, (state) => {
         state.loading = true;
         state.error = null; // Clear previous error state
       })
-      .addCase(fetchOrders.fulfilled, (state, action) => {
+      .addCase(CreateOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.orders = action.payload;
         
       })
-      .addCase(fetchOrders.rejected, (state, action) => {
+      .addCase(CreateOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         toast.error('Failed to fetch orders.', { position: 'bottom-left' });

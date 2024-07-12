@@ -103,7 +103,7 @@ function MobileHeader() {
                 whileTap={{ scale: 0.9 }}
                 src={Logo}
                 alt="Logo"
-                className="w-16 h-16 md:w-20 md:h-20"
+                className=" object-cover h-16 md:w-20 md:h-20"
               />
             </Link>
           </motion.div>
