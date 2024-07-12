@@ -76,7 +76,7 @@ const Header = () => {
           {/* logo */}
 
           <Link to={"/"}>
-            <img src={Logo} alt="Logo" className="w-28 h-28" />
+            <img src={Logo} alt="Logo" className="w-28 h-28 object-fill p-2" />
           </Link>
         </div>
         <div className="w-[40rem] relative px-5">
