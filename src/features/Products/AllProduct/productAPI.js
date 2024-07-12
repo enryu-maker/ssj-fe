@@ -59,3 +59,14 @@ export const GetProductByTags = async (tagName) => {
     throw new Error(error.message); // Throw an error if request fails
   }
 };
+
+// Gel Material Price API
+export const GetMaterialRate = async () => {
+  
+  try {
+    const response = await api.get(`/web/get-gold-rate/`);
+    return response; // Assuming response.data contains the single product object
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};

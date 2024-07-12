@@ -23,8 +23,8 @@ const SpinWheel = () => {
 
       // Trigger firecracker animation
       setShowFirecracker(true);
-      setTimeout(() => setShowFirecracker(false), 2000); // Duration of firecracker animation
-    }, 5000); // Duration should match the animation duration
+      setTimeout(() => setShowFirecracker(false), 2000); 
+    }, 5000); 
   };
 
   return (

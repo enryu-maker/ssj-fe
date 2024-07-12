@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   GetAllProducts,
   GetGiftedProduct,
+  GetMaterialRate,
   GetProductByTags,
   GetSingleProduct,
   GetTopSellerProduct,
@@ -101,6 +102,22 @@ export const fetchProductByTagsAsync = createAsyncThunk(
   }
 );
 
+// Async thunk to fetch Material price using axios
+export const fetchMaterialRateAsync = createAsyncThunk(
+  "products/fetchMaterialRate",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await GetMaterialRate()
+      if (!response) {
+        throw new Error("Invalid response from server");
+      }
+      return response.data; // Assuming the API response structure has a 'data' property
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const productsSlice = createSlice({
   name: "products",
   initialState,
@@ -114,6 +131,7 @@ const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Fetch All Products
       .addCase(fetchAllProductsAsync.pending, (state) => {
         state.status = "loading";
         state.loading = true;
@@ -129,6 +147,8 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // Fetch Single Product
       .addCase(fetchSingleProductAsync.pending, (state) => {
         state.status = "loading";
         state.loading = true;
@@ -144,6 +164,8 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // Fetch Products by Tags
       .addCase(fetchProductByTagsAsync.pending, (state) => {
         state.status = "loading";
         state.loading = true;
@@ -158,6 +180,8 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+
+      // Fetch Gifted Products
       .addCase(fetchGiftedProductsAsync.pending, (state) => {
         state.status = "loading";
         state.loading = true;
@@ -172,6 +196,8 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+
+      // Fetch Top Seller Products
       .addCase(fetchTopSellerProductsAsync.pending, (state) => {
         state.status = "loading";
         state.loading = true;
@@ -186,6 +212,22 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+
+      // Fetch Material Rate
+      .addCase(fetchMaterialRateAsync.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(fetchMaterialRateAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.MaterialPrice = action.payload; // Update with the fetched material rate
+      })
+      .addCase(fetchMaterialRateAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
 });
 
@@ -196,9 +238,11 @@ export const selectSingleProduct = (state) => state.products.singleProduct;
 export const selectProductByTag = (state) => state.products.tagsProduct;
 export const selectGiftedProducts = (state) => state.products.GiftedProduct;
 export const selectTopSellerProducts = (state) => state.products.TopSellerProduct;
+export const selectMaterialPrice = (state) => state.products.MaterialPrice; // Added selector
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 export const selectCurrentPage = (state) => state.products.currentPage;
 export const selectSubCategory = (state) => state.products.subCategory;
 
 export default productsSlice.reducer;
+

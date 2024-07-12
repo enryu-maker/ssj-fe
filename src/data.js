@@ -58,17 +58,10 @@ export const MoreLink = [
     link: '#contacts',
   },
   {
-    name: 'ENCIRCLE',
-    link: '',
-  },
-  {
     name: 'FAQ',
     link: '',
   },
-  {
-    name: 'BRANDS',
-    link: '',
-  },
+ 
 ];
 
 
