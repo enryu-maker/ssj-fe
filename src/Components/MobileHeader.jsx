@@ -197,7 +197,7 @@ function MobileHeader() {
                         className="flex flex-col items-center uppercase text-primary-color p-2 md:p-3"
                       >
                         <HiOutlineUser className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
-                        Profile
+                        
                       </Link>
                       <motion.button
                         whileHover={{ scale: 1.1 }}
@@ -206,7 +206,7 @@ function MobileHeader() {
                         onClick={handleLogout}
                       >
                         <IoLogOutOutline className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
-                        Logout
+                        
                       </motion.button>
                     </div>
                   ) : (
