@@ -21,7 +21,7 @@ const CheckoutPage = () => {
     state: "",
     country: "",
     phoneNumber: "",
-    paymentMethod: "online", // Default payment method
+    paymentMethod: "cod", // Default payment method
   });
 
   const handleChange = (e) => {
@@ -35,6 +35,7 @@ const CheckoutPage = () => {
       navigate("/cart");
     }
   };
+  // TODO: ADD API
 
   const handlePlaceOrder = async () => {
     const {
