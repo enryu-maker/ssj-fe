@@ -35,7 +35,6 @@ const CheckoutPage = () => {
       navigate("/cart");
     }
   };
-  // TODO: ADD API
 
   const handlePlaceOrder = async () => {
     const {
@@ -86,7 +85,7 @@ const CheckoutPage = () => {
         email,
       },
       payment_method: paymentMethod,
-      total: totalAmount, // Add total amount
+      total: totalAmount,
     };
     console.log(orderDetails);
 
@@ -98,7 +97,7 @@ const CheckoutPage = () => {
         position: 'top-center',
       });
       dispatch(clearCart());
-      navigate('/order-success'); // Navigate to a success page or any other page you want
+      navigate('/order-success');
     } catch (error) {
       console.error("Failed to place order: ", error);
       alert("Failed to place order. Please try again later.");
@@ -115,7 +114,7 @@ const CheckoutPage = () => {
 
   if (cart.cartItems.length === 0) {
     navigate("/cart");
-    return null; // Optionally return a loader or message while redirecting
+    return null;
   }
 
   return (
@@ -273,6 +272,34 @@ const CheckoutPage = () => {
               />
             </div>
           </div>
+
+          {/* Payment Method */}
+          <div>
+            <label className="font-semibold">Payment Method</label>
+            <div className="mt-2 flex items-center">
+              <input
+                type="radio"
+                id="cod"
+                name="paymentMethod"
+                value="cod"
+                checked={formData.paymentMethod === "cod"}
+                onChange={handleChange}
+                className="mr-2"
+              />
+              <label htmlFor="cod" className="mr-4">Cash on Delivery (COD)</label>
+              <input
+                type="radio"
+                id="online"
+                name="paymentMethod"
+                value="online"
+                checked={formData.paymentMethod === "online"}
+                onChange={handleChange}
+                className="mr-2"
+              />
+              <label htmlFor="online">Online Payment</label>
+            </div>
+          </div>
+
           <div className="flex justify-end mt-6">
             <button
               onClick={handlePlaceOrder}
@@ -288,4 +315,3 @@ const CheckoutPage = () => {
 };
 
 export default CheckoutPage;
-
