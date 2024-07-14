@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { IoHeartOutline } from "react-icons/io5";
-import {
-  MdOutlineKeyboardArrowDown,
-  MdOutlineKeyboardArrowUp,
-} from "react-icons/md";
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import {
   fetchSingleProductAsync,
   selectProductsError,
@@ -20,13 +20,11 @@ function ProductDetail() {
   const [openWeight, setOpenWeight] = useState(false);
   const { productId } = useParams();
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const thisProduct = useSelector(selectSingleProduct);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
   const [index, setIndex] = useState(0);
-  const [activeImg, setActiveImage] = useState("");
   const [selectedWeight, setSelectedWeight] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
 
@@ -36,7 +34,6 @@ function ProductDetail() {
 
   useEffect(() => {
     if (thisProduct) {
-      setActiveImage(thisProduct?.image);
       if (thisProduct?.size_chart && thisProduct?.size_chart.length > 0) {
         setSelectedWeight(thisProduct?.size_chart[0]?.size?.[0]?.weight || "");
         setSelectedPrice(thisProduct?.size_chart[0]?.total_price || "");
@@ -98,10 +95,21 @@ function ProductDetail() {
     }, 0)
     .toFixed(2);
 
-   // Get making charges from the product data
-   const makingChargesRaw = thisProduct?.size_chart?.[0]?.size?.[0]?.making_charges;
-   const makingCharges = Number(makingChargesRaw) || 0;
-  const grandTotal = (parseFloat(subtotal).toFixed(2));
+  // Get making charges from the product data
+  const makingChargesRaw = thisProduct?.size_chart?.[0]?.size?.[0]?.making_charges;
+  const makingCharges = Number(makingChargesRaw) || 0;
+  const grandTotal = (parseFloat(subtotal) + makingCharges).toFixed(2);
+
+  // Slick carousel settings
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
 
   return (
     <div className="flex flex-col items-center font-Raleway mt-5 min-h-screen px-5 sm:px-10 md:px-20">
@@ -109,23 +117,20 @@ function ProductDetail() {
       {error && <h1>Error: {error}</h1>}
       {thisProduct && (
         <>
-          <div className="flex flex-col md:flex-row gap-10 w-full lg:w-3/4">
-            <div className="flex flex-col gap-5 w-full md:w-1/2">
-              <img
-                src={activeImg}
-                alt={thisProduct.name}
-                className="w-full aspect-square object-cover rounded-xl"
-              />
-              <div className="flex md:flex-row flex-wrap justify-between gap-2 h-24 mb-10">
-                {images?.map((img, index) => (
-                  <img
-                    key={index}
-                    src={img}
-                    alt={thisProduct.name}
-                    className="w-20 h-20 rounded-md cursor-pointer transition-transform duration-300 hover:scale-105"
-                    onClick={() => setActiveImage(img)}
-                  />
-                ))}
+          <div className="flex flex-col md:flex-row md:gap-20 w-full lg:w-3/4">
+            <div className="flex flex-col gap-5 w-full md:w-1/2 ">
+              <div className="relative mt-5">
+                <Slider {...settings}>
+                  {images.map((img, index) => (
+                    <div key={index} className="w-full aspect-square">
+                      <img
+                        src={img}
+                        alt={`Slide ${index}`}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    </div>
+                  ))}
+                </Slider>
               </div>
             </div>
             <div className="flex flex-col w-full md:w-1/2 mt-5">

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { clearCart, removeFromCart } from "../features/cart/cartSlice";
-
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { CreateOrder } from "../features/Products/Orders/orderSlice";
 
@@ -48,7 +47,7 @@ const CheckoutPage = () => {
       phoneNumber,
       paymentMethod,
     } = formData;
-
+  
     // Form validation
     if (!fullName || !email || !street || !zipCode || !city || !state || !country || !phoneNumber) {
       toast.error("Please fill in all required fields.", {
@@ -56,7 +55,7 @@ const CheckoutPage = () => {
       });
       return;
     }
-
+  
     // Calculate total amount
     const totalAmount = cart.cartItems.reduce((total, cartItem) => {
       if (cartItem.size_chart && cartItem.size_chart[0]) {
@@ -64,7 +63,7 @@ const CheckoutPage = () => {
       }
       return total;
     }, 0);
-
+  
     // Prepare order details
     const orderDetails = {
       items: cart.cartItems.map((cartItem) => ({
@@ -87,22 +86,54 @@ const CheckoutPage = () => {
       payment_method: paymentMethod,
       total: totalAmount,
     };
-    console.log(orderDetails);
 
     try {
       const actionResult = await dispatch(CreateOrder(orderDetails)).unwrap();
-     
-      console.log(actionResult);
-      toast.success("Order placed successfully!", {
-        position: 'top-center',
-      });
-      dispatch(clearCart());
-      navigate('/order-success');
+      
+      if (paymentMethod === "online") {
+        // Initialize Razorpay
+        const razorpay = new window.Razorpay({
+          key: "YOUR_RAZORPAY_KEY_ID",
+          amount: totalAmount * 100, // Amount in paise
+          currency: "INR",
+          name: "Your Company Name",
+          description: "Order Payment",
+          handler: function (response) {
+            // Handle successful payment
+            console.log(response);
+            toast.success("Order placed successfully!", {
+              position: 'top-center',
+            });
+            navigate('/order-success');
+            dispatch(clearCart());
+          },
+          prefill: {
+            name: fullName,
+            email: email,
+            contact: phoneNumber,
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        });
+  
+        // Open Razorpay payment modal
+        razorpay.open();
+      } else {
+        toast.success("Order placed successfully!", {
+          position: 'top-center',
+        });
+        navigate('/order-success');
+        dispatch(clearCart());
+      }
     } catch (error) {
       console.error("Failed to place order: ", error);
-      alert("Failed to place order. Please try again later.");
+      toast.error("Failed to place order. Please try again later.", {
+        position: 'top-center',
+      });
     }
   };
+  
 
   // Calculate subtotal
   const subtotal = cart.cartItems.reduce((total, cartItem) => {
