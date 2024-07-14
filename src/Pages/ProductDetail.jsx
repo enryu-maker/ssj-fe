@@ -238,7 +238,7 @@ function ProductDetail() {
             </div>
           </div>
           {/* Price Breakup */}
-          <div className="w-full lg:w-4/5 xl:w-3/5 mt-8 px-4 md:px-6 lg:px-8 xl:px-12">
+          <div className="w-full lg:w-4/5 xl:w-3/5 mt-10 px-4 md:px-6 lg:px-8 xl:px-12 space-y-10 ">
             <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-primary-color mb-4 md:mb-6">
               Price Breakup
             </h1>
@@ -297,7 +297,7 @@ function ProductDetail() {
         </>
       )}
       {/* Related Products */}
-      <div className="w-full mt-10 overflow-x-auto scrollbar-hide">
+      <div className="w-full mt-10 flex justify-center overflow-x-auto scrollbar-hide">
         <SuggestedProducts currentProductId={thisProduct.id} />
       </div>
     </div>
