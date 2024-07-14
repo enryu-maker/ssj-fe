@@ -112,7 +112,7 @@ function ProductDetail() {
   };
 
   return (
-    <div className="flex flex-col items-center font-Raleway mt-5 min-h-screen px-5 sm:px-10 md:px-20">
+    <div className="flex flex-col items-center font-Raleway mt-5 min-h-screen px-5 sm:px-10 md:px-20 overflow-hidden">
       {loading && <h1>Loading...</h1>}
       {error && <h1>Error: {error}</h1>}
       {thisProduct && (
