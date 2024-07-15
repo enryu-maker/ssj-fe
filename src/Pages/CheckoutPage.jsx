@@ -47,15 +47,13 @@ const CheckoutPage = () => {
       phoneNumber,
       paymentMethod,
     } = formData;
-  
+
     // Form validation
     if (!fullName || !email || !street || !zipCode || !city || !state || !country || !phoneNumber) {
-      toast.error("Please fill in all required fields.", {
-        position: 'top-center',
-      });
+      toast.error("Please fill in all required fields.", { position: "top-center" });
       return;
     }
-  
+
     // Calculate total amount
     const totalAmount = cart.cartItems.reduce((total, cartItem) => {
       if (cartItem.size_chart && cartItem.size_chart[0]) {
@@ -63,7 +61,7 @@ const CheckoutPage = () => {
       }
       return total;
     }, 0);
-  
+
     // Prepare order details
     const orderDetails = {
       items: cart.cartItems.map((cartItem) => ({
@@ -89,23 +87,24 @@ const CheckoutPage = () => {
 
     try {
       const actionResult = await dispatch(CreateOrder(orderDetails)).unwrap();
-      
+
       if (paymentMethod === "online") {
-        // Initialize Razorpay
+        if (!actionResult || !actionResult.data || !actionResult.razor_pay_secrets) {
+          throw new Error("Incomplete order details from server");
+        }
+
         const razorpay = new window.Razorpay({
-          key: "YOUR_RAZORPAY_KEY_ID",
-          amount: totalAmount * 100, // Amount in paise
-          currency: "INR",
-          name: "Your Company Name",
+          key: actionResult.razor_pay_secrets.razor_pay_id,
+          amount: actionResult.data.amount,
+          currency: actionResult.data.currency,
+          name: "Sai Shraddha Jewellers",
           description: "Order Payment",
           handler: function (response) {
             // Handle successful payment
             console.log(response);
-            toast.success("Order placed successfully!", {
-              position: 'top-center',
-            });
-            navigate('/order-success');
+            toast.success("Order placed successfully!", { position: "top-center" });
             dispatch(clearCart());
+            navigate("/order-success");
           },
           prefill: {
             name: fullName,
@@ -113,27 +112,22 @@ const CheckoutPage = () => {
             contact: phoneNumber,
           },
           theme: {
-            color: "#3399cc",
+            color: "#f2e9e9",
           },
         });
-  
-        // Open Razorpay payment modal
+
         razorpay.open();
       } else {
-        toast.success("Order placed successfully!", {
-          position: 'top-center',
-        });
-        navigate('/order-success');
+        // Handle COD order placement
+        toast.success("Order placed successfully!", { position: "top-center" });
         dispatch(clearCart());
+        navigate("/order-success");
       }
     } catch (error) {
       console.error("Failed to place order: ", error);
-      toast.error("Failed to place order. Please try again later.", {
-        position: 'top-center',
-      });
+      toast.error("Failed to place order. Please try again later.", { position: "top-center" });
     }
   };
-  
 
   // Calculate subtotal
   const subtotal = cart.cartItems.reduce((total, cartItem) => {
@@ -143,10 +137,7 @@ const CheckoutPage = () => {
     return total;
   }, 0);
 
-  if (cart.cartItems.length === 0) {
-    navigate("/cart");
-    return null;
-  }
+  
 
   return (
     <div className="container mx-auto mt-10 px-4 sm:px-6 lg:px-8">
@@ -157,9 +148,16 @@ const CheckoutPage = () => {
           <h2 className="text-lg font-semibold mb-4">Order Items</h2>
           <div className="space-y-4">
             {cart?.cartItems?.map((cartItem) => (
-              <div key={cartItem.id} className="flex items-center justify-between border-b pb-2">
+              <div
+                key={cartItem.id}
+                className="flex items-center justify-between border-b pb-2"
+              >
                 <div className="flex items-center space-x-4">
-                  <img src={cartItem.image} alt={cartItem.name} className="w-16 h-16 rounded-md object-cover" />
+                  <img
+                    src={cartItem.image}
+                    alt={cartItem.name}
+                    className="w-16 h-16 rounded-md object-cover"
+                  />
                   <div>
                     <p className="font-semibold">{cartItem.name}</p>
                     {cartItem?.size_chart && cartItem?.size_chart[0] && (
@@ -167,7 +165,9 @@ const CheckoutPage = () => {
                         Weight: {cartItem?.size_chart[0]?.size[0]?.weight} grams
                       </p>
                     )}
-                    <p className="text-lg font-semibold">₹ {cartItem?.size_chart[0]?.total_price?.toFixed(2)}</p>
+                    <p className="text-lg font-semibold">
+                      ₹ {cartItem?.size_chart[0]?.total_price?.toFixed(2)}
+                    </p>
                   </div>
                 </div>
                 <button
@@ -198,8 +198,12 @@ const CheckoutPage = () => {
               <p className="text-sm">FREE</p>
             </div>
             <div className="flex justify-between">
-              <p className="text-sm font-semibold text-primary-color">TOTAL (Incl of all Taxes.)</p>
-              <p className="text-lg font-semibold text-primary-color">₹ {subtotal.toFixed(2)}</p>
+              <p className="text-sm font-semibold text-primary-color">
+                TOTAL (Incl of all Taxes.)
+              </p>
+              <p className="text-lg font-semibold text-primary-color">
+                ₹ {subtotal.toFixed(2)}
+              </p>
             </div>
             <div className="flex justify-between">
               <p className="text-lg font-semibold text-green-500">YOU SAVE</p>
@@ -215,7 +219,9 @@ const CheckoutPage = () => {
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="fullName" className="font-semibold">Full Name</label>
+              <label htmlFor="fullName" className="font-semibold">
+                Full Name
+              </label>
               <input
                 type="text"
                 id="fullName"
@@ -226,7 +232,9 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="email" className="font-semibold">Email</label>
+              <label htmlFor="email" className="font-semibold">
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
@@ -237,7 +245,22 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="street" className="font-semibold">Street</label>
+              <label htmlFor="phoneNumber" className="font-semibold">
+                Phone Number
+              </label>
+              <input
+                type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                className="border border-gray-300 p-2 rounded w-full"
+              />
+            </div>
+            <div>
+              <label htmlFor="street" className="font-semibold">
+                Street
+              </label>
               <input
                 type="text"
                 id="street"
@@ -248,7 +271,9 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="zipCode" className="font-semibold">Zip Code</label>
+              <label htmlFor="zipCode" className="font-semibold">
+                Zip Code
+              </label>
               <input
                 type="text"
                 id="zipCode"
@@ -259,7 +284,9 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="city" className="font-semibold">City</label>
+              <label htmlFor="city" className="font-semibold">
+                City
+              </label>
               <input
                 type="text"
                 id="city"
@@ -270,7 +297,9 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="state" className="font-semibold">State</label>
+              <label htmlFor="state" className="font-semibold">
+                State
+              </label>
               <input
                 type="text"
                 id="state"
@@ -281,7 +310,9 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="country" className="font-semibold">Country</label>
+              <label htmlFor="country" className="font-semibold">
+                Country
+              </label>
               <input
                 type="text"
                 id="country"
@@ -291,54 +322,28 @@ const CheckoutPage = () => {
                 className="border border-gray-300 p-2 rounded w-full"
               />
             </div>
-            <div>
-              <label htmlFor="phoneNumber" className="font-semibold">Phone Number</label>
-              <input
-                type="tel"
-                id="phoneNumber"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
-              />
-            </div>
           </div>
-
-          {/* Payment Method */}
           <div>
-            <label className="font-semibold">Payment Method</label>
-            <div className="mt-2 flex items-center">
-              <input
-                type="radio"
-                id="cod"
-                name="paymentMethod"
-                value="cod"
-                checked={formData.paymentMethod === "cod"}
-                onChange={handleChange}
-                className="mr-2"
-              />
-              <label htmlFor="cod" className="mr-4">Cash on Delivery (COD)</label>
-              <input
-                type="radio"
-                id="online"
-                name="paymentMethod"
-                value="online"
-                checked={formData.paymentMethod === "online"}
-                onChange={handleChange}
-                className="mr-2"
-              />
-              <label htmlFor="online">Online Payment</label>
-            </div>
-          </div>
-
-          <div className="flex justify-end mt-6">
-            <button
-              onClick={handlePlaceOrder}
-              className="bg-primary-color text-white px-4 py-2 rounded"
+            <label htmlFor="paymentMethod" className="font-semibold">
+              Payment Method
+            </label>
+            <select
+              id="paymentMethod"
+              name="paymentMethod"
+              value={formData.paymentMethod}
+              onChange={handleChange}
+              className="border border-gray-300 p-2 rounded w-full"
             >
-              Place Order
-            </button>
+              <option value="cod">Cash on Delivery (COD)</option>
+              <option value="online">Online Payment</option>
+            </select>
           </div>
+          <button
+            onClick={handlePlaceOrder}
+            className="bg-primary-color text-white px-4 py-2 rounded mt-4"
+          >
+            Place Order
+          </button>
         </div>
       </div>
     </div>
