@@ -25,44 +25,6 @@ export const createOrder = createAsyncThunk(
       });
 
       const { order } = response.data;
-
-      // Create Razorpay order
-      const razorpayOrder = await api.post('/order/razorpay-order/', { amount: order.totalAmount });
-
-      // Initialize Razorpay payment
-      const options = {
-        key: 'YOUR_RAZORPAY_KEY_ID', // Enter the Key ID generated from the Dashboard
-        amount: razorpayOrder.amount, // Amount in currency subunits. E.g. 50000 paise = INR 500
-        currency: 'INR',
-        name: 'Your Company Name',
-        description: 'Order Payment',
-        order_id: razorpayOrder.id, // Razorpay Order ID
-        handler: function (response) {
-          // Handle successful payment here
-          console.log('Payment successful:', response);
-          // Dispatch any action or thunk to finalize the order
-          dispatch(finalizeOrder(response.razorpay_payment_id));
-        },
-        prefill: {
-          name: orderData.customerName,
-          email: orderData.customerEmail,
-          contact: orderData.customerPhone,
-        },
-        notes: {
-          address: orderData.customerAddress,
-        },
-        theme: {
-          color: '#F37254',
-        },
-      };
-
-      const rzp = new Razorpay(options);
-      rzp.on('payment.failed', function (response) {
-        console.error('Payment failed:', response.error);
-        toast.error(`Payment failed: ${response.error.description}`, { position: 'bottom-left' });
-      });
-      rzp.open();
-
       return order;
     } catch (error) {
       console.error('Error in API call:', error.response?.data || error.message); // Log full error

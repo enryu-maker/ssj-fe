@@ -95,7 +95,7 @@ const CheckoutPage = () => {
 
         const razorpay = new window.Razorpay({
           key: actionResult.razor_pay_secrets.razor_pay_id,
-          amount: actionResult.data.amount,
+          amount: actionResult.data.amount * 100,
           currency: actionResult.data.currency,
           name: "Sai Shraddha Jewellers",
           description: "Order Payment",
