@@ -97,8 +97,8 @@ const CheckoutPage = () => {
   
         const razorpay = new window.Razorpay({
           key: actionResult.razor_pay_secrets.razor_pay_id,
-          amount: actionResult.data.amount * 100,
           currency: actionResult.data.currency,
+          order_id: actionResult.data.id,
           name: "Sai Shraddha Jewellers",
           description: "Order Payment",
           handler: async function (response) {
@@ -108,64 +108,56 @@ const CheckoutPage = () => {
             console.log(`Bearer ${localStorage.getItem('accessToken')}`);
   
             // Send the payment details to your server for verification
-            try {
-              const verifyResponse = await api.post("/order/verify-order/", {
-                order_id: actionResult.order_id,
-                payment_id: razorpay_payment_id,
-                signature: razorpay_signature,
-              }, {
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-              });
-  
-              const verifyText = await verifyResponse.text();
-              console.log("Verify Response Text: ", verifyText);
-  
-              let verifyData;
-              try {
-                verifyData = JSON.parse(verifyText);
-              } catch (error) {
-                console.error("Failed to parse verification response: ", error);
-                toast.error("Payment verification failed. Please try again later.", { position: "top-center" });
-                return;
-              }
-  
-              if (verifyData.success) {
-                toast.success("Order placed successfully!", { position: "top-center" });
-                dispatch(clearCart());
-                navigate("/order-success");
-              } else {
-                toast.error("Payment verification failed. Please contact support.", { position: "top-center" });
-              }
-            } catch (error) {
-              console.error("Payment verification failed: ", error);
-              toast.error("Payment verification failed. Please try again later.", { position: "top-center" });
+          try {
+            const verifyResponse = await api.post("/order/verify-order/", {
+              order_id: actionResult.order_id,
+              razorpay_payment_id: razorpay_payment_id,
+              razorpay_signature: razorpay_signature,
+              razorpay_order_id: actionResult.data.id,
+            }, {
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
+              },
+            });
+
+            const verifyData = verifyResponse.data;
+            console.log("Verify Response Data: ", verifyData);
+
+            if (verifyData.status_code === 201) {
+              toast.success("Order placed successfully!", { position: "top-center" });
+              dispatch(clearCart());
+              navigate("/order-success");
+            } else {
+              toast.error("Payment verification failed. Please contact support.", { position: "top-center" });
             }
-          },
-          prefill: {
-            name: fullName,
-            email: email,
-            contact: phoneNumber,
-          },
-          theme: {
-            color: "#f2e9e9",
-          },
-        });
-  
-        razorpay.open();
-      } else {
-        // Handle COD order placement
-        toast.success("Order placed successfully!", { position: "top-center" });
-        dispatch(clearCart());
-        navigate("/order-success");
-      }
-    } catch (error) {
-      console.error("Failed to place order: ", error);
-      toast.error("Failed to place order. Please try again later.", { position: "top-center" });
+          } catch (error) {
+            console.error("Payment verification failed: ", error);
+            toast.error("Payment verification failed. Please try again later.", { position: "top-center" });
+          }
+        },
+        prefill: {
+          name: fullName,
+          email: email,
+          contact: phoneNumber,
+        },
+        theme: {
+          color: "#f2e9e9",
+        },
+      });
+
+      razorpay.open();
+    } else {
+      // Handle COD order placement
+      toast.success("Order placed successfully!", { position: "top-center" });
+      dispatch(clearCart());
+      navigate("/order-success");
     }
-  };
+  } catch (error) {
+    console.error("Failed to place order: ", error);
+    toast.error("Failed to place order. Please try again later.", { position: "top-center" });
+  }
+};
   
   
   

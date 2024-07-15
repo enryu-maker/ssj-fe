@@ -28,6 +28,8 @@ function ProductDetail() {
   const [selectedWeight, setSelectedWeight] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
 
+  console.log(thisProduct);
+
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId));
   }, [dispatch, productId]);
@@ -289,7 +291,7 @@ function ProductDetail() {
                   <span></span>
                   <span></span>
                   <span></span>
-                  <span>Rs {grandTotal}</span>
+                  <span>Rs {subtotal}</span>
                 </div>
               </div>
             </div>
