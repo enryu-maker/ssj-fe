@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { clearCart, removeFromCart } from "../features/cart/cartSlice";
 import { toast } from "react-toastify";
 import { CreateOrder } from "../features/Products/Orders/orderSlice";
+import api from "../helper/AxiosInstance";
 
 const CheckoutPage = () => {
   const cart = useSelector((state) => state.cart);
@@ -47,13 +48,13 @@ const CheckoutPage = () => {
       phoneNumber,
       paymentMethod,
     } = formData;
-
+  
     // Form validation
     if (!fullName || !email || !street || !zipCode || !city || !state || !country || !phoneNumber) {
       toast.error("Please fill in all required fields.", { position: "top-center" });
       return;
     }
-
+  
     // Calculate total amount
     const totalAmount = cart.cartItems.reduce((total, cartItem) => {
       if (cartItem.size_chart && cartItem.size_chart[0]) {
@@ -61,7 +62,7 @@ const CheckoutPage = () => {
       }
       return total;
     }, 0);
-
+  
     // Prepare order details
     const orderDetails = {
       items: cart.cartItems.map((cartItem) => ({
@@ -84,27 +85,64 @@ const CheckoutPage = () => {
       payment_method: paymentMethod,
       total: totalAmount,
     };
-
+  
     try {
       const actionResult = await dispatch(CreateOrder(orderDetails)).unwrap();
-
+      console.log(actionResult);
+  
       if (paymentMethod === "online") {
         if (!actionResult || !actionResult.data || !actionResult.razor_pay_secrets) {
           throw new Error("Incomplete order details from server");
         }
-
+  
         const razorpay = new window.Razorpay({
           key: actionResult.razor_pay_secrets.razor_pay_id,
           amount: actionResult.data.amount * 100,
           currency: actionResult.data.currency,
           name: "Sai Shraddha Jewellers",
           description: "Order Payment",
-          handler: function (response) {
+          handler: async function (response) {
             // Handle successful payment
-            console.log(response);
-            toast.success("Order placed successfully!", { position: "top-center" });
-            dispatch(clearCart());
-            navigate("/order-success");
+            const { razorpay_payment_id, razorpay_signature } = response;
+            console.log(actionResult.order_id);
+            console.log(`Bearer ${localStorage.getItem('accessToken')}`);
+  
+            // Send the payment details to your server for verification
+            try {
+              const verifyResponse = await api.post("/order/verify-order/", {
+                order_id: actionResult.order_id,
+                payment_id: razorpay_payment_id,
+                signature: razorpay_signature,
+              }, {
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+              });
+  
+              const verifyText = await verifyResponse.text();
+              console.log("Verify Response Text: ", verifyText);
+  
+              let verifyData;
+              try {
+                verifyData = JSON.parse(verifyText);
+              } catch (error) {
+                console.error("Failed to parse verification response: ", error);
+                toast.error("Payment verification failed. Please try again later.", { position: "top-center" });
+                return;
+              }
+  
+              if (verifyData.success) {
+                toast.success("Order placed successfully!", { position: "top-center" });
+                dispatch(clearCart());
+                navigate("/order-success");
+              } else {
+                toast.error("Payment verification failed. Please contact support.", { position: "top-center" });
+              }
+            } catch (error) {
+              console.error("Payment verification failed: ", error);
+              toast.error("Payment verification failed. Please try again later.", { position: "top-center" });
+            }
           },
           prefill: {
             name: fullName,
@@ -115,7 +153,7 @@ const CheckoutPage = () => {
             color: "#f2e9e9",
           },
         });
-
+  
         razorpay.open();
       } else {
         // Handle COD order placement
@@ -128,6 +166,9 @@ const CheckoutPage = () => {
       toast.error("Failed to place order. Please try again later.", { position: "top-center" });
     }
   };
+  
+  
+  
 
   // Calculate subtotal
   const subtotal = cart.cartItems.reduce((total, cartItem) => {

@@ -24,8 +24,8 @@ export const createOrder = createAsyncThunk(
         },
       });
 
-      const { order } = response.data;
-      return order;
+      
+      return response.data;
     } catch (error) {
       console.error('Error in API call:', error.response?.data || error.message); // Log full error
       return rejectWithValue(error.response?.data?.message || error.message);
