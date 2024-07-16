@@ -62,7 +62,16 @@ function ProductDetail() {
       selectedPrice,
     };
     dispatch(addToCart(productWithDetails));
-    navigate("/cart", { state: { product: productWithDetails } });
+    
+  };
+  const handleBuy = () => {
+    const productWithDetails = {
+      ...thisProduct,
+      selectedWeight,
+      selectedPrice,
+    };
+    dispatch(addToCart(productWithDetails));
+    navigate("/cart");
   };
 
   const handleAddToWishlist = (product) => {
@@ -98,7 +107,7 @@ function ProductDetail() {
   // Get making charges from the product data
   const makingChargesRaw = thisProduct?.size_chart?.[0]?.size?.[0]?.making_charges;
   const makingCharges = Number(makingChargesRaw) || 0;
-  const grandTotal = (parseFloat(subtotal) + makingCharges).toFixed(2);
+  const grandTotal = (parseFloat(subtotal)).toFixed(2);
 
   // Slick carousel settings
   const settings = {
@@ -217,7 +226,7 @@ function ProductDetail() {
                   Add To Cart
                 </button>
                 <button
-                  onClick={handleAddToCart}
+                  onClick={handleBuy}
                   className="border bg-primary-color w-full p-3 rounded-md text-white transition-transform duration-300 hover:bg-red-700"
                 >
                   Buy Now
@@ -289,7 +298,7 @@ function ProductDetail() {
                   <span></span>
                   <span></span>
                   <span></span>
-                  <span>Rs {subtotal}</span>
+                  <span>Rs {grandTotal}</span>
                 </div>
               </div>
             </div>
