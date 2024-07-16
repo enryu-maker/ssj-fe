@@ -12,7 +12,7 @@ const initialState = {
 // Create Order API Call and Razorpay Integration
 export const createOrder = createAsyncThunk(
   'order/createOrder',
-  async (orderData, { rejectWithValue, dispatch }) => {
+  async (orderData, { rejectWithValue }) => {
     const token = sessionStorage.getItem('accessToken');
     console.log('Token in API call:', token); // Verify token
 
