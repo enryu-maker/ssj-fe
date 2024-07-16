@@ -86,7 +86,7 @@ const MyOrders = () => {
                   <div className="flex items-center space-x-4 w-full sm:w-auto">
                     <div className="flex-shrink-0 w-16 h-16">
                       <img 
-                        src={item.product.product_image[0]?.images || '/path/to/default/image.jpg'} 
+                        src={item.product.product_image[0]?.images} 
                         alt={item.product.product_name} 
                         className="w-full h-full rounded-md object-cover" 
                       />
