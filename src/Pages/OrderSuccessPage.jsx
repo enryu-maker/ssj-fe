@@ -10,7 +10,7 @@ const OrderSuccessPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-6">
+    <div className="flex items-center justify-center min-h-[80vh] bg-gray-100 p-6">
       <motion.div
         className="bg-white rounded-lg shadow-lg p-8 max-w-md mx-auto"
         initial={{ opacity: 0, y: -20 }}
