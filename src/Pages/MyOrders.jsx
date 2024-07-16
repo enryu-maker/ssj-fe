@@ -15,7 +15,7 @@ const MyOrders = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 5;
+  const ordersPerPage = 3;
 
   useEffect(() => {
     dispatch(fetchOrders());
