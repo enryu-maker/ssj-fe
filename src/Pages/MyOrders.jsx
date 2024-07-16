@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { fetchOrders, selectOrders, selectOrdersError, selectOrdersLoading } from '../features/orders/orderSlice';
-import { selectIsAuthenticated } from '../features/Auth/authSlice';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  fetchOrders,
+  selectOrders,
+  selectOrdersError,
+  selectOrdersLoading,
+} from "../features/orders/orderSlice";
+import { selectIsAuthenticated } from "../features/Auth/authSlice";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
@@ -37,10 +42,11 @@ const MyOrders = () => {
   // Calculate the orders to be displayed
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = orders?.results?.slice(indexOfFirstOrder, indexOfLastOrder) || [];
+  const currentOrders =
+    orders?.results?.slice(indexOfFirstOrder, indexOfLastOrder) || [];
 
   return (
-    <motion.div 
+    <motion.div
       className="container mx-auto p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -66,18 +72,20 @@ const MyOrders = () => {
       {!loading && !error && currentOrders.length > 0 && (
         <div className="grid grid-cols-1 gap-4">
           {currentOrders.map((order) => (
-            <motion.div 
-              key={order.transaction_id} 
+            <motion.div
+              key={order.transaction_id}
               className="bg-white rounded-lg shadow-md p-4"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <h3 className="text-lg font-semibold mb-2">Order #{order.transaction_id}</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                Order #{order.transaction_id}
+              </h3>
 
               {order.items.map((item, index) => (
-                <motion.div 
-                  key={index} 
+                <motion.div
+                  key={index}
                   className="flex flex-col sm:flex-row items-center justify-between border-b pb-2 mb-2"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -85,20 +93,33 @@ const MyOrders = () => {
                 >
                   <div className="flex items-center space-x-4 w-full sm:w-auto">
                     <div className="flex-shrink-0 w-16 h-16">
-                      <img 
-                        src={item.product.product_image[0]?.images} 
-                        alt={item.product.product_name} 
-                        className="w-full h-full rounded-md object-cover" 
+                      <img
+                        src={`https://api.saishraddhajewellers.com/${item.product.product_image[0]?.images}`}
+                        alt={item.product.product_name}
+                        className="w-full h-full rounded-md object-cover"
+                        onError={(e) => {
+                          e.target.onerror = null; // Prevent infinite loop
+                          e.target.src = "/path/to/placeholder/image.png"; // Placeholder image
+                        }}
                       />
                     </div>
                     <div className="flex-grow">
-                      <p className="font-semibold">{item.product.product_name}</p>
-                      <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
-                      <p className="text-lg font-semibold">Total Price: ₹ {item.size_chart.total_price.toFixed(2)}</p>
+                      <p className="font-semibold">
+                        {item.product.product_name}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Quantity: {item.quantity}
+                      </p>
+                      <p className="text-lg font-semibold">
+                        Total Price: ₹ {item.size_chart.total_price.toFixed(2)}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-5 justify-end mt-4 sm:mt-0">
-                    <Link to={`/order/${order.transaction_id}`} className="text-blue-500 hover:text-blue-700">
+                    <Link
+                      to={`/order/${order.transaction_id}`}
+                      className="text-blue-500 hover:text-blue-700"
+                    >
                       View Details
                     </Link>
                     <motion.button
@@ -116,8 +137,17 @@ const MyOrders = () => {
 
               <div className="mt-4">
                 <p className="text-lg font-semibold">Delivery Address:</p>
-                <p>{order.address.street}, {order.address.city}, {order.address.state}, {order.address.country} - {order.address.zipcode}</p>
-                <p className="mt-2"><span className="font-semibold">Contact:</span> {order.contact_details.name}, {order.contact_details.contact_number}, {order.contact_details.email}</p>
+                <p>
+                  {order.address.street}, {order.address.city},{" "}
+                  {order.address.state}, {order.address.country} -{" "}
+                  {order.address.zipcode}
+                </p>
+                <p className="mt-2">
+                  <span className="font-semibold">Contact:</span>{" "}
+                  {order.contact_details.name},{" "}
+                  {order.contact_details.contact_number},{" "}
+                  {order.contact_details.email}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -127,8 +157,8 @@ const MyOrders = () => {
       {!loading && !error && (
         <div className="flex justify-center mt-4 space-x-4">
           {currentPage > 1 && (
-            <motion.button 
-              onClick={handleShowLess} 
+            <motion.button
+              onClick={handleShowLess}
               className="bg-primary-color text-white py-3 px-6 text-lg rounded hover:bg-red-900 transition duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -137,8 +167,8 @@ const MyOrders = () => {
             </motion.button>
           )}
           {orders?.results?.length > currentPage * ordersPerPage && (
-            <motion.button 
-              onClick={handleShowMore} 
+            <motion.button
+              onClick={handleShowMore}
               className="bg-primary-color text-white py-3 px-6 text-lg rounded hover:bg-red-900 transition duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
