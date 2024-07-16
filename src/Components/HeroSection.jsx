@@ -9,7 +9,6 @@ import api from '../helper/AxiosInstance';
 
 const HeroSection = () => {
   const [banners, setBanners] = useState([]);
-  console.log(banners);
 
   useEffect(() => {
     const fetchBannerImages = async () => {

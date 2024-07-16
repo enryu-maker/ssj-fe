@@ -4,7 +4,6 @@ import api from "../../../helper/AxiosInstance";
 export const getMainCategory = async () => {
   try {
     const response = await api.get('/product/main-category/');
-    // console.log('Response:', response); // Log the entire response for inspection
     if (!response.data) {
       throw new Error('Invalid response data from server');
     }

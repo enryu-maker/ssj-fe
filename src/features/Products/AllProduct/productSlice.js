@@ -93,7 +93,6 @@ export const fetchProductByTagsAsync = createAsyncThunk(
   async (Tagname, { rejectWithValue }) => {
     try {
       const response = await GetProductByTags(Tagname);
-      console.log(response);
       if (!response) {
         throw new Error("Invalid response from server");
       }

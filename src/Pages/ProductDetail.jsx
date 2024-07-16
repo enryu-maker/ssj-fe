@@ -28,8 +28,6 @@ function ProductDetail() {
   const [selectedWeight, setSelectedWeight] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
 
-  console.log(thisProduct);
-
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId));
   }, [dispatch, productId]);

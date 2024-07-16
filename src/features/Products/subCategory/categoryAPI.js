@@ -21,7 +21,6 @@ export const getCategory = async () => {
 export const getCategoryById = async (categoryId) => {
   try {
     const response = await api.get(`/product/sub-category/${categoryId}/`);
-    console.log(response);
     return response.data;
   } catch (error) {
     throw new Error(error.message);

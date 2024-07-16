@@ -106,7 +106,6 @@ const CheckoutPage = () => {
 
     try {
       const actionResult = await dispatch(createOrder(orderDetails)).unwrap();
-      console.log(actionResult);
 
       if (paymentMethod === "online") {
         if (!actionResult || !actionResult.data || !actionResult.razor_pay_secrets) {
@@ -121,8 +120,6 @@ const CheckoutPage = () => {
           description: "Order Payment",
           handler: async function (response) {
             const { razorpay_payment_id, razorpay_signature } = response;
-            console.log(actionResult.order_id);
-            console.log(`Bearer ${localStorage.getItem("accessToken")}`);
 
             try {
               const verifyResponse = await api.post(
@@ -142,7 +139,6 @@ const CheckoutPage = () => {
               );
 
               const verifyData = verifyResponse.data;
-              console.log("Verify Response Data: ", verifyData);
 
               if (verifyData.status_code === 201) {
                 toast.success("Order placed successfully!", {

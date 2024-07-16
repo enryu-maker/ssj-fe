@@ -89,8 +89,7 @@ export const updateUserProfile = createAsyncThunk(
       // Display success toast
       toast.success('Profile updated successfully!', { position: 'bottom-left' });
 
-      // Debugging: log response
-      console.log('Response:', response.data);
+      
 
       return response.data;
     } catch (error) {

@@ -13,7 +13,6 @@ export const createOrder = createAsyncThunk(
   'orders/createOrder',
   async (orderData, { rejectWithValue }) => {
     const token = localStorage.getItem("accessToken");
-    console.log('Token in API call:', token); // Verify token
 
     try {
       // Create order on your server
@@ -43,8 +42,6 @@ export const fetchOrders = createAsyncThunk(
       return rejectWithValue('Unauthorized: Token not found');
     }
 
-    console.log('Token in API call:', token); // Verify token
-
     try {
       // Create order on your server
       const response = await api.get('/profile/order/', {
@@ -52,9 +49,6 @@ export const fetchOrders = createAsyncThunk(
           'Authorization': `Bearer ${token}`,
         },
       });
-
-      console.log(response);
-      
       return response.data; // Ensure correct data format is returned
     } catch (error) {
       console.error('Error in API call:', error.response?.data || error.message); // Log full error

@@ -3,7 +3,6 @@ import Divider from '../../assets/divider.png';
 import { NewForYouData } from '../../data';
 
 function NewForYou() {
-  console.log(NewForYouData);
   return (
     <div className='flex flex-col gap-2 justify-center items-center font-Raleway py-10 '>
       <h1 className='md:text-4xl text-xl text-center font-semibold text-primary-color'>

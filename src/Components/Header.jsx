@@ -40,8 +40,6 @@ const Header = () => {
   const MaterialPrice = useSelector(selectMaterialPrice);
   const navigate = useNavigate();
 
-  console.log(MaterialPrice);
-
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
  
