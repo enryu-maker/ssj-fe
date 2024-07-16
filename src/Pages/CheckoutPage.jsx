@@ -6,6 +6,9 @@ import { clearCart, removeFromCart } from "../features/cart/cartSlice";
 import { toast } from "react-toastify";
 import { CreateOrder } from "../features/Products/Orders/orderSlice";
 import api from "../helper/AxiosInstance";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 const CheckoutPage = () => {
   const cart = useSelector((state) => state.cart);
@@ -23,6 +26,8 @@ const CheckoutPage = () => {
     phoneNumber: "",
     paymentMethod: "cod", // Default payment method
   });
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,21 +53,34 @@ const CheckoutPage = () => {
       phoneNumber,
       paymentMethod,
     } = formData;
-  
+
     // Form validation
-    if (!fullName || !email || !street || !zipCode || !city || !state || !country || !phoneNumber) {
-      toast.error("Please fill in all required fields.", { position: "top-center" });
+    if (
+      !fullName ||
+      !email ||
+      !street ||
+      !zipCode ||
+      !city ||
+      !state ||
+      !country ||
+      !phoneNumber
+    ) {
+      toast.error("Please fill in all required fields.", {
+        position: "top-center",
+      });
       return;
     }
-  
+
     // Calculate total amount
     const totalAmount = cart.cartItems.reduce((total, cartItem) => {
       if (cartItem.size_chart && cartItem.size_chart[0]) {
-        return total + cartItem.size_chart[0].total_price * (cartItem.cartQuantity || 1);
+        return (
+          total + cartItem.size_chart[0].total_price * (cartItem.cartQuantity || 1)
+        );
       }
       return total;
     }, 0);
-  
+
     // Prepare order details
     const orderDetails = {
       items: cart.cartItems.map((cartItem) => ({
@@ -85,16 +103,16 @@ const CheckoutPage = () => {
       payment_method: paymentMethod,
       total: totalAmount,
     };
-  
+
     try {
       const actionResult = await dispatch(CreateOrder(orderDetails)).unwrap();
       console.log(actionResult);
-  
+
       if (paymentMethod === "online") {
         if (!actionResult || !actionResult.data || !actionResult.razor_pay_secrets) {
           throw new Error("Incomplete order details from server");
         }
-  
+
         const razorpay = new window.Razorpay({
           key: actionResult.razor_pay_secrets.razor_pay_id,
           currency: actionResult.data.currency,
@@ -102,65 +120,80 @@ const CheckoutPage = () => {
           name: "Sai Shraddha Jewellers",
           description: "Order Payment",
           handler: async function (response) {
-            // Handle successful payment
             const { razorpay_payment_id, razorpay_signature } = response;
             console.log(actionResult.order_id);
-            console.log(`Bearer ${localStorage.getItem('accessToken')}`);
-  
-            // Send the payment details to your server for verification
-          try {
-            const verifyResponse = await api.post("/order/verify-order/", {
-              order_id: actionResult.order_id,
-              razorpay_payment_id: razorpay_payment_id,
-              razorpay_signature: razorpay_signature,
-              razorpay_order_id: actionResult.data.id,
-            }, {
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
-              },
-            });
+            console.log(`Bearer ${localStorage.getItem("accessToken")}`);
 
-            const verifyData = verifyResponse.data;
-            console.log("Verify Response Data: ", verifyData);
+            try {
+              const verifyResponse = await api.post(
+                "/order/verify-order/",
+                {
+                  order_id: actionResult.order_id,
+                  razorpay_payment_id: razorpay_payment_id,
+                  razorpay_signature: razorpay_signature,
+                  razorpay_order_id: actionResult.data.id,
+                },
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                  },
+                }
+              );
 
-            if (verifyData.status_code === 201) {
-              toast.success("Order placed successfully!", { position: "top-center" });
-              dispatch(clearCart());
-              navigate("/order-success");
-            } else {
-              toast.error("Payment verification failed. Please contact support.", { position: "top-center" });
+              const verifyData = verifyResponse.data;
+              console.log("Verify Response Data: ", verifyData);
+
+              if (verifyData.status_code === 201) {
+                toast.success("Order placed successfully!", {
+                  position: "top-center",
+                });
+                dispatch(clearCart());
+                navigate("/order-success");
+              } else {
+                setModalIsOpen(true);
+                toast.error("Order failed to place. Please contact support or try again later.Click on 'Contact Us' button to reach out to our support team.", {
+                  position: "top-center",
+                });
+                console.error("Payment failed: ", verifyData.message);
+              }
+            } catch (error) {
+              console.error("Payment verification failed: ", error);
+              setModalIsOpen(true);
             }
-          } catch (error) {
-            console.error("Payment verification failed: ", error);
-            toast.error("Payment verification failed. Please try again later.", { position: "top-center" });
-          }
-        },
-        prefill: {
-          name: fullName,
-          email: email,
-          contact: phoneNumber,
-        },
-        theme: {
-          color: "#f2e9e9",
-        },
-      });
+          },
+          prefill: {
+            name: fullName,
+            email: email,
+            contact: phoneNumber,
+          },
+          theme: {
+            color: "#f2e9e9",
+          },
+        });
 
-      razorpay.open();
-    } else {
-      // Handle COD order placement
-      toast.success("Order placed successfully!", { position: "top-center" });
-      dispatch(clearCart());
-      navigate("/order-success");
+        razorpay.open();
+      } else {
+        toast.success("Order placed successfully!", { position: "top-center" });
+        dispatch(clearCart());
+        navigate("/order-success");
+      }
+    } catch (error) {
+      console.error("Failed to place order: ", error);
+      toast.error("Failed to place order. Please try again later.", {
+        position: "top-center",
+      });
     }
-  } catch (error) {
-    console.error("Failed to place order: ", error);
-    toast.error("Failed to place order. Please try again later.", { position: "top-center" });
-  }
-};
-  
-  
-  
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const redirectToContact = () => {
+    navigate("/contact");
+    closeModal();
+  };
 
   // Calculate subtotal
   const subtotal = cart.cartItems.reduce((total, cartItem) => {
@@ -169,8 +202,6 @@ const CheckoutPage = () => {
     }
     return total;
   }, 0);
-
-  
 
   return (
     <div className="container mx-auto mt-10 px-4 sm:px-6 lg:px-8">
@@ -240,145 +271,159 @@ const CheckoutPage = () => {
             </div>
             <div className="flex justify-between">
               <p className="text-lg font-semibold text-green-500">YOU SAVE</p>
-              <p className="text-lg font-semibold text-green-500">+ ₹ 0</p>
+              <p className="text-lg font-semibold text-green-500">₹ 0.00</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Customer Details Form */}
+      {/* Address Form */}
       <div className="bg-white rounded-lg shadow-md p-4 mt-8">
-        <h2 className="text-lg font-semibold mb-4">Customer Details</h2>
+        <h2 className="text-lg font-semibold mb-4">Shipping Address</h2>
         <div className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="fullName" className="font-semibold">
+              <label className="block text-sm font-medium mb-1" htmlFor="fullName">
                 Full Name
               </label>
               <input
                 type="text"
-                id="fullName"
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color"
               />
             </div>
             <div>
-              <label htmlFor="email" className="font-semibold">
+              <label className="block text-sm font-medium mb-1" htmlFor="email">
                 Email
               </label>
               <input
                 type="email"
-                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color"
               />
             </div>
             <div>
-              <label htmlFor="phoneNumber" className="font-semibold">
-                Phone Number
-              </label>
-              <input
-                type="text"
-                id="phoneNumber"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
-              />
-            </div>
-            <div>
-              <label htmlFor="street" className="font-semibold">
+              <label className="block text-sm font-medium mb-1" htmlFor="street">
                 Street
               </label>
               <input
                 type="text"
-                id="street"
                 name="street"
                 value={formData.street}
                 onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color"
               />
             </div>
             <div>
-              <label htmlFor="zipCode" className="font-semibold">
+              <label className="block text-sm font-medium mb-1" htmlFor="zipCode">
                 Zip Code
               </label>
               <input
                 type="text"
-                id="zipCode"
                 name="zipCode"
                 value={formData.zipCode}
                 onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color"
               />
             </div>
             <div>
-              <label htmlFor="city" className="font-semibold">
+              <label className="block text-sm font-medium mb-1" htmlFor="city">
                 City
               </label>
               <input
                 type="text"
-                id="city"
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color"
               />
             </div>
             <div>
-              <label htmlFor="state" className="font-semibold">
+              <label className="block text-sm font-medium mb-1" htmlFor="state">
                 State
               </label>
               <input
                 type="text"
-                id="state"
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color"
               />
             </div>
             <div>
-              <label htmlFor="country" className="font-semibold">
+              <label className="block text-sm font-medium mb-1" htmlFor="country">
                 Country
               </label>
               <input
                 type="text"
-                id="country"
                 name="country"
                 value={formData.country}
                 onChange={handleChange}
-                className="border border-gray-300 p-2 rounded w-full"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1" htmlFor="phoneNumber">
+                Phone Number
+              </label>
+              <input
+                type="text"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color"
               />
             </div>
           </div>
-          <div>
-            <label htmlFor="paymentMethod" className="font-semibold">
+
+          <div className="mt-4">
+            <label className="block text-sm font-medium mb-1" htmlFor="paymentMethod">
               Payment Method
             </label>
             <select
-              id="paymentMethod"
               name="paymentMethod"
               value={formData.paymentMethod}
               onChange={handleChange}
-              className="border border-gray-300 p-2 rounded w-full"
+              className="w-full md:w-96 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-color"
             >
-              <option value="cod">Cash on Delivery (COD)</option>
+              <option value="cod">Cash on Delivery</option>
               <option value="online">Online Payment</option>
             </select>
           </div>
           <button
             onClick={handlePlaceOrder}
-            className="bg-primary-color text-white px-4 py-2 rounded mt-4"
+            className="mt-4 px-4 py-2 bg-primary-color text-white font-semibold rounded-md hover:bg-primary-hover-color focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-opacity-50"
           >
             Place Order
           </button>
         </div>
       </div>
+
+      {/* Payment Failure Modal */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Payment Failure"
+        className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
+        overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50"
+      >
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <h2 className="text-xl font-semibold mb-4">Payment Failure</h2>
+          <p className="mb-4">
+            Unfortunately, your payment could not be processed. Please try again or contact our support team for assistance.
+          </p>
+          <button
+            onClick={redirectToContact}
+            className="px-4 py-2 bg-primary-color text-white font-semibold rounded-md hover:bg-primary-hover-color focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-opacity-50"
+          >
+            Contact Support
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
