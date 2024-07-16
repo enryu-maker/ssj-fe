@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,10 @@ const MyOrders = () => {
   const error = useSelector(selectOrdersError);
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 5;
+
   useEffect(() => {
     dispatch(fetchOrders());
   }, [dispatch]);
@@ -20,6 +24,20 @@ const MyOrders = () => {
   if (!isAuthenticated) {
     return <div>You are not authorized</div>;
   }
+
+  // Handle pagination
+  const handleShowMore = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handleShowLess = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  // Calculate the orders to be displayed
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders?.results?.slice(indexOfFirstOrder, indexOfLastOrder) || [];
 
   return (
     <motion.div 
@@ -34,20 +52,20 @@ const MyOrders = () => {
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-600">{error}</p>}
 
-      {!loading && !error && orders?.results?.length === 0 && (
+      {!loading && !error && currentOrders.length === 0 && (
         <div className="text-center">
           <p className="mb-4">You have no orders yet.</p>
           <Link to="/products">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded">
+            <button className="bg-blue-500 text-white py-3 px-6 text-lg rounded hover:bg-blue-600 transition duration-300">
               Explore Products
             </button>
           </Link>
         </div>
       )}
 
-      {!loading && !error && orders?.results?.length > 0 && (
+      {!loading && !error && currentOrders.length > 0 && (
         <div className="grid grid-cols-1 gap-4">
-          {orders.results.map((order) => (
+          {currentOrders.map((order) => (
             <motion.div 
               key={order.transaction_id} 
               className="bg-white rounded-lg shadow-md p-4"
@@ -103,6 +121,31 @@ const MyOrders = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+      )}
+
+      {!loading && !error && (
+        <div className="flex justify-center mt-4 space-x-4">
+          {currentPage > 1 && (
+            <motion.button 
+              onClick={handleShowLess} 
+              className="bg-primary-color text-white py-3 px-6 text-lg rounded hover:bg-red-900 transition duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Previous
+            </motion.button>
+          )}
+          {orders?.results?.length > currentPage * ordersPerPage && (
+            <motion.button 
+              onClick={handleShowMore} 
+              className="bg-primary-color text-white py-3 px-6 text-lg rounded hover:bg-red-900 transition duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Next
+            </motion.button>
+          )}
         </div>
       )}
     </motion.div>
