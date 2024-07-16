@@ -288,7 +288,7 @@ function MobileHeader() {
                     transition={{ duration: 0.3 }}
                     onClick={handleLinkClick}
                   >
-                    <Link to="/my-orders">My Orders</Link>
+                    <Link to="/dashboard/orders">My Orders</Link>
                   </motion.li>
                   <motion.li
                     initial={{ opacity: 0, y: -10 }}
