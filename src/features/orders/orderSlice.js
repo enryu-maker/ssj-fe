@@ -63,6 +63,23 @@ export const fetchOrders = createAsyncThunk(
   }
 );
 
+export const fetchOrderById = createAsyncThunk(
+  'orders/fetchOrderById',
+  async (transactionId, { rejectWithValue }) => {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const response = await api.get(`/profile/order/${transactionId}/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+
 
 
 const orderSlice = createSlice({
@@ -95,6 +112,18 @@ const orderSlice = createSlice({
       .addCase(fetchOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchOrderById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchOrderById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orders = action.payload;
+      })
+      .addCase(fetchOrderById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

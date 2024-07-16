@@ -27,6 +27,7 @@ import NotAuthenticatedPage from './Pages/NotAuthenticatedPage';
 import PrivateRoute from './helper/PrivateRoute';
 import SearchPage from './Pages/SearchPage';
 import SpinWheelPage from './Pages/SpinWheelPage';
+import OrderDetails from './Pages/OrderDetails';
 
 const App = () => {
   const location = useLocation();
@@ -56,6 +57,7 @@ const App = () => {
         <Route path="/not-auth" element={<NotAuthenticatedPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/spin-wheel" element={<SpinWheelPage />} />
+        <Route path="/order/:transactionId" element={<OrderDetails/>} />
 
         {/* Protected Routes */}
         <Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />
