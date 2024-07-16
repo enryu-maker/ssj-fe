@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { IoHeartOutline, IoChevronBack, IoChevronForward } from 'react-icons/io5';
+import {  IoChevronBack, IoChevronForward } from 'react-icons/io5';
 import { fetchRelatedProductAsync, selectProductsError, selectProductsLoading, selectRelatedProducts } from '../features/Products/AllProduct/productSlice';
+
 
 const SuggestedProducts = ({ currentProductId }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const SuggestedProducts = ({ currentProductId }) => {
       dispatch(fetchRelatedProductAsync(currentProductId));
     }
   }, [dispatch, currentProductId]);
+
+  
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -56,9 +59,6 @@ const SuggestedProducts = ({ currentProductId }) => {
                 alt={product.name}
                 className="w-full h-40 sm:h-60 object-cover rounded-md"
               />
-              <button className="absolute top-2 right-2 bg-white rounded-full p-1 text-primary-color shadow-md hover:bg-gray-100 transition-colors">
-                <IoHeartOutline className="w-6 h-6 sm:w-8 sm:h-8" />
-              </button>
               <h3 className="mt-1 sm:mt-2 text-sm sm:text-lg font-medium truncate">{product.name}</h3>
               <p className="text-xs sm:text-md font-semibold">{product.size_chart[0]?.total_price ? `₹ ${product.size_chart[0].total_price.toFixed(2)}` : 'Price not available'}</p>
             </Link>
