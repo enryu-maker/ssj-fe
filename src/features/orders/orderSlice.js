@@ -1,19 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import api from '../../helper/AxiosInstance';
-import Razorpay from 'razorpay';
 
 const initialState = {
-  orders: null,
+  orders: [],
   loading: false,
   error: null,
 };
 
 // Create Order API Call and Razorpay Integration
 export const createOrder = createAsyncThunk(
-  'order/createOrder',
+  'orders/createOrder',
   async (orderData, { rejectWithValue }) => {
-    const token = sessionStorage.getItem('accessToken');
+    const token = localStorage.getItem("accessToken");
     console.log('Token in API call:', token); // Verify token
 
     try {
@@ -33,21 +32,41 @@ export const createOrder = createAsyncThunk(
   }
 );
 
-// Finalize Order (Update order status after payment success)
-export const finalizeOrder = createAsyncThunk(
-  'order/finalizeOrder',
-  async (paymentId, { rejectWithValue }) => {
+export const fetchOrders = createAsyncThunk(
+  'orders/fetchOrder',
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem("accessToken");
+    
+    
+    if (!token) {
+      console.error('Token not found in LocalStorage');
+      return rejectWithValue('Unauthorized: Token not found');
+    }
+
+    console.log('Token in API call:', token); // Verify token
+
     try {
-      const response = await api.post('/order/finalize-order/', { paymentId });
-      return response.data;
+      // Create order on your server
+      const response = await api.get('/profile/order/', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      console.log(response);
+      
+      return response.data; // Ensure correct data format is returned
     } catch (error) {
+      console.error('Error in API call:', error.response?.data || error.message); // Log full error
       return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
 
+
+
 const orderSlice = createSlice({
-  name: 'order',
+  name: 'orders',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -65,20 +84,24 @@ const orderSlice = createSlice({
         state.error = action.payload;
         toast.error(`Failed to place order: ${action.payload}`, { position: 'bottom-left' });
       })
-      .addCase(finalizeOrder.pending, (state) => {
+      .addCase(fetchOrders.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
-      .addCase(finalizeOrder.fulfilled, (state, action) => {
+      .addCase(fetchOrders.fulfilled, (state, action) => {
         state.loading = false;
         state.orders = action.payload;
-        toast.success('Order placed successfully!', { position: 'bottom-left' });
       })
-      .addCase(finalizeOrder.rejected, (state, action) => {
+      .addCase(fetchOrders.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
-        toast.error(`Failed to finalize order: ${action.payload}`, { position: 'bottom-left' });
+        state.error = action.error.message;
       });
   },
 });
+
+// Selectors
+export const selectOrders = (state) => state.orders.orders;
+export const selectOrdersLoading = (state) => state.orders.loading;
+export const selectOrdersError = (state) => state.orders.error;
 
 export default orderSlice.reducer;

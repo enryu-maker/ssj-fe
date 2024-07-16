@@ -4,9 +4,9 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { clearCart, removeFromCart } from "../features/cart/cartSlice";
 import { toast } from "react-toastify";
-import { CreateOrder } from "../features/Products/Orders/orderSlice";
 import api from "../helper/AxiosInstance";
 import Modal from "react-modal";
+import { createOrder } from "../features/orders/orderSlice";
 
 Modal.setAppElement("#root");
 
@@ -105,7 +105,7 @@ const CheckoutPage = () => {
     };
 
     try {
-      const actionResult = await dispatch(CreateOrder(orderDetails)).unwrap();
+      const actionResult = await dispatch(createOrder(orderDetails)).unwrap();
       console.log(actionResult);
 
       if (paymentMethod === "online") {
