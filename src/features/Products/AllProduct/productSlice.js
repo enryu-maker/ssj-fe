@@ -5,6 +5,7 @@ import {
   GetMaterialRate,
   GetProductByTags,
   GetRelatedProduct,
+  GetSearchProduct,
   GetSingleProduct,
   GetTopSellerProduct,
 } from "./productAPI";
@@ -16,6 +17,7 @@ const initialState = {
   GiftedProduct: [],
   TopSellerProduct: [],
   RelatedProduct: [], // Added state for related products
+  searchResults: [],
   status: "idle",
   loading: false,
   error: null,
@@ -129,6 +131,19 @@ export const fetchRelatedProductAsync = createAsyncThunk(
         throw new Error("Invalid response from server");
       }
       return response.data; // Assuming the API response structure has a 'data' property
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Async thunk for fetching search results
+export const fetchSearchResults = createAsyncThunk(
+  'products/fetchSearchResults',
+  async (query, {rejectWithValue}) => {
+    try {
+      const response = await GetSearchProduct(query)
+    return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -260,7 +275,24 @@ const productsSlice = createSlice({
         state.status = "failed";
         state.loading = false;
         state.error = action.error.message;
+      })
+      // fetching search results 
+      .addCase(fetchSearchResults.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(fetchSearchResults.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.searchResults = action.payload;
+      })
+      .addCase(fetchSearchResults.rejected, (state, action) => {
+        state.status = "failed";
+        state.loading = false;
+        state.error = action.error.message;
       });
+
+
   },
 });
 
@@ -277,5 +309,6 @@ export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 export const selectCurrentPage = (state) => state.products.currentPage;
 export const selectSubCategory = (state) => state.products.subCategory;
+export const selectSearchResults = (state) => state.products.searchResults; 
 
 export default productsSlice.reducer;
