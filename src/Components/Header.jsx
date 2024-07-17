@@ -13,7 +13,7 @@ import Login from "../Pages/Login";
 import MobileHeader from "./MobileHeader";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileDetails from "../Pages/ProfileDetails";
-import Avatar from '../assets/avatar.png'
+import Avatar from "../assets/avatar.png";
 import {
   selectIsAuthenticated,
   selectUser,
@@ -23,7 +23,10 @@ import {
   fetchMainCategoryAsync,
   selectMainCategories,
 } from "../features/Products/mainCategory/mainCategoriesSlice";
-import { fetchMaterialRateAsync, selectMaterialPrice } from "../features/Products/AllProduct/productSlice";
+import {
+  fetchMaterialRateAsync,
+  selectMaterialPrice,
+} from "../features/Products/AllProduct/productSlice";
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
   const [openDetailPage, setDetailPage] = useState(false);
@@ -43,18 +46,15 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
- 
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchMaterialRateAsync());
- 
   }, [dispatch]);
 
   const handleGoldRateClick = () => {
     setIsActive(!isActive);
   };
-
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -81,9 +81,12 @@ const Header = () => {
       <div className="md:flex hidden items-center justify-around font-Raleway sticky top-0 z-50 bg-secondary-color w-full  ">
         <div>
           {/* logo */}
-
           <Link to={"/"}>
-            <img src={Logo} alt="Logo" className=" h-28 object-cover p-2" />
+            <img
+              src={Logo}
+              alt="Logo"
+              className="w-24 h-auto md:w-32 md:h-auto lg:w-40 lg:h-auto object-cover p-2"
+            />
           </Link>
         </div>
         <div className="w-[40rem] relative px-5">
@@ -142,7 +145,11 @@ const Header = () => {
                   style={{ color: "#994e4f" }}
                   className=" flex flex-col items-center uppercase underlineAni text-sm delay-100 transition-all ease-linear hover:scale-[1.1] "
                 >
-                  <img src={user.photo || Avatar} alt="profile" className="w-7 h-7 object-cover rounded-full "  />
+                  <img
+                    src={user.photo || Avatar}
+                    alt="profile"
+                    className="w-7 h-7 object-cover rounded-full "
+                  />
                   Profile
                 </Link>
                 <div className="absolute top-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:flex hidden gap-5 m-1  items-center justify-center flex-col w-[280px]  h-56  text-sm p-1  md:hidden child bg-white shadow-md rounded-md	">
@@ -315,57 +322,64 @@ const Header = () => {
 
         {/* More Links */}
         <ul className="relative flex items-center z-50">
-      <li
-        className="relative flex items-center"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div className="uppercase text-sm cursor-pointer underlineAni">
-          More
-        </div>
-        {isHovered && (
-          <div className="absolute top-3 left-[-190px] w-[200px] text-sm p-2 bg-white shadow-lg rounded-md">
-            <div className="flex flex-col gap-3 items-start">
-              <div
-                className={`text-sm font-extralight ${isActive ? 'bg-primary-color text-white p-2' : 'text-gray-800'}  rounded-md cursor-pointer`}
-                onClick={handleGoldRateClick}
-              >
-                GOLD RATE
-              </div>
-              {isActive && (
-                <div className="flex flex-col gap-1 mt-2 p-2 bg-gray-100 rounded-md">
-                  {MaterialPrice.map((rate) => (
-                    <div key={rate.id} className="text-sm font-light text-gray-700">
-                      {rate.purity}K Gold: ₹{rate.current_price}
-                    </div>
-                  ))}
-                </div>
-              )}
-              <a
-                href="#contacts"
-                className="text-sm font-light text-gray-700 hover:text-primary-color"
-              >
-                BOOK AN APPOINTMENT
-              </a>
-              <button
-                onClick={() => {
-                  /* Implement any necessary onClick logic here */
-                }}
-                className="text-sm font-light text-gray-700 hover:text-primary-color"
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: 0,
-                  cursor: "pointer",
-                }}
-              >
-                FAQ
-              </button>
+          <li
+            className="relative flex items-center"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <div className="uppercase text-sm cursor-pointer underlineAni">
+              More
             </div>
-          </div>
-        )}
-      </li>
-    </ul>
+            {isHovered && (
+              <div className="absolute top-3 left-[-190px] w-[200px] text-sm p-2 bg-white shadow-lg rounded-md">
+                <div className="flex flex-col gap-3 items-start">
+                  <div
+                    className={`text-sm font-extralight ${
+                      isActive
+                        ? "bg-primary-color text-white p-2"
+                        : "text-gray-800"
+                    }  rounded-md cursor-pointer`}
+                    onClick={handleGoldRateClick}
+                  >
+                    GOLD RATE
+                  </div>
+                  {isActive && (
+                    <div className="flex flex-col gap-1 mt-2 p-2 bg-gray-100 rounded-md">
+                      {MaterialPrice.map((rate) => (
+                        <div
+                          key={rate.id}
+                          className="text-sm font-light text-gray-700"
+                        >
+                          {rate.purity}K Gold: ₹{rate.current_price}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <a
+                    href="#contacts"
+                    className="text-sm font-light text-gray-700 hover:text-primary-color"
+                  >
+                    BOOK AN APPOINTMENT
+                  </a>
+                  <button
+                    onClick={() => {
+                      /* Implement any necessary onClick logic here */
+                    }}
+                    className="text-sm font-light text-gray-700 hover:text-primary-color"
+                    style={{
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      cursor: "pointer",
+                    }}
+                  >
+                    FAQ
+                  </button>
+                </div>
+              </div>
+            )}
+          </li>
+        </ul>
       </div>
 
       {/* Mobile header */}
