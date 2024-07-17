@@ -28,6 +28,8 @@ import PrivateRoute from './helper/PrivateRoute';
 import SearchPage from './Pages/SearchPage';
 import SpinWheelPage from './Pages/SpinWheelPage';
 import OrderDetails from './Pages/OrderDetails';
+import BlogPage from './Pages/Blog';
+import BlogDetailPage from './Pages/BlogDetailPage';
 
 const App = () => {
   const location = useLocation();
@@ -58,6 +60,8 @@ const App = () => {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/spin-wheel" element={<SpinWheelPage />} />
         <Route path="/order/:transactionId" element={<OrderDetails/>} />
+        <Route path="/blogs" element={<BlogPage />} />
+        <Route path="/blog/:id" element={<BlogDetailPage />} />
 
         {/* Protected Routes */}
         <Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />

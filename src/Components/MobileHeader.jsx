@@ -12,27 +12,30 @@ import { motion, AnimatePresence } from "framer-motion";
 import DailyWear from "../assets/EarringsIcon.svg";
 import Logo from "../assets/Logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectIsAuthenticated,
-  selectUser,
-} from "../features/Auth/authSlice";
+import { selectIsAuthenticated, selectUser } from "../features/Auth/authSlice";
 import {
   fetchMainCategoryAsync,
   selectMainCategories,
 } from "../features/Products/mainCategory/mainCategoriesSlice";
 import { HiOutlineUser } from "react-icons/hi2";
 import Login from "../Pages/Login";
-import Avatar from '../assets/avatar.png'
+import Avatar from "../assets/avatar.png";
+import {
+  fetchMaterialRateAsync,
+  selectMaterialPrice,
+} from "../features/Products/AllProduct/productSlice";
 
 function MobileHeader() {
   const [LoginModal, setLoginModal] = useState(false);
   const [openNavModal, setNavModal] = useState(false);
   const [selectedMainCategory, setSelectedMainCategory] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isActive, setIsActive] = useState(false);
 
   const dispatch = useDispatch();
   const mainCategories = useSelector(selectMainCategories);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const MaterialPrice = useSelector(selectMaterialPrice);
   const cart = useSelector((state) => state.cart);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
@@ -41,6 +44,10 @@ function MobileHeader() {
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
   }, [dispatch, openNavModal]); // Update useEffect dependencies
+
+  useEffect(() => {
+    dispatch(fetchMaterialRateAsync());
+  }, [dispatch]);
 
   // search query
   const handleSearch = (e) => {
@@ -64,7 +71,6 @@ function MobileHeader() {
     setNavModal(state !== undefined ? state : !openNavModal);
   };
 
-
   const handleMainCategoryClick = (mainCategory) => {
     setSelectedMainCategory(
       selectedMainCategory === mainCategory ? null : mainCategory
@@ -73,6 +79,10 @@ function MobileHeader() {
 
   const handleLinkClick = () => {
     handleNavModal(false); // Close the modal on link click
+  };
+
+  const handleGoldRateClick = () => {
+    setIsActive(!isActive);
   };
 
   return (
@@ -109,7 +119,11 @@ function MobileHeader() {
                 className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110"
               >
                 {/* <HiOutlineUser className="w-6 h-6 md:w-8 md:h-8" /> */}
-                <img src={user.photo || Avatar} alt="profile" className="w-8 h-8 md:w-8 md:h-8 object-cover rounded-full "  />
+                <img
+                  src={user.photo || Avatar}
+                  alt="profile"
+                  className="w-8 h-8 md:w-8 md:h-8 object-cover rounded-full "
+                />
               </Link>
             ) : (
               <motion.button
@@ -126,11 +140,7 @@ function MobileHeader() {
               to="/dailywear"
               className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110"
             >
-              <img
-                src={DailyWear}
-                alt=""
-                className="w-6 h-6 md:w-8 md:h-8"
-              />
+              <img src={DailyWear} alt="" className="w-6 h-6 md:w-8 md:h-8" />
             </Link>
 
             <Link
@@ -148,7 +158,6 @@ function MobileHeader() {
                 {cart.cartItems.length}
               </span>
             </Link>
-            
           </div>
         </div>
         <div className="relative px-2 md:px-8 py-2 md:py-3">
@@ -286,14 +295,25 @@ function MobileHeader() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
-                      onClick={handleLinkClick}
                     >
-                      <Link
-                        to="/digitalgold"
+                      <button
+                        onClick={handleGoldRateClick}
                         className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
                       >
-                        Digital Gold
-                      </Link>
+                        Gold rate
+                      </button>
+                      {isActive && (
+                        <div className="flex flex-col gap-1 mt-2 p-2 bg-gradient-to-r from-pink-500 to-pink-300 rounded-md">
+                          {MaterialPrice.map((rate) => (
+                            <div
+                              key={rate.id}
+                              className="text-base font-light text-gray-700"
+                            >
+                              {rate.purity}K Gold: ₹{rate.current_price}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </motion.li>
                     <motion.li
                       initial={{ opacity: 0, y: -10 }}
