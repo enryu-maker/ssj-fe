@@ -13,6 +13,7 @@ import Login from "../Pages/Login";
 import MobileHeader from "./MobileHeader";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileDetails from "../Pages/ProfileDetails";
+import Avatar from '../assets/avatar.png'
 import {
   selectIsAuthenticated,
   selectUser,
@@ -141,7 +142,7 @@ const Header = () => {
                   style={{ color: "#994e4f" }}
                   className=" flex flex-col items-center uppercase underlineAni text-sm delay-100 transition-all ease-linear hover:scale-[1.1] "
                 >
-                  <HiOutlineUser className="w-6 h-6 text-primary-color" />
+                  <img src={user.photo || Avatar} alt="profile" className="w-7 h-7 object-cover rounded-full "  />
                   Profile
                 </Link>
                 <div className="absolute top-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:flex hidden gap-5 m-1  items-center justify-center flex-col w-[280px]  h-56  text-sm p-1  md:hidden child bg-white shadow-md rounded-md	">

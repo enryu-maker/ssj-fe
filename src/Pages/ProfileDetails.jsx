@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile, selectUser, updateUserProfile } from "../features/Auth/authSlice";
-import Avatar from '../assets/avatar.jpeg'; // Ensure this path is correct for your Avatar image
+import Avatar from '../assets/avatar.png'; // Ensure this path is correct for your Avatar image
 import { useNavigate } from "react-router-dom";
 
 

@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsAuthenticated,
   selectUser,
-  signOutUser,
 } from "../features/Auth/authSlice";
 import {
   fetchMainCategoryAsync,
@@ -23,6 +22,7 @@ import {
 } from "../features/Products/mainCategory/mainCategoriesSlice";
 import { HiOutlineUser } from "react-icons/hi2";
 import Login from "../Pages/Login";
+import Avatar from '../assets/avatar.png'
 
 function MobileHeader() {
   const [LoginModal, setLoginModal] = useState(false);
@@ -36,6 +36,7 @@ function MobileHeader() {
   const cart = useSelector((state) => state.cart);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
+  console.log(user);
 
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
@@ -63,12 +64,6 @@ function MobileHeader() {
     setNavModal(state !== undefined ? state : !openNavModal);
   };
 
-  const handleLogout = () => {
-    dispatch(signOutUser());
-    handleNavModal(false); // Close the modal on logout
-    navigate("/");
-    
-  };
 
   const handleMainCategoryClick = (mainCategory) => {
     setSelectedMainCategory(
@@ -103,12 +98,30 @@ function MobileHeader() {
                 whileTap={{ scale: 0.9 }}
                 src={Logo}
                 alt="Logo"
-                className=" object-cover h-16 md:w-20 md:h-20"
+                className="object-cover h-16 md:w-20 md:h-20"
               />
             </Link>
           </motion.div>
-
           <div className="flex items-center gap-5">
+            {isAuthenticated && user ? (
+              <Link
+                to="/dashboard/profile"
+                className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110"
+              >
+                {/* <HiOutlineUser className="w-6 h-6 md:w-8 md:h-8" /> */}
+                <img src={user.photo || Avatar} alt="profile" className="w-8 h-8 md:w-8 md:h-8 object-cover rounded-full "  />
+              </Link>
+            ) : (
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="text-primary-color"
+                onClick={HandleModal}
+              >
+                <HiOutlineUser className="w-6 h-6 md:w-8 md:h-8" />
+              </motion.button>
+            )}
+
             <Link
               to="/dailywear"
               className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110"
@@ -131,11 +144,11 @@ function MobileHeader() {
               className="flex flex-col items-center text-primary-color text-sm md:text-base transition-all ease-linear hover:scale-110 relative"
             >
               <IoCartOutline className="w-6 h-6 md:w-8 md:h-8" />
-
               <span className="absolute left-3 md:left-5 -top-1 md:-top-2 w-3 h-3 md:w-4 md:h-4 bg-primary-color text-white flex items-center justify-center rounded-full text-xs">
                 {cart.cartItems.length}
               </span>
             </Link>
+            
           </div>
         </div>
         <div className="relative px-2 md:px-8 py-2 md:py-3">
@@ -189,46 +202,6 @@ function MobileHeader() {
                   >
                     Rs 500 off on first order
                   </motion.span>
-                  {isAuthenticated && user ? (
-                    <div className="flex items-center gap-4">
-                      <Link
-                        to="/dashboard/profile"
-                        onClick={handleLinkClick}
-                        className="flex flex-col items-center uppercase text-primary-color p-2 md:p-3"
-                      >
-                        <HiOutlineUser className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
-                        
-                      </Link>
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="flex flex-col items-center uppercase text-primary-color p-2 md:p-3"
-                        onClick={handleLogout}
-                      >
-                        <IoLogOutOutline className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
-                        
-                      </motion.button>
-                    </div>
-                  ) : (
-                    <div className="flex gap-5">
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="text-primary-color"
-                        onClick={HandleModal}
-                      >
-                        LOG IN
-                      </motion.button>
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="text-primary-color"
-                        onClick={HandleModal}
-                      >
-                        SIGN UP
-                      </motion.button>
-                    </div>
-                  )}
                 </div>
                 <ul className="space-y-5 text-black">
                   <motion.li
