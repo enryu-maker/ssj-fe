@@ -307,7 +307,7 @@ function MobileHeader() {
                           {MaterialPrice.map((rate) => (
                             <div
                               key={rate.id}
-                              className="text-base font-light text-gray-700"
+                              className="text-base font-light text-white">
                             >
                               {rate.purity}K Gold: ₹{rate.current_price}
                             </div>
