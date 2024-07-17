@@ -87,7 +87,7 @@ const MyOrders = () => {
                     <div className="flex-shrink-0 w-16 h-16">
                     {/* src={item.product.product_image[0]?.images ? `https://api.saishraddhajewellers.com$item.product.product_image[0]?.images` : ""} */}
                       <img 
-                       src={item.product.product_image[0]?.images ? `https://api.saishraddhajewellers.com$item.product.product_image[0]?.images` : ""}
+                       src={item.product.product_image[0]?.images ? `https://api.saishraddhajewellers.com${item.product.product_image[0]?.images}` : ""}
                         alt={item.product.product_name} 
                         className="w-full h-full rounded-md object-cover" 
                       />
