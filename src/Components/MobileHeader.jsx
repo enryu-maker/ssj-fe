@@ -193,17 +193,17 @@ function MobileHeader() {
                 <GoArrowLeft className="text-3xl md:text-4xl text-primary-color" />
               </motion.button>
               <div className="mt-14 md:mt-20">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-6 p-4 bg-gradient-to-r from-pink-500 to-pink-300 rounded-lg shadow-md">
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="text-lg md:text-xl font-semibold text-pink-500"
+                    className="text-lg md:text-xl font-semibold text-white"
                   >
                     Rs 500 off on first order
                   </motion.span>
                 </div>
-                <ul className="space-y-5 text-black">
+                <ul className="space-y-5 text-gray-700">
                   <motion.li
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -212,7 +212,7 @@ function MobileHeader() {
                     <Link
                       to={"/products"}
                       onClick={handleLinkClick}
-                      className="flex flex-col items-start text-primary-color text-md md:text-base"
+                      className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
                     >
                       All Products
                     </Link>
@@ -228,12 +228,12 @@ function MobileHeader() {
                       >
                         <motion.button
                           onClick={() => handleMainCategoryClick(mainCategory)}
-                          className="flex flex-col items-center text-primary-color text-md md:text-base transition-all ease-linear hover:scale-110"
+                          className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
                         >
                           {mainCategory.name}
                         </motion.button>
                         {selectedMainCategory === mainCategory && (
-                          <ul className="space-y-2 pl-4">
+                          <ul className="pl-4 space-y-3">
                             {mainCategory.sub_category.map((subcategory) => (
                               <motion.li
                                 key={subcategory.id}
@@ -244,7 +244,7 @@ function MobileHeader() {
                               >
                                 <Link
                                   to={`/sub-category/${subcategory.id}`}
-                                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-md"
+                                  className="block px-4 py-2 text-md md:text-lg text-gray-800 hover:bg-pink-100 rounded-md"
                                 >
                                   {subcategory.name}
                                 </Link>
@@ -255,30 +255,60 @@ function MobileHeader() {
                       </motion.li>
                     ))}
                   <hr />
-                  <motion.li
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    onClick={handleLinkClick}
-                  >
-                    <Link to="/dashboard/orders">My Orders</Link>
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    onClick={handleLinkClick}
-                  >
-                    <Link to="/digitalgold">Digital Gold</Link>
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    onClick={handleLinkClick}
-                  >
-                    <Link to="/faqs">FAQs</Link>
-                  </motion.li>
+                  <div className="flex flex-col gap-5 bg-gray-100 rounded-md p-4 shadow-md">
+                    <motion.li
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      onClick={handleLinkClick}
+                    >
+                      <Link
+                        to="/dashboard/orders"
+                        className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
+                      >
+                        My Orders
+                      </Link>
+                    </motion.li>
+                    <motion.li
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      onClick={handleLinkClick}
+                    >
+                      <Link
+                        to="/blogs"
+                        className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
+                      >
+                        Blogs
+                      </Link>
+                    </motion.li>
+                    <motion.li
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      onClick={handleLinkClick}
+                    >
+                      <Link
+                        to="/digitalgold"
+                        className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
+                      >
+                        Digital Gold
+                      </Link>
+                    </motion.li>
+                    <motion.li
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      onClick={handleLinkClick}
+                    >
+                      <Link
+                        to="/faqs"
+                        className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
+                      >
+                        FAQs
+                      </Link>
+                    </motion.li>
+                  </div>
                 </ul>
               </div>
             </motion.div>
