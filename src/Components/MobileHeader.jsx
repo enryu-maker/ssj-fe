@@ -120,7 +120,7 @@ function MobileHeader() {
               >
                 {/* <HiOutlineUser className="w-6 h-6 md:w-8 md:h-8" /> */}
                 <img
-                  src={user.photo || Avatar}
+                  src={user.photo ? `https://api.saishraddhajewellers.com${user.photo}` : Avatar}
                   alt="profile"
                   className="w-8 h-8 md:w-8 md:h-8 object-cover rounded-full "
                 />

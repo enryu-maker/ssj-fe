@@ -146,7 +146,7 @@ const Header = () => {
                   className=" flex flex-col items-center uppercase underlineAni text-sm delay-100 transition-all ease-linear hover:scale-[1.1] "
                 >
                   <img
-                    src={user.photo || Avatar}
+                    src={user.photo ? `https://api.saishraddhajewellers.com${user.photo}` : Avatar}
                     alt="profile"
                     className="w-7 h-7 object-cover rounded-full "
                   />
