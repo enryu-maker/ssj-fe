@@ -78,6 +78,10 @@ export const Information = [
     name: 'About SSJ',
     link: '#about-us',
   },
+  {
+    name: 'Blogs',
+    link: '#blogs',
+  },
 ];
 export const StoreInCities = [
   {

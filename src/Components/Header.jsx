@@ -355,12 +355,17 @@ const Header = () => {
                       ))}
                     </div>
                   )}
-                  <a
-                    href="#contacts"
+                  <Link
+                    to={'/contacts'}
                     className="text-sm font-light text-gray-700 hover:text-primary-color"
                   >
                     BOOK AN APPOINTMENT
-                  </a>
+                  </Link>
+                  <Link to="/blogs"
+                    className="text-sm font-light text-gray-700 hover:text-primary-color"
+                  >
+                    Blogs
+                  </Link>
                   <button
                     onClick={() => {
                       /* Implement any necessary onClick logic here */

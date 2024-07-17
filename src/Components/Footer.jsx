@@ -6,6 +6,7 @@ import { BsTelephone } from 'react-icons/bs';
 import { CiChat1 } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebook, FaYoutube, FaWhatsapp } from 'react-icons/fa';
+import { LiaReadme } from "react-icons/lia";
 
 const Footer = () => {
   return (
@@ -47,6 +48,7 @@ const Footer = () => {
                 <CiChat1 className="text-xl md:text-3xl" />
                 <Link to="/contacts" className="hover:text-primary-color">Chat with Us</Link>
               </div>
+              
             </div>
           </div>
           <div className="mt-10 sm:mt-20">
