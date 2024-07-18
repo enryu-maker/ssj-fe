@@ -12,7 +12,6 @@ import { motion } from "framer-motion";
 import Login from "../Pages/Login";
 import MobileHeader from "./MobileHeader";
 import { useDispatch, useSelector } from "react-redux";
-import ProfileDetails from "../Pages/ProfileDetails";
 import Avatar from "../assets/avatar.png";
 import {
   selectIsAuthenticated,
@@ -29,7 +28,6 @@ import {
 } from "../features/Products/AllProduct/productSlice";
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
-  const [openDetailPage, setDetailPage] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -46,9 +44,6 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(fetchMaterialRateAsync());
   }, [dispatch]);
 
@@ -70,10 +65,6 @@ const Header = () => {
 
   const HandleModal = () => {
     setLoginModal(!LoginModal);
-  };
-
-  const handleDetailModal = () => {
-    setDetailPage(!openDetailPage);
   };
 
   return (
@@ -146,7 +137,11 @@ const Header = () => {
                   className=" flex flex-col items-center uppercase underlineAni text-sm delay-100 transition-all ease-linear hover:scale-[1.1] "
                 >
                   <img
-                    src={user.photo ? `https://api.saishraddhajewellers.com${user.photo}` : Avatar}
+                    src={
+                      user.photo
+                        ? `https://api.saishraddhajewellers.com${user.photo}`
+                        : Avatar
+                    }
                     alt="profile"
                     className="w-7 h-7 object-cover rounded-full "
                   />
@@ -356,12 +351,13 @@ const Header = () => {
                     </div>
                   )}
                   <Link
-                    to={'/contacts'}
+                    to={"/contacts"}
                     className="text-sm font-light text-gray-700 hover:text-primary-color"
                   >
                     BOOK AN APPOINTMENT
                   </Link>
-                  <Link to="/blogs"
+                  <Link
+                    to="/blogs"
                     className="text-sm font-light text-gray-700 hover:text-primary-color"
                   >
                     Blogs
@@ -413,23 +409,6 @@ const Header = () => {
           </motion.div>
         </>
       ) : null}
-
-      {openDetailPage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.25 }}
-          className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed top-10 inset-0 z-50 outline-none focus:outline-none"
-        >
-          <div className="relative w-auto my-6 mx-auto max-w-4xl">
-            <div className="rounded-lg shadow-lg bg-white outline-none focus:outline-none">
-              <div className="relative flex-auto">
-                <ProfileDetails setModal={handleDetailModal} />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
     </>
   );
 };

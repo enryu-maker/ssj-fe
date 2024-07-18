@@ -3,7 +3,6 @@ import { CiMenuFries } from "react-icons/ci";
 import {
   IoCartOutline,
   IoHeartOutline,
-  IoLogOutOutline,
   IoSearchOutline,
 } from "react-icons/io5";
 import { GoArrowLeft } from "react-icons/go";
@@ -39,15 +38,11 @@ function MobileHeader() {
   const cart = useSelector((state) => state.cart);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
-  console.log(user);
 
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
-  }, [dispatch, openNavModal]); // Update useEffect dependencies
-
-  useEffect(() => {
     dispatch(fetchMaterialRateAsync());
-  }, [dispatch]);
+  }, [dispatch, openNavModal]); // Update useEffect dependencies
 
   // search query
   const handleSearch = (e) => {
@@ -120,7 +115,11 @@ function MobileHeader() {
               >
                 {/* <HiOutlineUser className="w-6 h-6 md:w-8 md:h-8" /> */}
                 <img
-                  src={user.photo ? `https://api.saishraddhajewellers.com${user.photo}` : Avatar}
+                  src={
+                    user.photo
+                      ? `https://api.saishraddhajewellers.com${user.photo}`
+                      : Avatar
+                  }
                   alt="profile"
                   className="w-8 h-8 md:w-8 md:h-8 object-cover rounded-full "
                 />
@@ -307,9 +306,9 @@ function MobileHeader() {
                           {MaterialPrice.map((rate) => (
                             <div
                               key={rate.id}
-                              className="text-base font-light text-white">
+                              className="text-base font-light text-white"
                             >
-                              {rate.purity}K Gold: ₹{rate.current_price}
+                              >{rate.purity}K Gold: ₹{rate.current_price}
                             </div>
                           ))}
                         </div>
