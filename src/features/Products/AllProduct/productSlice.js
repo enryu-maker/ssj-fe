@@ -6,6 +6,7 @@ import {
   GetProductByTags,
   GetRelatedProduct,
   GetSearchProduct,
+  GetSilverRate,
   GetSingleProduct,
   GetTopSellerProduct,
 } from "./productAPI";
@@ -121,6 +122,22 @@ export const fetchMaterialRateAsync = createAsyncThunk(
   }
 );
 
+// Async thunk to fetch material rate using axios
+export const fetchSilverRateAsync = createAsyncThunk(
+  "products/fetchSilverRate",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await GetSilverRate();
+      if (!response) {
+        throw new Error("Invalid response from server");
+      }
+      return response.data; // Assuming the API response structure has a 'data' property
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 // Async thunk to fetch related products using axios
 export const fetchRelatedProductAsync = createAsyncThunk(
   "products/fetchRelatedProduct",
@@ -139,11 +156,11 @@ export const fetchRelatedProductAsync = createAsyncThunk(
 
 // Async thunk for fetching search results
 export const fetchSearchResults = createAsyncThunk(
-  'products/fetchSearchResults',
-  async (query, {rejectWithValue}) => {
+  "products/fetchSearchResults",
+  async (query, { rejectWithValue }) => {
     try {
-      const response = await GetSearchProduct(query)
-    return response.data;
+      const response = await GetSearchProduct(query);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -260,6 +277,21 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      // Fetch Silver Rate
+      .addCase(fetchSilverRateAsync.pending, (state) => {
+        state.status = "loading";
+        state.loading = true;
+      })
+      .addCase(fetchSilverRateAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.loading = false;
+        state.SilverPrice = action.payload; // Update with the fetched material rate
+      })
+      .addCase(fetchSilverRateAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.loading = false;
+        state.error = action.error.message;
+      })
 
       // Fetch Related Products
       .addCase(fetchRelatedProductAsync.pending, (state) => {
@@ -276,7 +308,7 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      // fetching search results 
+      // fetching search results
       .addCase(fetchSearchResults.pending, (state) => {
         state.status = "loading";
         state.loading = true;
@@ -291,8 +323,6 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       });
-
-
   },
 });
 
@@ -302,13 +332,15 @@ export const selectProducts = (state) => state.products.products;
 export const selectSingleProduct = (state) => state.products.singleProduct;
 export const selectProductByTag = (state) => state.products.tagsProduct;
 export const selectGiftedProducts = (state) => state.products.GiftedProduct;
-export const selectTopSellerProducts = (state) => state.products.TopSellerProduct;
+export const selectTopSellerProducts = (state) =>
+  state.products.TopSellerProduct;
 export const selectRelatedProducts = (state) => state.products.RelatedProduct; // Added selector
 export const selectMaterialPrice = (state) => state.products.MaterialPrice;
+export const selectSilverPrice = (state) => state.products.SilverPrice;
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
 export const selectCurrentPage = (state) => state.products.currentPage;
 export const selectSubCategory = (state) => state.products.subCategory;
-export const selectSearchResults = (state) => state.products.searchResults; 
+export const selectSearchResults = (state) => state.products.searchResults;
 
 export default productsSlice.reducer;

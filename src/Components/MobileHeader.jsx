@@ -21,7 +21,9 @@ import Login from "../Pages/Login";
 import Avatar from "../assets/avatar.png";
 import {
   fetchMaterialRateAsync,
+  fetchSilverRateAsync,
   selectMaterialPrice,
+  selectSilverPrice,
 } from "../features/Products/AllProduct/productSlice";
 
 function MobileHeader() {
@@ -30,11 +32,13 @@ function MobileHeader() {
   const [selectedMainCategory, setSelectedMainCategory] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const [isSilver, setIsSilver] = useState(false);
 
   const dispatch = useDispatch();
   const mainCategories = useSelector(selectMainCategories);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const MaterialPrice = useSelector(selectMaterialPrice);
+  const SilverPrice = useSelector(selectSilverPrice);
   const cart = useSelector((state) => state.cart);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
@@ -42,6 +46,7 @@ function MobileHeader() {
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
     dispatch(fetchMaterialRateAsync());
+    dispatch(fetchSilverRateAsync());
   }, [dispatch, openNavModal]); // Update useEffect dependencies
 
   // search query
@@ -78,6 +83,9 @@ function MobileHeader() {
 
   const handleGoldRateClick = () => {
     setIsActive(!isActive);
+  };
+  const handleSilverRateClick = () => {
+    setIsSilver(!isSilver);
   };
 
   return (
@@ -309,6 +317,30 @@ function MobileHeader() {
                               className="text-base font-light text-white"
                             >
                               >{rate.purity}K Gold: ₹{rate.current_price}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </motion.li>
+                    <motion.li
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <button
+                        onClick={handleSilverRateClick}
+                        className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
+                      >
+                        Silver Rate
+                      </button>
+                      {isSilver && (
+                        <div className="flex flex-col gap-1 mt-2 p-2 bg-gradient-to-r from-pink-500 to-pink-300 rounded-md">
+                          {SilverPrice.map((rate) => (
+                            <div
+                              key={rate.id}
+                              className="text-base font-light text-white"
+                            >
+                              {rate.purity} Silver: ₹{rate.current_price}
                             </div>
                           ))}
                         </div>

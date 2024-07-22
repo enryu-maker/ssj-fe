@@ -1,9 +1,8 @@
 import api from "../../../helper/AxiosInstance";
 
-
-export const GetAllProducts = async (page = 1, subCategory = '') => {
+export const GetAllProducts = async (page = 1, subCategory = "") => {
   try {
-    const response = await api.get('/product/', {
+    const response = await api.get("/product/", {
       params: {
         page,
         sub_category: subCategory,
@@ -28,7 +27,7 @@ export const GetSingleProduct = async (productId) => {
 // Most gifted product
 export const GetGiftedProduct = async () => {
   try {
-    const response = await api.get('/web/most-gifted/');
+    const response = await api.get("/web/most-gifted/");
     return response; // Assuming response.data contains the single product object
   } catch (error) {
     throw new Error(error.message);
@@ -38,7 +37,7 @@ export const GetGiftedProduct = async () => {
 // TopSeller product
 export const GetTopSellerProduct = async () => {
   try {
-    const response = await api.get('/web/top-seller/');
+    const response = await api.get("/web/top-seller/");
     return response; // Assuming response.data contains the single product object
   } catch (error) {
     throw new Error(error.message);
@@ -48,7 +47,7 @@ export const GetTopSellerProduct = async () => {
 // Get product by Tags
 export const GetProductByTags = async (tagName) => {
   try {
-    const response = await api.get('/product/tags', {
+    const response = await api.get("/product/tags", {
       params: {
         tags: tagName,
       },
@@ -69,9 +68,8 @@ export const GetRelatedProduct = async (ProductId) => {
   }
 };
 
-// Gel Material Price API
+// Get Gold Material Price API
 export const GetMaterialRate = async () => {
-  
   try {
     const response = await api.get(`/web/get-gold-rate/`);
     return response; // Assuming response.data contains the single product object
@@ -80,11 +78,21 @@ export const GetMaterialRate = async () => {
   }
 };
 
-// Gel Search Product 
+// Get Gold Material Price API
+export const GetSilverRate = async () => {
+  try {
+    const response = await api.get(`/web/get-silver-rate/`);
+    return response; // Assuming response.data contains the single product object
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+// Gel Search Product
 export const GetSearchProduct = async (query) => {
   try {
     const response = await api.get(`/product/search?query=${query}`);
-    return response; 
+    return response;
   } catch (error) {
     throw new Error(error.message);
   }
