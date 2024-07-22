@@ -24,13 +24,16 @@ import {
 } from "../features/Products/mainCategory/mainCategoriesSlice";
 import {
   fetchMaterialRateAsync,
+  fetchSilverRateAsync,
   selectMaterialPrice,
+  selectSilverPrice,
 } from "../features/Products/AllProduct/productSlice";
 const Header = () => {
   const [LoginModal, setLoginModal] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const [isSilver, setIsSilver] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
@@ -40,15 +43,20 @@ const Header = () => {
   const wishlist = useSelector((state) => state.wishlist);
   const mainCategories = useSelector(selectMainCategories);
   const MaterialPrice = useSelector(selectMaterialPrice);
+  const SilverPrice = useSelector(selectSilverPrice);
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchMainCategoryAsync());
     dispatch(fetchMaterialRateAsync());
+    dispatch(fetchSilverRateAsync());
   }, [dispatch]);
 
   const handleGoldRateClick = () => {
     setIsActive(!isActive);
+  };
+  const handleSilverRateClick = () => {
+    setIsSilver(!isSilver);
   };
 
   const handleSearch = (e) => {
@@ -316,7 +324,7 @@ const Header = () => {
         </Link>
 
         {/* More Links */}
-        <ul className="relative flex items-center z-50">
+        <ul className="relative flex items-center z-40">
           <li
             className="relative flex items-center"
             onMouseEnter={() => setIsHovered(true)}
@@ -326,8 +334,9 @@ const Header = () => {
               More
             </div>
             {isHovered && (
-              <div className="absolute top-3 left-[-190px] w-[200px] text-sm p-2 bg-white shadow-lg rounded-md">
+              <div className="absolute top-3 left-[-190px] w-[220px] text-sm p-2 bg-white shadow-lg rounded-md">
                 <div className="flex flex-col gap-3 items-start">
+                  {/* Gold */}
                   <div
                     className={`text-sm font-extralight ${
                       isActive
@@ -336,10 +345,10 @@ const Header = () => {
                     }  rounded-md cursor-pointer`}
                     onClick={handleGoldRateClick}
                   >
-                    GOLD RATE
+                    Gold Rate
                   </div>
                   {isActive && (
-                    <div className="flex flex-col gap-1 mt-2 p-2 bg-gray-100 rounded-md">
+                    <div className="flex flex-col gap-2 mt-2 py-2 px-8 bg-gray-100 rounded-md">
                       {MaterialPrice.map((rate) => (
                         <div
                           key={rate.id}
@@ -350,11 +359,34 @@ const Header = () => {
                       ))}
                     </div>
                   )}
+                  {/* Silver  */}
+                  <div
+                    className={`text-sm font-extralight ${
+                      isSilver
+                        ? "bg-primary-color text-white p-2"
+                        : "text-gray-800"
+                    }  rounded-md cursor-pointer`}
+                    onClick={handleSilverRateClick}
+                  >
+                    Silver Rate
+                  </div>
+                  {isSilver && (
+                    <div className="flex flex-col gap-1 mt-2 py-2 px-3 bg-gray-100 rounded-md">
+                      {SilverPrice.map((rate) => (
+                        <div
+                          key={rate.id}
+                          className="text-sm font-light text-gray-700"
+                        >
+                          {rate.purity} Silver: ₹{rate.current_price}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   <Link
                     to={"/contacts"}
                     className="text-sm font-light text-gray-700 hover:text-primary-color"
                   >
-                    BOOK AN APPOINTMENT
+                    Book an appointment
                   </Link>
                   <Link
                     to="/blogs"
