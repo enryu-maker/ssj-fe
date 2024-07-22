@@ -65,9 +65,7 @@ const CouponPage = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-primary-color">
-        Your Coupons
-      </h1>
+      <h1 className="text-2xl font-bold mb-4">Your Coupons</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {dummyCoupons.length === 0 ? (
           <p>No coupons available.</p>
