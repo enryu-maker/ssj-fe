@@ -1,24 +1,38 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
-
-const dummyBlogs = [
-  { id: 1, title: 'Blog Post 1', content: 'Detailed content for blog post 1.', image: 'https://via.placeholder.com/800x400' },
-  { id: 2, title: 'Blog Post 2', content: 'Detailed content for blog post 2.', image: 'https://via.placeholder.com/800x400' },
-  { id: 3, title: 'Blog Post 3', content: 'Detailed content for blog post 3.', image: 'https://via.placeholder.com/800x400' },
-  { id: 4, title: 'Blog Post 4', content: 'Detailed content for blog post 4.', image: 'https://via.placeholder.com/800x400' },
-  { id: 5, title: 'Blog Post 5', content: 'Detailed content for blog post 5.', image: 'https://via.placeholder.com/800x400' },
-  { id: 6, title: 'Blog Post 6', content: 'Detailed content for blog post 6.', image: 'https://via.placeholder.com/800x400' },
-  { id: 7, title: 'Blog Post 7', content: 'Detailed content for blog post 7.', image: 'https://via.placeholder.com/800x400' },
-  { id: 8, title: 'Blog Post 8', content: 'Detailed content for blog post 8.', image: 'https://via.placeholder.com/800x400' },
-];
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import ReactQuill from "react-quill";
+import api from "../helper/AxiosInstance"; // import your Axios instance
+import "react-quill/dist/quill.bubble.css"; // import styles for React Quill bubble theme
 
 const BlogDetailPage = () => {
-  const { id } = useParams();
-  const blog = dummyBlogs.find((b) => b.id === parseInt(id));
+  const { slug } = useParams();
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const response = await api.get(`/web/blog/${slug}/`);
+        setBlog(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching blog:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchBlog();
+  }, [slug]);
+
+  if (loading) {
+    return <p className="text-center text-primary-color">Loading...</p>;
+  }
 
   if (!blog) {
-    return <p className="text-center text-white">Blog post not found!</p>;
+    return (
+      <p className="text-center text-primary-color">Blog post not found!</p>
+    );
   }
 
   return (
@@ -32,15 +46,13 @@ const BlogDetailPage = () => {
         <img
           src={blog.image}
           alt={blog.title}
-          className="w-full h-96 object-cover rounded-t-lg"
+          className="w-full h-96 object-cover rounded-lg"
         />
         <div className="bg-white p-6 rounded-b-lg">
           <h1 className="text-3xl md:text-4xl font-bold text-primary-color mb-4">
             {blog.title}
           </h1>
-          <p className="text-gray-700 leading-relaxed">
-            {blog.content}
-          </p>
+          <ReactQuill value={blog.content} readOnly={true} theme="bubble" />
         </div>
       </motion.div>
     </div>
