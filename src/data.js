@@ -41,26 +41,7 @@ export const UsefulLinks = [
   },
 ];
 
-export const MoreLink = [
-  {
-    name: "GOLD RATE",
-    link: "",
-  },
-  {
-    name: "BOOK AN APPOINTMENT",
-    link: "#contacts",
-  },
-  {
-    name: "FAQ",
-    link: "",
-  },
-];
-
 export const Information = [
-  {
-    name: "Careers",
-    link: "",
-  },
   {
     name: "Help & FAQs",
     link: "#contacts",
@@ -72,31 +53,5 @@ export const Information = [
   {
     name: "Blogs",
     link: "#blogs",
-  },
-];
-export const StoreInCities = [
-  {
-    city: "Mumbai",
-    img: "https://i.ibb.co/MsG5FVs/Mumbai-42b4bffdd6b38798a062.png",
-    store: "10 stores",
-    link: "",
-  },
-  {
-    city: "Mumbai",
-    img: "https://i.ibb.co/MsG5FVs/Mumbai-42b4bffdd6b38798a062.png",
-    store: "18 stores",
-    link: "",
-  },
-  {
-    city: "Mumbai",
-    img: "https://i.ibb.co/MsG5FVs/Mumbai-42b4bffdd6b38798a062.png",
-    store: "6 stores",
-    link: "",
-  },
-  {
-    city: "Mumbai",
-    img: "https://i.ibb.co/MsG5FVs/Mumbai-42b4bffdd6b38798a062.png",
-    store: "7 stores",
-    link: "",
   },
 ];
