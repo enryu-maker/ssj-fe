@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { IoHeartOutline } from "react-icons/io5";
-import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
+import {
+  MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
+} from "react-icons/md";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -62,7 +65,6 @@ function ProductDetail() {
       selectedPrice,
     };
     dispatch(addToCart(productWithDetails));
-    
   };
   const handleBuy = () => {
     const productWithDetails = {
@@ -105,9 +107,10 @@ function ProductDetail() {
     .toFixed(2);
 
   // Get making charges from the product data
-  const makingChargesRaw = thisProduct?.size_chart?.[0]?.size?.[0]?.making_charges;
+  const makingChargesRaw =
+    thisProduct?.size_chart?.[0]?.size?.[0]?.making_charges;
   const makingCharges = Number(makingChargesRaw) || 0;
-  const grandTotal = (parseFloat(subtotal)).toFixed(2);
+  const grandTotal = parseFloat(subtotal).toFixed(2);
 
   // Slick carousel settings
   const settings = {
@@ -130,13 +133,22 @@ function ProductDetail() {
             <div className="flex flex-col gap-5 w-full md:w-1/2 ">
               <div className="relative mt-5">
                 <Slider {...settings}>
-                  {images.map((img, index) => (
+                  {images.map((item, index) => (
                     <div key={index} className="w-full aspect-square">
-                      <img
-                        src={img}
-                        alt={`Slide ${index}`}
-                        className="w-full h-full object-cover rounded-xl"
-                      />
+                      {typeof item === "string" && item.endsWith(".mp4") ? (
+                        <video
+                          src={item}
+                          controls
+                          className="w-full h-full object-cover rounded-xl"
+                          alt={`Slide ${index}`}
+                        />
+                      ) : (
+                        <img
+                          src={item}
+                          alt={`Slide ${index}`}
+                          className="w-full h-full object-cover rounded-xl"
+                        />
+                      )}
                     </div>
                   ))}
                 </Slider>
