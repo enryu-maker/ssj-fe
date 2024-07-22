@@ -1,12 +1,19 @@
-import React from 'react';
-import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBoxOpen, faHeart, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import ProfileDetails from './ProfileDetails';
-import MyOrders from './MyOrders';
-import WishList from './WishList';
-import { useDispatch } from 'react-redux';
-import { signOutUser } from '../features/Auth/authSlice';
+import React from "react";
+import { NavLink, Route, Routes, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faBoxOpen,
+  faHeart,
+  faSignOutAlt,
+  faTicket,
+} from "@fortawesome/free-solid-svg-icons";
+import ProfileDetails from "./ProfileDetails";
+import MyOrders from "./MyOrders";
+import WishList from "./WishList";
+import { useDispatch } from "react-redux";
+import { signOutUser } from "../features/Auth/authSlice";
+import CouponPage from "./CouponPage";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,7 +32,11 @@ const Dashboard = () => {
           <NavLink
             to="/dashboard/profile"
             className={({ isActive }) =>
-              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-slate-500' : 'text-gray-800 hover:bg-secondary-color hover:text-slate-500'}`
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${
+                isActive
+                  ? "bg-secondary-color text-slate-500"
+                  : "text-gray-800 hover:bg-secondary-color hover:text-slate-500"
+              }`
             }
           >
             <FontAwesomeIcon icon={faUser} className="mr-2" />
@@ -34,7 +45,11 @@ const Dashboard = () => {
           <NavLink
             to="/dashboard/orders"
             className={({ isActive }) =>
-              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-slate-500' : 'text-gray-800 hover:bg-secondary-color hover:text-slate-500'}`
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${
+                isActive
+                  ? "bg-secondary-color text-slate-500"
+                  : "text-gray-800 hover:bg-secondary-color hover:text-slate-500"
+              }`
             }
           >
             <FontAwesomeIcon icon={faBoxOpen} className="mr-2" />
@@ -43,11 +58,28 @@ const Dashboard = () => {
           <NavLink
             to="/dashboard/wishlist"
             className={({ isActive }) =>
-              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${isActive ? 'bg-secondary-color text-slate-500' : 'text-gray-800 hover:bg-secondary-color hover:text-slate-500'}`
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${
+                isActive
+                  ? "bg-secondary-color text-slate-500"
+                  : "text-gray-800 hover:bg-secondary-color hover:text-slate-500"
+              }`
             }
           >
             <FontAwesomeIcon icon={faHeart} className="mr-2" />
             Wishlist
+          </NavLink>
+          <NavLink
+            to="/dashboard/coupons"
+            className={({ isActive }) =>
+              `flex items-center text-lg font-medium rounded-md p-3 transition-colors duration-300 ${
+                isActive
+                  ? "bg-secondary-color text-slate-500"
+                  : "text-gray-800 hover:bg-secondary-color hover:text-slate-500"
+              }`
+            }
+          >
+            <FontAwesomeIcon icon={faTicket} className="mr-2" />
+            Coupons
           </NavLink>
           <button
             onClick={handleLogout}
@@ -63,6 +95,7 @@ const Dashboard = () => {
           <Route path="profile" element={<ProfileDetails />} />
           <Route path="orders" element={<MyOrders />} />
           <Route path="wishlist" element={<WishList />} />
+          <Route path="coupons" element={<CouponPage />} />
           <Route path="/" element={<ProfileDetails />} />
         </Routes>
       </main>
