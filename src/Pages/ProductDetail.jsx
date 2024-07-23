@@ -259,58 +259,60 @@ function ProductDetail() {
             </div>
           </div>
           {/* Price Breakup */}
-          <div className="w-full lg:w-4/5 xl:w-3/5 mt-10 px-4 md:px-6 lg:px-8 xl:px-12 space-y-10 ">
+          <div className="w-full mt-20 px-4 md:px-6 lg:px-8 xl:px-12 space-y-10">
             <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-primary-color mb-4 md:mb-6">
               Price Breakup
             </h1>
-            <div className="bg-gray-50 p-4 md:p-6 lg:p-8 xl:p-10 rounded-lg shadow-lg">
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-sm md:text-base lg:text-lg mb-4">
-                <span className="font-semibold">Component</span>
-                <span className="font-semibold">Gold Rate</span>
-                <span className="font-semibold">Weight</span>
-                <span className="font-semibold">Discount</span>
-                <span className="font-semibold">Final Value</span>
-              </div>
-              <div className="border-t border-gray-200">
-                {priceBreakup.map((item, index) => (
-                  <div
-                    key={index}
-                    className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg border-b border-gray-200"
-                  >
-                    <span>{item.component}</span>
-                    <span>{item.gold_rate}</span>
-                    <span>{item.weight}</span>
-                    <span>{item.discount}</span>
-                    <span className="font-semibold">{item.final_value}</span>
+            <div className="overflow-x-auto">
+              <div className="border-b border-gray-200">
+                <div className="hidden md:grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 p-4 md:p-6 lg:p-8 text-sm md:text-base lg:text-lg font-semibold text-primary-color bg-gray-50">
+                  <span>Component</span>
+                  <span>Gold Rate</span>
+                  <span>Weight</span>
+                  <span>Discount</span>
+                  <span>Final Value</span>
+                </div>
+                <div className="divide-y divide-gray-200">
+                  {priceBreakup.map((item, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg hover:bg-gray-50"
+                    >
+                      <span>{item.component}</span>
+                      <span>{item.gold_rate}</span>
+                      <span>{item.weight}</span>
+                      <span>{item.discount}</span>
+                      <span className="font-semibold">{item.final_value}</span>
+                    </div>
+                  ))}
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg bg-gray-50 font-semibold text-gray-700">
+                    <span>Total Weight</span>
+                    <span></span>
+                    <span>{totalWeight} g</span>
+                    <span></span>
+                    <span></span>
                   </div>
-                ))}
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
-                  <span>Total Weight</span>
-                  <span></span>
-                  <span>{totalWeight} g</span>
-                  <span></span>
-                  <span></span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg border-b border-gray-200 font-semibold">
-                  <span>Grand Total</span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span>Rs {subtotal}</span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
-                  <span>Making Charges</span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span>Rs {makingCharges.toFixed(2)}</span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 py-2 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
-                  <span>Grand Total</span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span>Rs {grandTotal}</span>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
+                    <span>Grand Total</span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span>Rs {subtotal}</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
+                    <span>Making Charges</span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span>Rs {makingCharges.toFixed(2)}</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
+                    <span>Grand Total</span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span>Rs {grandTotal}</span>
+                  </div>
                 </div>
               </div>
             </div>
