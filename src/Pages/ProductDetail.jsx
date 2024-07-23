@@ -318,7 +318,7 @@ function ProductDetail() {
         </>
       )}
       {/* Related Products */}
-      <div className="w-full mt-10 flex justify-center overflow-x-auto scrollbar-hide">
+      <div className="w-full mt-10 md:flex md:justify-center overflow-x-auto scrollbar-hide">
         <SuggestedProducts currentProductId={thisProduct.id} />
       </div>
     </div>
