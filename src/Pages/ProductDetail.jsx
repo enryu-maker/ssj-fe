@@ -31,6 +31,8 @@ function ProductDetail() {
   const [selectedWeight, setSelectedWeight] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
 
+  console.log(thisProduct);
+
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId));
   }, [dispatch, productId]);
@@ -44,12 +46,14 @@ function ProductDetail() {
     }
   }, [thisProduct]);
 
+  // Include the video URL in the media array
   const images = [
     thisProduct?.image,
     ...(thisProduct?.other_images
       ? thisProduct?.other_images.map((img) => img?.images)
       : []),
-  ];
+    thisProduct?.video, // Add video URL here
+  ].filter(Boolean); // Remove any undefined values
 
   const handleWeightChange = (weight, price, index) => {
     setIndex(index);
@@ -135,10 +139,13 @@ function ProductDetail() {
                 <Slider {...settings}>
                   {images.map((item, index) => (
                     <div key={index} className="w-full aspect-square">
-                      {typeof item === "string" && item.endsWith(".mp4") ? (
+                      {item.endsWith(".mp4") ? (
                         <video
                           src={item}
-                          controls
+                          type="video/mp4"
+                          muted
+                          autoPlay
+                          loop
                           className="w-full h-full object-cover rounded-xl"
                           alt={`Slide ${index}`}
                         />

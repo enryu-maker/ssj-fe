@@ -13,7 +13,7 @@
 }
 
 .underlineAni::before {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: 100%;
@@ -49,3 +49,106 @@
   display: none; /* Chrome, Safari, and Opera */
 }
 
+/* custom-quill-content.css */
+
+/* Style the editor container (for overall appearance) */
+.ql-container.ql-snow {
+  padding: 1rem; /* Padding around the editor content */
+}
+
+/* Style paragraphs inside the editor */
+.ql-editor p {
+  margin-bottom: 1rem; /* Space between paragraphs */
+  font-size: 1rem; /* Base font size */
+  color: #374151; /* Dark gray text color */
+}
+
+/* Style bold text */
+.ql-editor strong {
+  font-weight: 700; /* Bold text */
+}
+
+/* Style links */
+.ql-editor a {
+  color: #2563eb; /* Blue color for links */
+  text-decoration: underline; /* Underline links */
+}
+
+/* Style lists */
+.ql-editor ul {
+  list-style-type: disc; /* Bullet points for unordered lists */
+  padding-left: 2rem; /* Indentation for list items */
+  margin-bottom: 1rem; /* Space below the list */
+}
+
+.ql-editor ol {
+  list-style-type: decimal; /* Numbered list */
+  padding-left: 2rem; /* Indentation for list items */
+  margin-bottom: 1rem; /* Space below the list */
+}
+
+/* Style list items */
+.ql-editor li {
+  margin-bottom: 0.5rem; /* Space between list items */
+}
+
+/* Style block quotes */
+.ql-editor blockquote {
+  border-left: 4px solid #2563eb; /* Blue border for blockquotes */
+  padding-left: 1rem; /* Padding inside the blockquote */
+  margin: 1rem 0; /* Margin above and below the blockquote */
+  color: #6b7280; /* Light gray text color for blockquotes */
+  font-style: italic; /* Italic text for blockquotes */
+}
+
+/* Style headings */
+.ql-editor h1 {
+  font-size: 2rem; /* Size for H1 */
+  font-weight: 700; /* Bold text */
+  color: #994e4f; /* Dark text color for headings */
+  margin-bottom: 1rem; /* Space below heading */
+}
+
+.ql-editor h2 {
+  font-size: 1.5rem; /* Size for H2 */
+  font-weight: 600; /* Semi-bold text */
+  color: #111827; /* Dark text color for headings */
+  margin-bottom: 0.75rem; /* Space below heading */
+}
+
+.ql-editor h3 {
+  font-size: 1.25rem; /* Size for H3 */
+  font-weight: 500; /* Medium text */
+  color: #111827; /* Dark text color for headings */
+  margin-bottom: 0.5rem; /* Space below heading */
+}
+
+/* Style the placeholder text */
+.ql-editor.ql-blank::before {
+  color: #9ca3af; /* Light gray color for placeholder text */
+}
+
+/* custom-quill-content.css */
+
+/* Map container styles */
+.map-container iframe {
+  border: none; /* Remove border from iframe */
+  border-radius: 0.5rem; /* Rounded corners */
+  margin-bottom: 1rem; /* Space below the map */
+}
+
+/* Image container styles */
+.image-container img {
+  border-radius: 0.5rem; /* Rounded corners */
+  margin-bottom: 1rem; /* Space below the image */
+}
+
+/* Video container styles */
+.video-container iframe {
+  border-radius: 0.5rem; /* Rounded corners */
+  margin-bottom: 1rem; /* Space below the video */
+}
+
+.ql-toolbar {
+  display: none !important;
+}

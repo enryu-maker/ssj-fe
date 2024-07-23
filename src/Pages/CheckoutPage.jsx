@@ -75,7 +75,8 @@ const CheckoutPage = () => {
     const totalAmount = cart.cartItems.reduce((total, cartItem) => {
       if (cartItem.size_chart && cartItem.size_chart[0]) {
         return (
-          total + cartItem.size_chart[0].total_price * (cartItem.cartQuantity || 1)
+          total +
+          cartItem.size_chart[0].total_price * (cartItem.cartQuantity || 1)
         );
       }
       return total;
@@ -105,10 +106,15 @@ const CheckoutPage = () => {
     };
 
     try {
+      console.log(orderDetails);
       const actionResult = await dispatch(createOrder(orderDetails)).unwrap();
 
       if (paymentMethod === "online") {
-        if (!actionResult || !actionResult.data || !actionResult.razor_pay_secrets) {
+        if (
+          !actionResult ||
+          !actionResult.data ||
+          !actionResult.razor_pay_secrets
+        ) {
           throw new Error("Incomplete order details from server");
         }
 
@@ -133,7 +139,9 @@ const CheckoutPage = () => {
                 {
                   headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                    Authorization: `Bearer ${localStorage.getItem(
+                      "accessToken"
+                    )}`,
                   },
                 }
               );
@@ -148,9 +156,12 @@ const CheckoutPage = () => {
                 navigate("/order-success");
               } else {
                 setModalIsOpen(true);
-                toast.error("Order failed to place. Please contact support or try again later.Click on 'Contact Us' button to reach out to our support team.", {
-                  position: "top-center",
-                });
+                toast.error(
+                  "Order failed to place. Please contact support or try again later.Click on 'Contact Us' button to reach out to our support team.",
+                  {
+                    position: "top-center",
+                  }
+                );
                 console.error("Payment failed: ", verifyData.message);
               }
             } catch (error) {
@@ -187,14 +198,17 @@ const CheckoutPage = () => {
   };
 
   const redirectToContact = () => {
-    navigate("/contact");
+    navigate("/contacts");
     closeModal();
   };
 
   // Calculate subtotal
   const subtotal = cart.cartItems.reduce((total, cartItem) => {
     if (cartItem.size_chart && cartItem.size_chart[0]) {
-      return total + cartItem.size_chart[0].total_price * (cartItem.cartQuantity || 1);
+      return (
+        total +
+        cartItem.size_chart[0].total_price * (cartItem.cartQuantity || 1)
+      );
     }
     return total;
   }, 0);
@@ -279,7 +293,10 @@ const CheckoutPage = () => {
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="fullName">
+              <label
+                className="block text-sm font-medium mb-1"
+                htmlFor="fullName"
+              >
                 Full Name
               </label>
               <input
@@ -303,7 +320,10 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="street">
+              <label
+                className="block text-sm font-medium mb-1"
+                htmlFor="street"
+              >
                 Street
               </label>
               <input
@@ -315,7 +335,10 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="zipCode">
+              <label
+                className="block text-sm font-medium mb-1"
+                htmlFor="zipCode"
+              >
                 Zip Code
               </label>
               <input
@@ -351,7 +374,10 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="country">
+              <label
+                className="block text-sm font-medium mb-1"
+                htmlFor="country"
+              >
                 Country
               </label>
               <input
@@ -363,7 +389,10 @@ const CheckoutPage = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="phoneNumber">
+              <label
+                className="block text-sm font-medium mb-1"
+                htmlFor="phoneNumber"
+              >
                 Phone Number
               </label>
               <input
@@ -377,7 +406,10 @@ const CheckoutPage = () => {
           </div>
 
           <div className="mt-4">
-            <label className="block text-sm font-medium mb-1" htmlFor="paymentMethod">
+            <label
+              className="block text-sm font-medium mb-1"
+              htmlFor="paymentMethod"
+            >
               Payment Method
             </label>
             <select
@@ -407,10 +439,30 @@ const CheckoutPage = () => {
         className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
         overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50"
       >
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white rounded-lg shadow-lg p-8 relative">
+          <button
+            onClick={closeModal}
+            className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 focus:outline-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
           <h2 className="text-xl font-semibold mb-4">Payment Failure</h2>
           <p className="mb-4">
-            Unfortunately, your payment could not be processed. Please try again or contact our support team for assistance.
+            Unfortunately, your payment could not be processed. Please try again
+            or contact our support team for assistance.
           </p>
           <button
             onClick={redirectToContact}
