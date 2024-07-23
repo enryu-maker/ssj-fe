@@ -353,7 +353,7 @@ function MobileHeader() {
                       onClick={handleLinkClick}
                     >
                       <Link
-                        to="/faqs"
+                        to="/faq"
                         className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
                       >
                         FAQs
