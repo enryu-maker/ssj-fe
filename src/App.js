@@ -35,6 +35,7 @@ import SpinWheelPage from "./Pages/SpinWheelPage";
 import OrderDetails from "./Pages/OrderDetails";
 import BlogPage from "./Pages/Blog";
 import BlogDetailPage from "./Pages/BlogDetailPage";
+import FAQPage from "./Pages/FAQ";
 
 const App = () => {
   const location = useLocation();
@@ -70,6 +71,7 @@ const App = () => {
         <Route path="/order/:transactionId" element={<OrderDetails />} />
         <Route path="/blogs" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogDetailPage />} />
+        <Route path="/faq" element={<FAQPage />} />
 
         {/* Protected Routes */}
         <Route

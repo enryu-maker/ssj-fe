@@ -396,7 +396,7 @@ const Header = () => {
                   </Link>
                   <button
                     onClick={() => {
-                      /* Implement any necessary onClick logic here */
+                      navigate("/faq");
                     }}
                     className="text-sm font-light text-gray-700 hover:text-primary-color"
                     style={{
