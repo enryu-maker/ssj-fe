@@ -12,6 +12,7 @@ const CouponModal = ({
 }) => {
   const dispatch = useDispatch();
   const { coupons, status, error } = useSelector((state) => state.coupons);
+  console.log(coupons);
 
   useEffect(() => {
     if (status === "idle") {
