@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { clearCart, removeFromCart } from "../features/cart/cartSlice";
@@ -7,10 +8,16 @@ import { toast } from "react-toastify";
 import api from "../helper/AxiosInstance";
 import Modal from "react-modal";
 import { createOrder } from "../features/orders/orderSlice";
+import CouponModal from "../Components/CouponModal";
 
 Modal.setAppElement("#root");
 
 const CheckoutPage = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [discount, setDiscount] = useState(0); // New state for discount
+
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +34,49 @@ const CheckoutPage = () => {
     paymentMethod: "cod", // Default payment method
   });
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    setCouponCode(e.target.value);
+  };
+
+  const handleApplyCoupon = (code) => {
+    setCouponCode(code);
+    setIsCouponModalOpen(false);
+
+    // Simulate coupon discount logic
+    const couponDiscount = 100; // Example fixed discount amount
+    setDiscount(couponDiscount);
+    // Display a toast notification with the discount amount
+    toast.success(`Coupon applied! Discount: ₹${couponDiscount.toFixed(2)}`, {
+      position: "top-center",
+    });
+    console.log(`Coupon applied: ${code}`);
+  };
+
+  // const handleApplyCoupon = async (code) => {
+  //   setCouponCode(code);
+  //   setIsCouponModalOpen(false);
+
+  //   try {
+  //     // Fetch coupon details from the server
+  //     const response = await api.get(`/coupons/${code}`);
+  //     const couponData = response.data;
+
+  //     // Set the discount based on the fetched coupon
+  //     const couponDiscount = couponData.discountAmount; // Adjust this based on your API response
+  //     setDiscount(couponDiscount);
+
+  //     // Display a toast notification with the discount amount
+  // toast.success(`Coupon applied! Discount: ₹${couponDiscount.toFixed(2)}`, {
+  //   position: "top-center",
+  // });
+  //   } catch (error) {
+  //     console.error("Error applying coupon: ", error);
+  //     toast.error("Failed to apply coupon. Please try again.", {
+  //       position: "top-center",
+  //     });
+  //   }
+  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -82,6 +131,9 @@ const CheckoutPage = () => {
       return total;
     }, 0);
 
+    // Apply discount
+    const finalAmount = totalAmount - discount;
+
     // Prepare order details
     const orderDetails = {
       items: cart.cartItems.map((cartItem) => ({
@@ -102,7 +154,8 @@ const CheckoutPage = () => {
         email,
       },
       payment_method: paymentMethod,
-      total: totalAmount,
+      total: finalAmount, // Updated total amount
+      coupon_code: couponCode, // Include coupon code
     };
 
     try {
@@ -213,6 +266,9 @@ const CheckoutPage = () => {
     return total;
   }, 0);
 
+  // Final amount after discount
+  const finalAmount = subtotal - discount;
+
   return (
     <div className="container mx-auto mt-10 px-4 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-semibold mb-5">Checkout</h1>
@@ -265,7 +321,7 @@ const CheckoutPage = () => {
             </div>
             <div className="flex justify-between">
               <p className="text-sm">Discount</p>
-              <p className="text-sm">- ₹ 0</p>
+              <p className="text-sm">₹ {discount.toFixed(2)}</p>
             </div>
             <div className="flex justify-between">
               <p className="text-sm">Delivery Charge</p>
@@ -276,12 +332,14 @@ const CheckoutPage = () => {
                 TOTAL (Incl of all Taxes.)
               </p>
               <p className="text-lg font-semibold text-primary-color">
-                ₹ {subtotal.toFixed(2)}
+                ₹ {finalAmount.toFixed(2)}
               </p>
             </div>
             <div className="flex justify-between">
               <p className="text-lg font-semibold text-green-500">YOU SAVE</p>
-              <p className="text-lg font-semibold text-green-500">₹ 0.00</p>
+              <p className="text-lg font-semibold text-green-500">
+                ₹ {discount}
+              </p>
             </div>
           </div>
         </div>
@@ -422,12 +480,33 @@ const CheckoutPage = () => {
               <option value="online">Online Payment</option>
             </select>
           </div>
-          <button
-            onClick={handlePlaceOrder}
-            className="mt-4 px-4 py-2 bg-primary-color text-white font-semibold rounded-md hover:bg-primary-hover-color focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-opacity-50"
-          >
-            Place Order
-          </button>
+          <div className="flex gap-5">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handlePlaceOrder}
+              className="mt-4 px-6 py-5 bg-primary-color text-white font-semibold rounded-md hover:bg-primary-hover-color focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-opacity-50"
+            >
+              Place Order
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsCouponModalOpen(true)}
+              className="mt-4 px-6 py-5 bg-secondary-color text-black font-semibold rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-100 focus:ring-opacity-50"
+            >
+              Apply Coupon
+            </motion.button>
+            {isCouponModalOpen && (
+              <CouponModal
+                isOpen={isCouponModalOpen}
+                onClose={() => setIsCouponModalOpen(false)}
+                couponCode={couponCode}
+                onInputChange={handleInputChange}
+                onApplyCoupon={handleApplyCoupon}
+              />
+            )}
+          </div>
         </div>
       </div>
 
