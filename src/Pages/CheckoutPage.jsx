@@ -39,13 +39,14 @@ const CheckoutPage = () => {
     setCouponCode(e.target.value);
   };
 
-  const handleApplyCoupon = (code) => {
+  const handleApplyCoupon = ({ code, discount_amount }) => {
     setCouponCode(code);
     setIsCouponModalOpen(false);
 
-    // Simulate coupon discount logic
-    const couponDiscount = 100; // Example fixed discount amount
+    // Ensure discount_amount is a number
+    const couponDiscount = Number(discount_amount) || 0; // Default to 0 if NaN
     setDiscount(couponDiscount);
+
     // Display a toast notification with the discount amount
     toast.success(`Coupon applied! Discount: ₹${couponDiscount.toFixed(2)}`, {
       position: "top-center",
@@ -155,7 +156,7 @@ const CheckoutPage = () => {
       },
       payment_method: paymentMethod,
       total: finalAmount, // Updated total amount
-      coupon_code: couponCode, // Include coupon code
+      coupon: couponCode, // Include coupon code
     };
 
     try {

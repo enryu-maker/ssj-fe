@@ -66,6 +66,7 @@ const CouponModal = ({
                   code={coupon.code}
                   description={coupon.description}
                   details={`Discount Amount: ${coupon.discount_amount}`}
+                  discount_amount={coupon.discount_amount}
                   onApplyCoupon={onApplyCoupon}
                 />
               );
@@ -77,24 +78,35 @@ const CouponModal = ({
   );
 };
 
-const Coupon = ({ code, description, details, onApplyCoupon }) => (
-  <div className="border p-4 mb-4 rounded">
-    <div className="flex items-center mb-2">
-      <span className="bg-yellow-100 text-yellow-800 p-1 rounded mr-2">💡</span>
-      <span className="font-bold">{code}</span>
+const Coupon = ({
+  id,
+  code,
+  description,
+  details,
+  onApplyCoupon,
+  discount_amount,
+}) => {
+  return (
+    <div className="border p-4 mb-4 rounded">
+      <div className="flex items-center mb-2">
+        <span className="bg-yellow-100 text-yellow-800 p-1 rounded mr-2">
+          💡
+        </span>
+        <span className="font-bold">{code}</span>
+      </div>
+      <p className="text-lg font-bold">{description}</p>
+      <p className="text-gray-700 text-sm">{details}</p>
+      <motion.button
+        onClick={() => onApplyCoupon({ id, discount_amount })}
+        className="mt-2 bg-transparent border border-orange-500 text-orange-500 px-4 py-2 rounded"
+        whileHover={{ scale: 1.05, backgroundColor: "#fff5f0" }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
+        APPLY COUPON
+      </motion.button>
     </div>
-    <p className="text-lg font-bold">{description}</p>
-    <p className="text-gray-700 text-sm">{details}</p>
-    <motion.button
-      onClick={() => onApplyCoupon(code)}
-      className="mt-2 bg-transparent border border-orange-500 text-orange-500 px-4 py-2 rounded"
-      whileHover={{ scale: 1.05, backgroundColor: "#fff5f0" }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 300 }}
-    >
-      APPLY COUPON
-    </motion.button>
-  </div>
-);
+  );
+};
 
 export default CouponModal;
