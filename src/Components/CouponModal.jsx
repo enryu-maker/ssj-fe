@@ -30,8 +30,8 @@ const CouponModal = ({
       transition={{ duration: 0.3 }}
       className="fixed inset-0 flex justify-end z-50"
     >
-      <div className="w-1/2 md:w-1/3 lg:w-1/4 bg-white shadow-lg h-full overflow-auto">
-        <div className="p-6">
+      <div className="w-full sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white shadow-lg h-full overflow-auto">
+        <div className="p-4 sm:p-6">
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 focus:outline-none text-xl"
@@ -48,7 +48,7 @@ const CouponModal = ({
             />
             <motion.button
               onClick={() => onApplyCoupon(couponCode)}
-              className="bg-orange-500 text-white px-4 py-2 rounded"
+              className="bg-orange-500 text-white px-4 py-2 rounded w-full"
               whileHover={{ scale: 1.05, backgroundColor: "#e07b39" }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300 }}
@@ -98,7 +98,7 @@ const Coupon = ({
       <p className="text-gray-700 text-sm">{details}</p>
       <motion.button
         onClick={() => onApplyCoupon({ id, discount_amount })}
-        className="mt-2 bg-transparent border border-orange-500 text-orange-500 px-4 py-2 rounded"
+        className="mt-2 bg-transparent border border-orange-500 text-orange-500 px-4 py-2 rounded w-full sm:w-auto"
         whileHover={{ scale: 1.05, backgroundColor: "#fff5f0" }}
         whileTap={{ scale: 0.95 }}
         transition={{ type: "spring", stiffness: 300 }}

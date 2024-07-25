@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaPercent } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { clearCart, removeFromCart } from "../features/cart/cartSlice";
 import { toast } from "react-toastify";
@@ -481,12 +482,13 @@ const CheckoutPage = () => {
               <option value="online">Online Payment</option>
             </select>
           </div>
-          <div className="flex gap-5">
+
+          <div className="flex flex-col gap-5 md:flex-row">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handlePlaceOrder}
-              className="mt-4 px-6 py-5 bg-primary-color text-white font-semibold rounded-md hover:bg-primary-hover-color focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-opacity-50"
+              className="w-full md:w-auto mt-4 px-6 py-5 bg-primary-color text-white font-semibold rounded-md hover:bg-primary-hover-color focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-opacity-50"
             >
               Place Order
             </motion.button>
@@ -494,8 +496,9 @@ const CheckoutPage = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsCouponModalOpen(true)}
-              className="mt-4 px-6 py-5 bg-secondary-color text-black font-semibold rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-100 focus:ring-opacity-50"
+              className="w-full md:w-auto mt-4 px-6 py-5 bg-white border border-dashed border-gray-400 text-gray-700 font-semibold rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-opacity-50 flex items-center justify-center gap-2"
             >
+              <FaPercent className="text-gray-700" />
               Apply Coupon
             </motion.button>
             {isCouponModalOpen && (
