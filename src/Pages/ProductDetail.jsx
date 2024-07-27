@@ -87,7 +87,7 @@ function ProductDetail() {
   // Calculate price breakup
   const priceBreakup =
     thisProduct?.size_chart?.[0]?.price_breakdown?.map((item) => ({
-      component: "Base Component",
+      component: item.material,
       gold_rate: item.material_price,
       weight: `${item.weight} g`,
       discount: "0", // Assuming no discount
@@ -275,7 +275,7 @@ function ProductDetail() {
               <div className="border-b border-gray-200">
                 <div className="hidden md:grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 p-4 md:p-6 lg:p-8 text-sm md:text-base lg:text-lg font-semibold text-primary-color bg-gray-50">
                   <span>Component</span>
-                  <span>Gold Rate</span>
+                  <span>Material Rate</span>
                   <span>Weight</span>
                   <span>Discount</span>
                   <span>Final Value</span>
@@ -286,7 +286,7 @@ function ProductDetail() {
                       key={index}
                       className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg hover:bg-gray-50"
                     >
-                      <span>{item.component}</span>
+                      <span className="font-semibold">{item.component}</span>
                       <span>{item.gold_rate}</span>
                       <span>{item.weight}</span>
                       <span>{item.discount}</span>
