@@ -40,45 +40,52 @@ const CheckoutPage = () => {
     setCouponCode(e.target.value);
   };
 
-  const handleApplyCoupon = ({ code, discount_amount }) => {
+  // Applyig Coupon Code here...
+  const handleApplyCoupon = async ({ code }) => {
+    // Set the coupon code in the state and close the modal
     setCouponCode(code);
     setIsCouponModalOpen(false);
 
-    // Ensure discount_amount is a number
-    const couponDiscount = Number(discount_amount) || 0; // Default to 0 if NaN
-    setDiscount(couponDiscount);
+    try {
+      const response = await api.get(`/profile/get-coupon/${code}/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      const couponData = response.data;
+      console.log("Coupon data received:", couponData);
 
-    // Display a toast notification with the discount amount
-    toast.success(`Coupon applied! Discount: ₹${couponDiscount.toFixed(2)}`, {
-      position: "top-center",
-    });
-    console.log(`Coupon applied: ${code}`);
+      // Extract and parse the discount amount
+      const discountAmountStr = couponData.coupon.discount_amount;
+      const couponDiscount = parseFloat(discountAmountStr);
+
+      // Check if couponDiscount is a valid number
+      if (!isNaN(couponDiscount)) {
+        setDiscount(couponDiscount);
+
+        // Display a toast notification with the discount amount
+        toast.success(
+          `Coupon applied! Discount: ₹${couponDiscount.toFixed(2)}`,
+          {
+            position: "top-center",
+          }
+        );
+      } else {
+        console.error("Invalid discount amount", couponData);
+        toast.error(
+          "Invalid coupon. Please check the coupon code and try again.",
+          {
+            position: "top-center",
+          }
+        );
+      }
+    } catch (error) {
+      console.error("Error applying coupon: ", error);
+      toast.error("Failed to apply coupon. Please try again.", {
+        position: "top-center",
+      });
+    }
   };
-
-  // const handleApplyCoupon = async (code) => {
-  //   setCouponCode(code);
-  //   setIsCouponModalOpen(false);
-
-  //   try {
-  //     // Fetch coupon details from the server
-  //     const response = await api.get(`/coupons/${code}`);
-  //     const couponData = response.data;
-
-  //     // Set the discount based on the fetched coupon
-  //     const couponDiscount = couponData.discountAmount; // Adjust this based on your API response
-  //     setDiscount(couponDiscount);
-
-  //     // Display a toast notification with the discount amount
-  // toast.success(`Coupon applied! Discount: ₹${couponDiscount.toFixed(2)}`, {
-  //   position: "top-center",
-  // });
-  //   } catch (error) {
-  //     console.error("Error applying coupon: ", error);
-  //     toast.error("Failed to apply coupon. Please try again.", {
-  //       position: "top-center",
-  //     });
-  //   }
-  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;

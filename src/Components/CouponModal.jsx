@@ -12,7 +12,6 @@ const CouponModal = ({
 }) => {
   const dispatch = useDispatch();
   const { coupons, status, error } = useSelector((state) => state.coupons);
-  console.log(coupons);
 
   useEffect(() => {
     if (status === "idle") {
@@ -47,7 +46,7 @@ const CouponModal = ({
               className="border rounded w-full p-2 mb-4"
             />
             <motion.button
-              onClick={() => onApplyCoupon(couponCode)}
+              onClick={() => onApplyCoupon({ code: couponCode })}
               className="bg-orange-500 text-white px-4 py-2 rounded w-full"
               whileHover={{ scale: 1.05, backgroundColor: "#e07b39" }}
               whileTap={{ scale: 0.95 }}
@@ -59,14 +58,16 @@ const CouponModal = ({
           <div className="mt-6">
             <h2 className="font-bold mb-4">AVAILABLE COUPONS</h2>
             {coupons.map((item) => {
-              const { coupon } = item; // Access the nested coupon object
+              const { coupon } = item;
               return (
                 <Coupon
                   key={coupon.id}
+                  id={coupon.id}
                   code={coupon.code}
                   description={coupon.description}
                   details={`Discount Amount: ${coupon.discount_amount}`}
                   discount_amount={coupon.discount_amount}
+                  isUsed={item.is_used}
                   onApplyCoupon={onApplyCoupon}
                 />
               );
@@ -78,32 +79,32 @@ const CouponModal = ({
   );
 };
 
-const Coupon = ({
-  id,
-  code,
-  description,
-  details,
-  onApplyCoupon,
-  discount_amount,
-}) => {
+const Coupon = ({ id, code, description, details, isUsed, onApplyCoupon }) => {
   return (
     <div className="border p-4 mb-4 rounded">
       <div className="flex items-center mb-2">
         <span className="bg-yellow-100 text-yellow-800 p-1 rounded mr-2">
           💡
         </span>
-        <span className="font-bold">{code}</span>
+        <span className={`font-bold ${isUsed ? "text-gray-500" : ""}`}>
+          {isUsed ? "Already Used" : code}
+        </span>
       </div>
       <p className="text-lg font-bold">{description}</p>
       <p className="text-gray-700 text-sm">{details}</p>
       <motion.button
-        onClick={() => onApplyCoupon({ id, discount_amount })}
-        className="mt-2 bg-transparent border border-orange-500 text-orange-500 px-4 py-2 rounded w-full sm:w-auto"
-        whileHover={{ scale: 1.05, backgroundColor: "#fff5f0" }}
-        whileTap={{ scale: 0.95 }}
+        onClick={() => !isUsed && onApplyCoupon({ code })}
+        className={`mt-2 ${
+          isUsed
+            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+            : "bg-transparent border border-orange-500 text-orange-500"
+        } px-4 py-2 rounded w-full sm:w-auto`}
+        whileHover={!isUsed ? { scale: 1.05, backgroundColor: "#fff5f0" } : {}}
+        whileTap={!isUsed ? { scale: 0.95 } : {}}
         transition={{ type: "spring", stiffness: 300 }}
+        disabled={isUsed}
       >
-        APPLY COUPON
+        {isUsed ? "" : "APPLY COUPON"}
       </motion.button>
     </div>
   );
