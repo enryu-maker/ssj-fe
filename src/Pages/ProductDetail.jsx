@@ -86,26 +86,26 @@ function ProductDetail() {
 
   // Calculate price breakup
   const priceBreakup =
-    thisProduct?.size_chart?.map((item) => ({
+    thisProduct?.size_chart?.[0]?.price_breakdown?.map((item) => ({
       component: "Base Component",
-      gold_rate: item.size[0].material.current_price,
-      weight: `${item.size[0].weight} g`,
+      gold_rate: item.material_price,
+      weight: `${item.weight} g`,
       discount: "0", // Assuming no discount
-      final_value: `Rs ${item.total_price.toFixed(2)}`,
+      final_value: item.price.toFixed(2), // Format price to 2 decimal places
     })) || [];
 
+  // Calculate total weight
   const totalWeight = priceBreakup
     .reduce((sum, item) => {
       const weight = parseFloat(item.weight.replace(" g", ""));
       return sum + (isNaN(weight) ? 0 : weight);
     }, 0)
-    .toFixed(3);
+    .toFixed(2); // Use 2 decimal places for weight
 
+  // Calculate subtotal
   const subtotal = priceBreakup
     .reduce((sum, item) => {
-      const finalValue = parseFloat(
-        item.final_value.replace("Rs ", "").replace(",", "")
-      );
+      const finalValue = parseFloat(item.final_value);
       return sum + (isNaN(finalValue) ? 0 : finalValue);
     }, 0)
     .toFixed(2);
@@ -113,9 +113,10 @@ function ProductDetail() {
   // Get making charges from the product data
   const makingChargesRaw =
     thisProduct?.size_chart?.[0]?.size?.[0]?.making_charges;
-  const makingCharges = Number(makingChargesRaw) || 0;
-  const grandTotal = parseFloat(subtotal).toFixed(2);
+  const makingCharges = parseFloat(makingChargesRaw) || 0;
 
+  // Calculate grand total (if making charges are added to subtotal)
+  const grandTotal = thisProduct?.size_chart[0]?.total_price;
   // Slick carousel settings
   const settings = {
     dots: true,
@@ -300,7 +301,7 @@ function ProductDetail() {
                     <span></span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
-                    <span>Grand Total</span>
+                    <span>Sub Total</span>
                     <span></span>
                     <span></span>
                     <span></span>
