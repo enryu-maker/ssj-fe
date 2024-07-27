@@ -14,6 +14,7 @@ import MobileHeader from "./MobileHeader";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../assets/avatar.png";
 import {
+  fetchUserProfile,
   selectIsAuthenticated,
   selectUser,
   signOutUser,
@@ -50,6 +51,7 @@ const Header = () => {
     dispatch(fetchMainCategoryAsync());
     dispatch(fetchMaterialRateAsync());
     dispatch(fetchSilverRateAsync());
+    dispatch(fetchUserProfile());
   }, [dispatch]);
 
   const handleGoldRateClick = () => {

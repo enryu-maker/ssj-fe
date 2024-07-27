@@ -11,7 +11,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import DailyWear from "../assets/EarringsIcon.svg";
 import Logo from "../assets/Logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsAuthenticated, selectUser } from "../features/Auth/authSlice";
+import {
+  fetchUserProfile,
+  selectIsAuthenticated,
+  selectUser,
+} from "../features/Auth/authSlice";
 import {
   fetchMainCategoryAsync,
   selectMainCategories,
@@ -47,6 +51,7 @@ function MobileHeader() {
     dispatch(fetchMainCategoryAsync());
     dispatch(fetchMaterialRateAsync());
     dispatch(fetchSilverRateAsync());
+    dispatch(fetchUserProfile());
   }, [dispatch, openNavModal]); // Update useEffect dependencies
 
   // search query
