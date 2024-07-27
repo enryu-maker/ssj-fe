@@ -394,6 +394,12 @@ const Header = () => {
                   >
                     Blogs
                   </Link>
+                  <Link
+                    to="/gold-investment"
+                    className="text-sm font-light text-gray-700 hover:text-primary-color"
+                  >
+                    Gold investment
+                  </Link>
                   <button
                     onClick={() => {
                       navigate("/faq");

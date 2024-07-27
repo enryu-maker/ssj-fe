@@ -53,7 +53,6 @@ const CheckoutPage = () => {
         },
       });
       const couponData = response.data;
-      console.log("Coupon data received:", couponData);
 
       // Extract and parse the discount amount
       const discountAmountStr = couponData.coupon.discount_amount;
@@ -71,7 +70,6 @@ const CheckoutPage = () => {
           }
         );
       } else {
-        console.error("Invalid discount amount", couponData);
         toast.error(
           "Invalid coupon. Please check the coupon code and try again.",
           {
@@ -80,7 +78,6 @@ const CheckoutPage = () => {
         );
       }
     } catch (error) {
-      console.error("Error applying coupon: ", error);
       toast.error("Failed to apply coupon. Please try again.", {
         position: "top-center",
       });

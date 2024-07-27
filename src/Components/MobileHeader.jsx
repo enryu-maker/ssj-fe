@@ -353,6 +353,19 @@ function MobileHeader() {
                       onClick={handleLinkClick}
                     >
                       <Link
+                        to="/gold-investment"
+                        className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
+                      >
+                        Gold investment
+                      </Link>
+                    </motion.li>
+                    <motion.li
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      onClick={handleLinkClick}
+                    >
+                      <Link
                         to="/faq"
                         className="flex flex-col items-start text-lg md:text-xl transition-all ease-linear hover:scale-105 hover:text-pink-500"
                       >
