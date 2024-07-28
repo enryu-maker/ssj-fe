@@ -66,7 +66,7 @@ const CouponPage = () => {
                   disabled={is_used} // Disable the button if coupon is used
                   className={`absolute top-2 right-2 ${
                     is_used
-                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      ? "bg-gray-300 text-gray-500 hover:bg-gray-300 hover:text-gray-500 cursor-not-allowed"
                       : "bg-secondary-color text-primary-color"
                   } p-2 rounded-full hover:bg-primary-color hover:text-white focus:outline-none`}
                   whileHover={!is_used ? { scale: 1.2 } : {}}
