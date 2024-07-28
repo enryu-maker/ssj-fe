@@ -10,6 +10,7 @@ const CouponPage = () => {
 
   const dispatch = useDispatch();
   const { coupons, status, error } = useSelector((state) => state.coupons);
+  console.log(coupons);
 
   useEffect(() => {
     if (status === "idle") {
@@ -40,7 +41,7 @@ const CouponPage = () => {
           <p>No coupons available.</p>
         ) : (
           coupons.map((item) => {
-            const { coupon } = item; // Access the nested coupon object
+            const { coupon, is_used } = item; // Access the nested coupon object and is_used property
             return (
               <motion.div
                 key={coupon.id}
@@ -51,7 +52,9 @@ const CouponPage = () => {
                 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <h2 className="text-xl font-semibold">{coupon.code}</h2>
+                <h2 className="text-xl font-semibold">
+                  {is_used ? "Already Used" : coupon.code}
+                </h2>
                 <p className="text-gray-600">{coupon.description}</p>
                 <p className="mt-2 text-green-600 font-bold">
                   {coupon.discount_amount > 0
@@ -59,10 +62,15 @@ const CouponPage = () => {
                     : "Free Shipping"}
                 </p>
                 <motion.button
-                  onClick={() => handleCopy(coupon.code)}
-                  className="absolute top-2 right-2 bg-secondary-color text-primary-color p-2 rounded-full hover:bg-primary-color hover:text-white focus:outline-none"
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
+                  onClick={() => !is_used && handleCopy(coupon.code)} // Only call handleCopy if not used
+                  disabled={is_used} // Disable the button if coupon is used
+                  className={`absolute top-2 right-2 ${
+                    is_used
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-secondary-color text-primary-color"
+                  } p-2 rounded-full hover:bg-primary-color hover:text-white focus:outline-none`}
+                  whileHover={!is_used ? { scale: 1.2 } : {}}
+                  whileTap={!is_used ? { scale: 0.9 } : {}}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <FontAwesomeIcon

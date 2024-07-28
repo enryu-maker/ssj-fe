@@ -17,6 +17,7 @@ const CheckoutPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
   const [couponCode, setCouponCode] = useState("");
+  const [couponId, setCouponId] = useState("");
   const [discount, setDiscount] = useState(0); // New state for discount
 
   const cart = useSelector((state) => state.cart);
@@ -53,6 +54,7 @@ const CheckoutPage = () => {
         },
       });
       const couponData = response.data;
+      setCouponId(couponData.id);
 
       // Extract and parse the discount amount
       const discountAmountStr = couponData.coupon.discount_amount;
@@ -161,7 +163,7 @@ const CheckoutPage = () => {
       },
       payment_method: paymentMethod,
       total: finalAmount, // Updated total amount
-      coupon: couponCode, // Include coupon code
+      coupon: couponId, // Include coupon code
     };
 
     try {
