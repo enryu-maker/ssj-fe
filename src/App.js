@@ -11,7 +11,6 @@ import Contact from "./Pages/Contact";
 import Footer from "./Components/Footer";
 import CartPage from "./Pages/CartPage";
 import AllJewellery from "./Pages/AllJewellery";
-import ProductDetail from "./Pages/ProductDetail";
 import Stores from "./Pages/Stores";
 import DailyWear from "./Pages/DailyWear";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
@@ -37,6 +36,7 @@ import BlogPage from "./Pages/Blog";
 import BlogDetailPage from "./Pages/BlogDetailPage";
 import FAQPage from "./Pages/FAQ";
 import GoldInvestment from "./Pages/GoldInvestmet";
+import SingleProduct from "./Pages/SingleProduct";
 
 const App = () => {
   const location = useLocation();
@@ -58,7 +58,7 @@ const App = () => {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/wishlist" element={<WishList />} />
         <Route path="/products" element={<AllJewellery />} />
-        <Route path="/product/:productId" element={<ProductDetail />} />
+        <Route path="/product/:productId" element={<SingleProduct />} />
         <Route path="/collections" element={<Collections />} />
         <Route
           path="/collections/:collectionId"
