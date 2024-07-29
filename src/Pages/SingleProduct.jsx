@@ -31,6 +31,8 @@ const SingleProduct = () => {
   const [selectedWeight, setSelectedWeight] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
 
+  console.log(thisProduct);
+
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId));
   }, [dispatch, productId]);
@@ -264,53 +266,61 @@ const SingleProduct = () => {
               Price Breakup
             </h1>
             <div className="overflow-x-auto">
-              <div className="border-b border-gray-200">
-                <div className="hidden md:grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 p-4 md:p-6 lg:p-8 text-sm md:text-base lg:text-lg font-semibold text-primary-color bg-gray-50">
+              <div className="">
+                <div className="hidden md:grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 p-4 md:p-6 lg:p-8 text-sm md:text-base lg:text-lg font-medium text-primary-color border-b border-black">
                   <span>Component</span>
                   <span>Material Rate</span>
                   <span>Weight</span>
                   <span>Discount</span>
                   <span>Final Value</span>
                 </div>
-                <div className="divide-y divide-gray-200">
+                <div className="">
                   {priceBreakup.map((item, index) => (
                     <div
                       key={index}
-                      className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg hover:bg-gray-50"
+                      className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg"
                     >
-                      <span className="font-semibold">{item.component}</span>
+                      <span className="font-medium">{item.component}</span>
                       <span>{item.gold_rate}</span>
                       <span>{item.weight}</span>
                       <span>{item.discount}</span>
-                      <span className="font-semibold">{item.final_value}</span>
+                      <span className="font-medium">Rs {item.final_value}</span>
                     </div>
                   ))}
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg bg-gray-50 font-semibold text-gray-700">
-                    <span>Total Weight</span>
-                    <span></span>
-                    <span>{totalWeight} g</span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
-                    <span>Sub Total</span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span>Rs {subtotal}</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg  font-medium">
                     <span>Making Charges</span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span>-</span>
+                    <span>-</span>
+                    <span>-</span>
                     <span>Rs {makingCharges.toFixed(2)}</span>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-gray-200 font-semibold">
+
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-black font-medium">
+                    <span>Sub Total</span>
+                    <span>-</span>
+                    <span>-</span>
+                    <span>-</span>
+                    <span>Rs {subtotal}</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-black font-medium">
+                    <span>Gst</span>
+                    <span>-</span>
+                    <span>-</span>
+                    <span>-</span>
+                    <span>Rs {}</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg font-medium text-gray-700">
+                    <span>Total Weight</span>
+                    <span>-</span>
+                    <span>{totalWeight} g (Gross Weight)</span>
+                    <span>-</span>
+                    <span>-</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg  font-medium">
                     <span>Grand Total</span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span>-</span>
+                    <span>-</span>
+                    <span>-</span>
                     <span>Rs {grandTotal}</span>
                   </div>
                 </div>
