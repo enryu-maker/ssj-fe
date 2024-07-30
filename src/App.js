@@ -47,6 +47,7 @@ const App = () => {
       <ScrollToTop />
       {!isSpinWheelPage && <Header />}
       <Routes>
+        {/* All routes */}
         <Route path="/" element={<Home />} />
         <Route path="/contacts" element={<Contact />} />
         <Route path="/about-us" element={<AboutUs />} />
