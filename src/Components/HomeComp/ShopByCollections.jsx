@@ -31,10 +31,10 @@ function ShopByCollections() {
       {loading && <h1>Loading...</h1>}
       {error && <h1>{error}</h1>}
       <motion.h1
-        className="md:text-4xl text-xl text-center font-semibold text-primary-color"
+        className="md:text-4xl text-xl text-center font-semibold text-primary-color uppercase"
         initial={{ opacity: 0, y: -50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.75, ease: 'easeOut' }}
+        transition={{ duration: 0.75, ease: "easeOut" }}
       >
         Shop By Collections
       </motion.h1>
@@ -42,7 +42,7 @@ function ShopByCollections() {
         className="md:text-md text-center"
         initial={{ opacity: 0, y: -20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.75, ease: 'easeOut' }}
+        transition={{ duration: 0.75, ease: "easeOut" }}
       >
         Whatever the occasion, we've got a beautiful piece of jewellery for you.
       </motion.p>
@@ -52,7 +52,7 @@ function ShopByCollections() {
         className="object-cover"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 0.75, ease: 'easeOut' }}
+        transition={{ duration: 0.75, ease: "easeOut" }}
       />
 
       <div ref={ref} className="flex md:flex-row flex-col gap-2 px-5 mt-5">
@@ -62,7 +62,7 @@ function ShopByCollections() {
             className="relative"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.75, ease: 'easeOut' }}
+            transition={{ duration: 0.75, ease: "easeOut" }}
           >
             <CollectionCard {...collection} />
           </motion.div>

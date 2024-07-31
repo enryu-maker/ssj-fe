@@ -8,7 +8,8 @@ function ProductCard({ id, name, image, size_chart, is_bestseller }) {
   const dispatch = useDispatch();
 
   // Extract total_price from size_chart
-  const total_price = size_chart && size_chart.length > 0 ? size_chart[0].total_price : undefined;
+  const total_price =
+    size_chart && size_chart.length > 0 ? size_chart[0].total_price : undefined;
 
   // Static actual price
   const actual_price = 1000; // Static value for the actual price
@@ -46,7 +47,9 @@ function ProductCard({ id, name, image, size_chart, is_bestseller }) {
       </button>
       <Link to={`/product/${id}`} className="w-full">
         <div className="flex flex-col items-start gap-2 mt-3 w-full">
-          <p className="text-sm sm:text-md font-semibold text-center w-full truncate">{name}</p>
+          <p className="text-sm sm:text-md font-semibold text-center w-full truncate">
+            {name}
+          </p>
           <div className="flex flex-col items-center w-full">
             <div className="text-center">
               <p className="text-sm sm:text-md text-red-500 line-through">

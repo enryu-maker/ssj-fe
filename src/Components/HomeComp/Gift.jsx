@@ -29,7 +29,7 @@ function Gift() {
   return (
     <div className="flex flex-col gap-2 justify-center items-center font-Raleway py-10">
       <motion.h1
-        className="md:text-4xl text-xl text-center font-semibold text-primary-color"
+        className="md:text-4xl text-xl text-center font-semibold text-primary-color uppercase"
         initial={{ opacity: 0, y: -50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.75, ease: "easeOut" }}
