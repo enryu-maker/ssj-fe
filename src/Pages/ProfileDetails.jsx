@@ -307,6 +307,7 @@ const ProfileDetails = () => {
           >
             Spin
           </button>
+          
         </div>
       </div>
     </div>

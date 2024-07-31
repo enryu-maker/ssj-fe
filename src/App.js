@@ -37,6 +37,7 @@ import BlogDetailPage from "./Pages/BlogDetailPage";
 import FAQPage from "./Pages/FAQ";
 import GoldInvestment from "./Pages/GoldInvestmet";
 import SingleProduct from "./Pages/SingleProduct";
+import CouponClaim from "./Pages/CouponClaim";
 
 const App = () => {
   const location = useLocation();
@@ -75,6 +76,7 @@ const App = () => {
         <Route path="/blog/:slug" element={<BlogDetailPage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/gold-investment" element={<GoldInvestment />} />
+        <Route path="/coupon-claim" element={<CouponClaim />} />
 
         {/* Protected Routes */}
         <Route

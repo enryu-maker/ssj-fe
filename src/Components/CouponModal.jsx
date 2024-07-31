@@ -47,8 +47,8 @@ const CouponModal = ({
             />
             <motion.button
               onClick={() => onApplyCoupon({ code: couponCode })}
-              className="bg-orange-500 text-white px-4 py-2 rounded w-full"
-              whileHover={{ scale: 1.05, backgroundColor: "#e07b39" }}
+              className="bg-red-600 text-white px-4 py-2 rounded w-full"
+              whileHover={{ scale: 1.05, backgroundColor:  "rgb(220 38 38)" }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -81,32 +81,38 @@ const CouponModal = ({
 
 const Coupon = ({ id, code, description, details, isUsed, onApplyCoupon }) => {
   return (
-    <div className="border p-4 mb-4 rounded">
-      <div className="flex items-center mb-2">
-        <span className="bg-yellow-100 text-yellow-800 p-1 rounded mr-2">
+    <motion.div
+    className="bg-gradient-to-r from-pink-300 via-rose-300 to-red-300 border border-transparent shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    <div className="p-6">
+      <div className="flex items-center mb-4">
+        <span className="bg-yellow-100 text-yellow-800 p-2 rounded-full mr-3 text-2xl shadow-md">
           💡
         </span>
-        <span className={`font-bold ${isUsed ? "text-gray-500" : ""}`}>
+        <span className={`font-bold text-xl ${isUsed ? "text-gray-400" : "text-white"}`}>
           {isUsed ? "Already Used" : code}
         </span>
       </div>
-      <p className="text-lg font-bold">{description}</p>
-      <p className="text-gray-700 text-sm">{details}</p>
+      <p className="text-2xl font-semibold mb-3 text-white">{description}</p>
+      <p className="text-gray-200 text-sm">{details}</p>
       <motion.button
         onClick={() => !isUsed && onApplyCoupon({ code })}
-        className={`mt-2 ${
+        className={`mt-4 ${
           isUsed
-            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-            : "bg-transparent border border-orange-500 text-orange-500"
-        } px-4 py-2 rounded w-full sm:w-auto`}
-        whileHover={!isUsed ? { scale: 1.05, backgroundColor: "#fff5f0" } : {}}
+            ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+            : "bg-red-600 hover:bg-red-700 text-white"
+        } px-6 py-3 rounded-md w-full shadow-lg`}
+        whileHover={!isUsed ? { scale: 1.05, backgroundColor: "rgb(220 38 38)" } : {}}
         whileTap={!isUsed ? { scale: 0.95 } : {}}
         transition={{ type: "spring", stiffness: 300 }}
         disabled={isUsed}
       >
-        {isUsed ? "" : "APPLY COUPON"}
+        {isUsed ? "Already Used" : "APPLY COUPON"}
       </motion.button>
     </div>
+  </motion.div>
   );
 };
 
