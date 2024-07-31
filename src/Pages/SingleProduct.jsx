@@ -92,6 +92,8 @@ const SingleProduct = () => {
       final_value: item.price.toFixed(2),
     })) || [];
 
+    
+
   const totalWeight = priceBreakup
     .reduce((sum, item) => {
       const weight = parseFloat(item.weight.replace(" g", ""));
@@ -114,6 +116,8 @@ const SingleProduct = () => {
 
   const grandTotal = thisProduct?.size_chart?.[0]?.total_price;
 
+  const actual_price = 1000;
+
   // Slick carousel settings
   const settings = {
     dots: true,
@@ -132,141 +136,145 @@ const SingleProduct = () => {
       {thisProduct && (
         <>
           <div className="flex flex-col md:flex-row md:gap-8 lg:gap-16 w-full lg:w-3/4">
-            <div className="flex flex-col gap-5 w-full md:w-1/2">
-              <div className="relative mt-5">
-                <Slider {...settings}>
-                  {images.map((item, index) => (
-                    <div key={index} className="w-full aspect-w-1 aspect-h-1">
-                      {item.endsWith(".mp4") ? (
-                        <video
-                          src={item}
-                          type="video/mp4"
-                          muted
-                          autoPlay
-                          loop
-                          className="w-full h-full object-cover rounded-xl"
-                          alt={`Slide ${index}`}
-                        />
-                      ) : (
-                        <img
-                          src={item}
-                          alt={`Slide ${index}`}
-                          className="w-full h-full object-cover rounded-xl"
-                        />
-                      )}
-                    </div>
-                  ))}
-                </Slider>
-              </div>
-            </div>
-            <div className="flex flex-col w-full md:w-1/2 mt-5">
-              <div className="flex justify-end">
-                <button
-                  onClick={() => handleAddToWishlist(thisProduct)}
-                  className="flex flex-col items-center uppercase text-sm text-primary-color transition-transform duration-300 hover:scale-110"
-                >
-                  <IoHeartOutline className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
-                </button>
-              </div>
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-medium">
-                {thisProduct?.name}
-              </h1>
-              <div className="mt-2 border-t border-primary-color" />
-              <p className="font-light text-sm md:text-base mt-5">
-                {thisProduct?.description}
-              </p>
-              <div className="mt-5 flex flex-col">
-                <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-black">
-                  <span className="text-sm md:text-base lg:text-lg text-black">
-                    Offer Price
-                  </span>{" "}
-                  ₹{Math.round(parseInt(selectedPrice))}
-                </h1>
-                <p className="text-sm md:text-base">
-                  Price Inclusive of all taxes. See full{" "}
-                  <span className="text-primary-color">Price Breakup</span>
-                </p>
-              </div>
-              <div className="flex md:flex-row gap-4 md:gap-8 flex-col justify-between md:w-1/2 mt-5 relative">
-                <div
-                  onClick={() => setOpenWeight(!openWeight)}
-                  className="flex flex-col gap-2"
-                >
-                  <h1 className="font-medium text-base md:text-lg">
-                    Gross Weight
-                  </h1>
-                  <div className="flex items-center justify-between border border-gray-300 md:w-32 w-full p-2 cursor-pointer rounded-md">
-                    <p className="text-md font-medium">{selectedWeight}</p>
-                    {openWeight ? (
-                      <MdOutlineKeyboardArrowUp />
-                    ) : (
-                      <MdOutlineKeyboardArrowDown />
-                    )}
-                  </div>
-                  {openWeight && (
-                    <div className="absolute md:bottom-0 md:w-32 w-full bg-white shadow-lg rounded-md p-2 mt-2">
-                      {thisProduct?.size_chart?.map((size, index) => (
-                        <p
-                          key={index}
-                          className="cursor-pointer hover:bg-gray-200 p-2 rounded"
-                          onClick={() =>
-                            handleWeightChange(
-                              size.size?.[0]?.weight,
-                              size?.total_price,
-                              index
-                            )
-                          }
-                        >
-                          {size.size?.[0]?.weight}
-                        </p>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="flex gap-4 md:gap-8 mt-5">
-                <div className="flex justify-center items-center gap-4 md:gap-6">
-                  {thisProduct.size_chart?.[index]?.size.map((item) => (
-                    <h1
-                      key={item.material.name}
-                      className="font-medium text-sm md:text-base"
-                    >
-                      {item?.material?.name}:{" "}
-                      <span className="ml-2 text-sm md:text-base text-primary-color">
-                        {item?.material?.purity} Karat
-                      </span>
-                    </h1>
-                  ))}
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 md:gap-8 mt-5">
-                <button
-                  onClick={handleAddToCart}
-                  className="border border-black w-full p-3 rounded-md cursor-pointer transition-transform duration-300 hover:bg-gray-200 text-sm md:text-base"
-                >
-                  Add To Cart
-                </button>
-                <button
-                  onClick={handleBuy}
-                  className="border bg-primary-color w-full p-3 rounded-md text-white transition-transform duration-300 hover:bg-red-700 text-sm md:text-base"
-                >
-                  Buy Now
-                </button>
-              </div>
-              <div className="flex flex-col gap-2 mt-5">
-                <h1 className="text-xl md:text-2xl font-medium text-primary-color">
-                  Still Confused What to Buy?
-                </h1>
-                <p className="text-sm md:text-base text-start">
-                  Get on live video call with our design experts, or visit your
-                  nearest SSJ store to get personalized recommendations!
-                </p>
-                <button className="w-full bg-primary-color p-3 rounded-md text-white transition-transform duration-300 hover:bg-primary-dark text-sm md:text-base">
-                  Book a Free Video Call
-                </button>
-              </div>
-            </div>
+  <div className="flex flex-col gap-5 w-full md:w-1/2">
+    <div className="relative mt-5">
+      <Slider {...settings}>
+        {images.map((item, index) => (
+          <div key={index} className="w-full aspect-w-1 aspect-h-1">
+            {item.endsWith(".mp4") ? (
+              <video
+                src={item}
+                type="video/mp4"
+                muted
+                autoPlay
+                loop
+                className="w-full h-full object-cover rounded-xl"
+                alt={`Slide ${index}`}
+              />
+            ) : (
+              <img
+                src={item}
+                alt={`Slide ${index}`}
+                className="w-full h-full object-cover rounded-xl"
+              />
+            )}
           </div>
+        ))}
+      </Slider>
+    </div>
+  </div>
+  <div className="flex flex-col w-full md:w-1/2 mt-5">
+    <div className="flex justify-end">
+      <button
+        onClick={() => handleAddToWishlist(thisProduct)}
+        className="flex flex-col items-center uppercase text-sm text-primary-color transition-transform duration-300 hover:scale-110"
+      >
+        <IoHeartOutline className="w-6 h-6 md:w-8 md:h-8 text-primary-color" />
+      </button>
+    </div>
+    <h1 className="text-xl md:text-2xl lg:text-3xl font-medium">
+      {thisProduct?.name}
+    </h1>
+    <div className="mt-2 border-t border-primary-color" />
+    <p className="font-light text-sm md:text-base mt-5">
+      {thisProduct?.description}
+    </p>
+    <div className="mt-5 flex flex-col">
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-black">
+        <span className="text-sm md:text-base lg:text-lg text-black">
+          Offer Price
+        </span>{" "}
+        ₹{Math.round(parseInt(selectedPrice))}
+      </h1>
+      <p className="text-sm md:text-base line-through text-red-500 mt-2">
+        <span className="text-sm md:text-base lg:text-lg">Price:</span> ₹{Math.round(parseInt(actual_price))}
+      </p>
+      <p className="text-sm md:text-base">
+        Price Inclusive of all taxes. See full{" "}
+        <span className="text-primary-color">Price Breakup</span>
+      </p>
+    </div>
+    <div className="flex md:flex-row gap-4 md:gap-8 flex-col justify-between md:w-1/2 mt-5 relative">
+      <div
+        onClick={() => setOpenWeight(!openWeight)}
+        className="flex flex-col gap-2"
+      >
+        <h1 className="font-medium text-base md:text-lg">
+          Gross Weight
+        </h1>
+        <div className="flex items-center justify-between border border-gray-300 md:w-32 w-full p-2 cursor-pointer rounded-md">
+          <p className="text-md font-medium">{selectedWeight}</p>
+          {openWeight ? (
+            <MdOutlineKeyboardArrowUp />
+          ) : (
+            <MdOutlineKeyboardArrowDown />
+          )}
+        </div>
+        {openWeight && (
+          <div className="absolute md:bottom-0 md:w-32 w-full bg-white shadow-lg rounded-md p-2 mt-2">
+            {thisProduct?.size_chart?.map((size, index) => (
+              <p
+                key={index}
+                className="cursor-pointer hover:bg-gray-200 p-2 rounded"
+                onClick={() =>
+                  handleWeightChange(
+                    size.size?.[0]?.weight,
+                    size?.total_price,
+                    index
+                  )
+                }
+              >
+                {size.size?.[0]?.weight}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+    <div className="flex gap-4 md:gap-8 mt-5">
+      <div className="flex justify-center items-center gap-4 md:gap-6">
+        {thisProduct.size_chart?.[index]?.size.map((item) => (
+          <h1
+            key={item.material.name}
+            className="font-medium text-sm md:text-base"
+          >
+            {item?.material?.name}:{" "}
+            <span className="ml-2 text-sm md:text-base text-primary-color">
+              {item?.material?.purity} Karat
+            </span>
+          </h1>
+        ))}
+      </div>
+    </div>
+    <div className="flex flex-col md:flex-row gap-4 md:gap-8 mt-5">
+      <button
+        onClick={handleAddToCart}
+        className="border border-black w-full p-3 rounded-md cursor-pointer transition-transform duration-300 hover:bg-gray-200 text-sm md:text-base"
+      >
+        Add To Cart
+      </button>
+      <button
+        onClick={handleBuy}
+        className="border bg-primary-color w-full p-3 rounded-md text-white transition-transform duration-300 hover:bg-red-700 text-sm md:text-base"
+      >
+        Buy Now
+      </button>
+    </div>
+    <div className="flex flex-col gap-2 mt-5">
+      <h1 className="text-xl md:text-2xl font-medium text-primary-color">
+        Still Confused What to Buy?
+      </h1>
+      <p className="text-sm md:text-base text-start">
+        Get on live video call with our design experts, or visit your
+        nearest SSJ store to get personalized recommendations!
+      </p>
+      <button className="w-full bg-primary-color p-3 rounded-md text-white transition-transform duration-300 hover:bg-primary-dark text-sm md:text-base">
+        Book a Free Video Call
+      </button>
+    </div>
+  </div>
+</div>
+
           {/* Price Breakup */}
           <div className="w-full  mt-10 px-4 sm:px-6 md:px-8 lg:px-12 space-y-8">
             <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-primary-color mb-4 md:mb-6">
