@@ -1,6 +1,5 @@
-import React from 'react';
-import SpinWheel from '../Components/SpinWheel';
-
+import React from "react";
+import SpinWheel from "../Components/SpinWheel";
 
 const SpinWheelPage = () => {
   return (

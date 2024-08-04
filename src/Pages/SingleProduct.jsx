@@ -18,6 +18,7 @@ import {
 import { addToCart } from "../features/cart/cartSlice";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 import SuggestedProducts from "../Components/SuggestedProducts";
+import RatingComp from "../Components/RatingComp";
 
 const SingleProduct = () => {
   const [openWeight, setOpenWeight] = useState(false);
@@ -114,7 +115,10 @@ const SingleProduct = () => {
 
   const grandTotal = thisProduct?.size_chart?.[0]?.total_price;
 
-  const actual_price = 1000;
+  const actual_price = thisProduct?.size_chart?.[0]?.actual_price ?? undefined;
+
+  const discountPercentage =
+    Math.round(thisProduct?.size_chart?.[0]?.discount_percentage) || undefined;
 
   // Slick carousel settings
   const settings = {
@@ -136,6 +140,14 @@ const SingleProduct = () => {
           <div className="flex flex-col md:flex-row md:gap-8 lg:gap-16 w-full lg:w-3/4">
             <div className="flex flex-col gap-5 w-full md:w-1/2">
               <div className="relative mt-5">
+                {discountPercentage && (
+                  <span className="bg-gradient-to-r from-green-400 to-green-600 text-white flex items-center justify-center w-12 h-12 px-3 py-1 text-xs absolute top-3 left-3 rounded-full shadow-lg z-30">
+                    {discountPercentage}% OFF
+                  </span>
+                )}
+                <div className="absolute bottom-2 right-3 z-50">
+                  <RatingComp />
+                </div>
                 <Slider {...settings}>
                   {images.map((item, index) => (
                     <div key={index} className="w-full aspect-w-1 aspect-h-1">
