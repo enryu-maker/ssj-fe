@@ -92,7 +92,7 @@ const App = () => {
           element={<PrivateRoute element={<OrderSuccessPage />} />}
         />
 
-        {/* Catch-all route */}
+        {/* Catch-all route 404 */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       {!isSpinWheelPage && <Footer />}
