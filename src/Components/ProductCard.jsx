@@ -23,18 +23,24 @@ function ProductCard({ id, name, image, size_chart, is_bestseller }) {
 
   return (
     <div className="relative flex flex-col items-center justify-between shadow-lg p-4 rounded-lg bg-white max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
-      {/* Modern Discount Badge */}
-      {discountPercentage && (
-        <span className="bg-gradient-to-r from-green-400 to-green-600 text-white px-3 py-1 text-xs absolute top-3 left-3 rounded-full shadow-lg z-30">
-          {discountPercentage}% OFF
-        </span>
-      )}
+      {/* Discount Badge Wrapper */}
+      <div className="absolute top-3 left-3 z-30">
+        {/* Modern Discount Badge */}
+        {discountPercentage ? (
+          <span className="bg-gradient-to-r from-green-400 to-green-600 text-white px-3 py-1 text-xs rounded-full shadow-lg">
+            {discountPercentage}% OFF
+          </span>
+        ) : (
+          <span className="w-16 h-5 invisible"></span> // Invisible space holder
+        )}
+      </div>
+      
       <div className="relative">
         <Link to={`/product/${id}`} className="w-full">
           <img
             src={image}
             alt={name}
-            className="w-full h-56 sm:h-56 md:h-72 object-cover mb-4 rounded-lg "
+            className="w-full h-56 sm:h-56 md:h-72 object-cover mb-4 rounded-lg"
           />
         </Link>
         <div className="absolute bottom-4 md:right-2 right-1">
