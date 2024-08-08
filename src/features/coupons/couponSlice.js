@@ -15,6 +15,18 @@ export const fetchCoupons = createAsyncThunk(
   }
 );
 
+export const claimCoupons = createAsyncThunk(
+  "coupons/claimCoupons",
+  async (code) => {
+    const response = await api.post(`/profile/claim-coupon/${code}/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    return response.data;
+  }
+);
+
 // Create the slice
 const couponSlice = createSlice({
   name: "coupons",
