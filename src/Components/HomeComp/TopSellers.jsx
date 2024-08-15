@@ -55,7 +55,7 @@ function TopSellers() {
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
       <div ref={ref} className="overflow-x-auto w-full px-5 scrollbar-hide">
-        <div className="flex justify-center items-center gap-5">
+        <div className="flex md:justify-center md:items-center gap-5 md:px-0 px-5">
           {products.map((product) => (
             <motion.div
               key={product.id}
