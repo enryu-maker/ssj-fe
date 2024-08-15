@@ -11,7 +11,7 @@ const RatingComp = () => {
       <ReactStars
         count={5}
         onChange={ratingChanged}
-        size={24}
+        size={20}
         activeColor="#ffd700"
       />
     </div>

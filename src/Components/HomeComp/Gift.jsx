@@ -55,7 +55,7 @@ function Gift() {
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
       <div ref={ref} className="overflow-x-auto w-full px-5 scrollbar-hide">
-        <div className="flex gap-5">
+        <div className="flex justify-center gap-5">
           {products.map((product, index) => (
             <motion.div
               key={index}

@@ -55,10 +55,10 @@ function TopSellers() {
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
       <div ref={ref} className="overflow-x-auto w-full px-5 scrollbar-hide">
-        <div className="flex gap-5">
-          {products.map((product, index) => (
+        <div className="flex justify-center items-center gap-5">
+          {products.map((product) => (
             <motion.div
-              key={index}
+              key={product.id}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.75, ease: "easeOut" }}

@@ -51,10 +51,10 @@ function ProductCard({ id, name, image, size_chart, is_bestseller, is_out_of_sto
             <span className="text-white text-xl font-bold">Out Of Stock</span>
           </div>
         )}
-        <div className="absolute bottom-4 md:right-2 right-5">
+      </div>
+      <div className="">
           <RatingComp />
         </div>
-      </div>
 
       {is_bestseller && (
         <div className="absolute bottom-3 right-3 bg-red-800 text-white px-3 py-1 text-xs rounded-full shadow-lg z-20">
