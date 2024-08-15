@@ -255,6 +255,9 @@ const SingleProduct = () => {
                       <span className="ml-2 text-sm md:text-base text-primary-color">
                         {item?.material?.purity} Karat
                       </span>
+                      <h1 className="font-medium text-sm md:text-base text-primary-color">
+                        HSN-HX2KX
+                      </h1>
                     </h1>
                   ))}
                 </div>
@@ -281,7 +284,10 @@ const SingleProduct = () => {
                   Get on live video call with our design experts, or visit your
                   nearest SSJ store to get personalized recommendations!
                 </p>
-                <button className="w-full bg-primary-color p-3 rounded-md text-white transition-transform duration-300 hover:bg-primary-dark text-sm md:text-base">
+                <button
+                  onClick={() => navigate("/contacts")}
+                  className="w-full bg-primary-color p-3 rounded-md text-white transition-transform duration-300 hover:bg-primary-dark text-sm md:text-base"
+                >
                   Book a Free Video Call
                 </button>
               </div>
@@ -290,7 +296,7 @@ const SingleProduct = () => {
 
           {/* Price Breakup */}
           <div className="w-full  mt-10 px-4 sm:px-6 md:px-8 lg:px-12 space-y-8">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-primary-color mb-4 md:mb-6">
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-primary-color mb-4 md:mb-6 uppercase">
               Price Details
             </h1>
             <div className="overflow-x-auto">
@@ -337,7 +343,7 @@ const SingleProduct = () => {
                     <span>Rs {gst}</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-b border-primary-color font-medium">
-                  <span>Hallmaking Charges</span>
+                    <span>Hallmaking Charges</span>
                     <span>-</span>
                     <span>-</span>
                     <span>-</span>
@@ -366,7 +372,19 @@ const SingleProduct = () => {
       {/* Related Products */}
       <div className="w-full mt-10 flex justify-center overflow-x-auto scrollbar-hide">
         <div className="max-w-full px-4 sm:px-6 lg:px-8">
-          <SuggestedProducts currentProductId={thisProduct.id} />
+          <SuggestedProducts
+            currentProductId={thisProduct.id}
+            Title={"You May Also Like"}
+          />
+        </div>
+      </div>
+      {/* Extra feature Products */}
+      <div className="w-full mt-10 flex justify-center overflow-x-auto scrollbar-hide">
+        <div className="max-w-full px-4 sm:px-6 lg:px-8">
+          <SuggestedProducts
+            currentProductId={thisProduct.id}
+            Title={"New Jewellery Variety"}
+          />
         </div>
       </div>
     </div>

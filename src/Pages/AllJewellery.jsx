@@ -28,6 +28,8 @@ const AllJewellery = () => {
   const currentPage = useSelector(selectCurrentPage);
   const subCategory = useSelector(selectSubCategory);
 
+  console.log(products);
+
   useEffect(() => {
     dispatch(fetchAllProductsAsync({ page: currentPage, subCategory }));
   }, [dispatch, currentPage, subCategory]);
@@ -149,7 +151,7 @@ const AllJewellery = () => {
           )}
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5 p-5 mt-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5">
         {sortedProducts.length > 0 ? (
           sortedProducts.map((product) => (
             <ProductCard key={product.id} {...product} />

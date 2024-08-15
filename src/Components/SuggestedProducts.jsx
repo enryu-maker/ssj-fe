@@ -8,8 +8,9 @@ import {
   selectRelatedProducts,
 } from "../features/Products/AllProduct/productSlice";
 import ProductCard from "./ProductCard";
+import Divider from "../assets/divider.png";
 
-const SuggestedProducts = ({ currentProductId }) => {
+const SuggestedProducts = ({ currentProductId, Title }) => {
   const dispatch = useDispatch();
   const relatedProducts = useSelector(selectRelatedProducts);
   const loading = useSelector(selectProductsLoading);
@@ -53,7 +54,12 @@ const SuggestedProducts = ({ currentProductId }) => {
 
   return (
     <div className="mt-12 relative">
-      <h2 className="text-3xl sm:text-4xl font-semibold mb-6">You May Also Like</h2>
+      <h2 className="text-xl md:text-4xl font-semibold text-primary-color text-center uppercase">{Title}</h2>
+      <img
+        src={Divider}
+        alt=""
+        className="object-cover"
+      />
       <div className="relative">
         <button
           onClick={() => scroll("left")}
