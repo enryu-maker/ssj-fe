@@ -204,7 +204,7 @@ const SingleProduct = () => {
                 </p>
                 <p className="text-sm md:text-base">
                   Price Inclusive of all taxes. See full{" "}
-                  <span className="text-primary-color">Price Breakup</span>
+                  <span className="text-primary-color">Price Details</span>
                 </p>
               </div>
               <div className="flex md:flex-row gap-4 md:gap-8 flex-col justify-between md:w-1/2 mt-5 relative">
@@ -291,7 +291,7 @@ const SingleProduct = () => {
           {/* Price Breakup */}
           <div className="w-full  mt-10 px-4 sm:px-6 md:px-8 lg:px-12 space-y-8">
             <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-primary-color mb-4 md:mb-6">
-              Price Breakup
+              Price Details
             </h1>
             <div className="overflow-x-auto">
               <div className="">
@@ -322,7 +322,6 @@ const SingleProduct = () => {
                     <span>-</span>
                     <span>Rs {makingCharges.toFixed(2)}</span>
                   </div>
-
                   <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-primary-color font-medium">
                     <span>Sub Total</span>
                     <span>-</span>
@@ -336,6 +335,13 @@ const SingleProduct = () => {
                     <span>-</span>
                     <span>-</span>
                     <span>Rs {gst}</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg border-t border-b border-primary-color font-medium">
+                  <span>Hallmaking Charges</span>
+                    <span>-</span>
+                    <span>-</span>
+                    <span>-</span>
+                    <span>Rs {0}</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base lg:text-lg font-medium text-gray-700">
                     <span>Total Weight</span>
