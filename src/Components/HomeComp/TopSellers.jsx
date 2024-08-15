@@ -54,20 +54,20 @@ function TopSellers() {
       />
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      <div ref={ref} className="grid grid-cols-2 md:flex gap-5 p-5">
-        {products.map(
-          (product, index) =>
-            index <= 3 && (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.75, ease: "easeOut" }}
-              >
-                <ProductCard {...product.product} />
-              </motion.div>
-            )
-        )}
+      <div ref={ref} className="overflow-x-auto w-full px-5 scrollbar-hide">
+        <div className="flex gap-5">
+          {products.map((product, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.75, ease: "easeOut" }}
+              className="flex-shrink-0 w-64"
+            >
+              <ProductCard {...product.product} />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
