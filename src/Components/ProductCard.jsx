@@ -42,7 +42,7 @@ function ProductCard({ id, name, image, size_chart, is_bestseller, is_out_of_sto
           <img
             src={image}
             alt={name}
-            className={`w-full h-56 sm:h-56 md:h-72 object-cover mb-4 rounded-lg ${is_out_of_stock ? 'blur-sm' : ''}`}
+            className={`w-full h-56 sm:h-56 md:h-72 object-fill mb-4 rounded-lg ${is_out_of_stock ? 'blur-sm' : ''}`}
           />
         </Link>
         {/* Out of Stock Overlay */}
@@ -51,7 +51,7 @@ function ProductCard({ id, name, image, size_chart, is_bestseller, is_out_of_sto
             <span className="text-white text-xl font-bold">Out Of Stock</span>
           </div>
         )}
-        <div className="absolute bottom-4 md:right-2 right-1">
+        <div className="absolute bottom-4 md:right-2 right-5">
           <RatingComp />
         </div>
       </div>
