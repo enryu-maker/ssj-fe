@@ -5,7 +5,14 @@ import { Link } from "react-router-dom";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 import RatingComp from "./RatingComp";
 
-function ProductCard({ id, name, image, size_chart, is_bestseller, is_out_of_stock }) {
+function ProductCard({
+  id,
+  name,
+  image,
+  size_chart,
+  is_bestseller,
+  is_out_of_stock,
+}) {
   const dispatch = useDispatch();
 
   // Extract total_price from size_chart
@@ -38,11 +45,16 @@ function ProductCard({ id, name, image, size_chart, is_bestseller, is_out_of_sto
       {/* Image Wrapper */}
       <div className="relative">
         {/* Image */}
-        <Link to={is_out_of_stock ? '#' : `/product/${id}`} className={`w-full ${is_out_of_stock ? 'cursor-not-allowed' : ''}`}>
+        <Link
+          to={is_out_of_stock ? "#" : `/product/${id}`}
+          className={`w-full ${is_out_of_stock ? "cursor-not-allowed" : ""}`}
+        >
           <img
             src={image}
             alt={name}
-            className={`w-full h-56 sm:h-56 md:h-72 object-cover mb-4 rounded-lg ${is_out_of_stock ? 'blur-sm' : ''}`}
+            className={`w-full h-56 sm:h-56 md:h-72 object-fill mb-4 rounded-lg ${
+              is_out_of_stock ? "blur-sm" : ""
+            }`}
           />
         </Link>
         {/* Out of Stock Overlay */}
@@ -51,9 +63,13 @@ function ProductCard({ id, name, image, size_chart, is_bestseller, is_out_of_sto
             <span className="text-white text-xl font-bold">Out Of Stock</span>
           </div>
         )}
-        <div className="md:absolute md:bottom-4 md:right-2 flex justify-center">
-          <RatingComp />
-        </div>
+        {is_out_of_stock ? (
+          null
+        ) : (
+          <div className="md:absolute md:bottom-4 md:right-2 flex justify-center">
+            <RatingComp />
+          </div>
+        )}
       </div>
 
       {is_bestseller && (
@@ -68,7 +84,10 @@ function ProductCard({ id, name, image, size_chart, is_bestseller, is_out_of_sto
         <CiHeart className="w-6 h-6 sm:w-7 sm:h-7" />
       </button>
 
-      <Link to={is_out_of_stock ? '#' : `/product/${id}`} className={`w-full ${is_out_of_stock ? 'cursor-not-allowed' : ''}`}>
+      <Link
+        to={is_out_of_stock ? "#" : `/product/${id}`}
+        className={`w-full ${is_out_of_stock ? "cursor-not-allowed" : ""}`}
+      >
         <div className="flex flex-col items-start gap-2 mt-3 w-full">
           <p className="text-sm sm:text-md font-semibold text-center w-full truncate">
             {name}
