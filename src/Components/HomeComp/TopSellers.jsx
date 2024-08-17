@@ -27,7 +27,7 @@ function TopSellers() {
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col gap-2 justify-center items-center font-Raleway py-10 ">
+    <div className="flex flex-col gap-2 justify-center items-center font-Raleway py-10">
       <motion.h1
         className="md:text-4xl text-xl text-center font-semibold text-primary-color uppercase"
         initial={{ opacity: 0, y: -50 }}
@@ -54,15 +54,15 @@ function TopSellers() {
       />
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      <div ref={ref} className="overflow-x-auto w-full px-5 scrollbar-hide">
-        <div className="flex md:justify-center md:items-center gap-5 md:px-0 px-5">
+      <div ref={ref} className="overflow-x-auto md:overflow-x-hidden w-full px-5 scrollbar-hide">
+        <div className="flex flex-nowrap gap-5 md:flex-wrap">
           {products.map((product) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.75, ease: "easeOut" }}
-              className="flex-shrink-0 w-64"
+              className="flex-shrink-0 w-64 sm:w-72 md:w-80 lg:w-96"
             >
               <ProductCard {...product.product} />
             </motion.div>
