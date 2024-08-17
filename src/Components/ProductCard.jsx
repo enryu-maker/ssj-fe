@@ -52,7 +52,7 @@ function ProductCard({
           <img
             src={image}
             alt={name}
-            className={`w-full h-56 sm:h-56 md:h-72 object-cover mb-4 rounded-t-lg ${
+            className={`w-full h-56 sm:h-56 md:h-72 object-fill mb-4 rounded-t-lg ${
               is_out_of_stock ? "blur-sm" : ""
             }`}
           />
