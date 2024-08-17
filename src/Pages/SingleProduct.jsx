@@ -19,6 +19,7 @@ import { addToCart } from "../features/cart/cartSlice";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 import SuggestedProducts from "../Components/SuggestedProducts";
 import RatingComp from "../Components/RatingComp";
+import ReviewForm from "../Components/ReviewForm";
 
 const SingleProduct = () => {
   const [openWeight, setOpenWeight] = useState(false);
@@ -369,6 +370,12 @@ const SingleProduct = () => {
           </div>
         </>
       )}
+        {/* Review form  */}
+
+        <div>
+          <ReviewForm/>
+        </div>
+
       {/* Related Products */}
       <div className="w-full mt-10 flex justify-center overflow-x-auto scrollbar-hide">
         <div className="max-w-full px-4 sm:px-6 lg:px-8">
