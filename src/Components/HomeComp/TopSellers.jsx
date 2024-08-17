@@ -54,15 +54,15 @@ function TopSellers() {
       />
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      <div ref={ref} className="overflow-x-auto md:overflow-x-hidden w-full px-5 scrollbar-hide">
-        <div className="flex md:justify-center flex-nowrap gap-5 md:flex-wrap">
+      <div ref={ref} className="overflow-x-auto md:overflow-x-hidden w-full scrollbar-hide">
+        <div className="flex md:justify-center gap-5 flex-nowrap md:flex-wrap">
           {products.map((product) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.75, ease: "easeOut" }}
-              className="flex-shrink-0 w-64 sm:w-72 md:w-80 lg:w-96"
+              className="flex-shrink-0"
             >
               <ProductCard {...product.product} />
             </motion.div>

@@ -29,7 +29,7 @@ function ProductCard({
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-between shadow-lg p-4 rounded-lg bg-white max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+    <div className="relative flex flex-col items-center justify-between shadow-lg rounded-lg bg-white max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
       {/* Discount Badge Wrapper */}
       <div className="absolute top-3 left-3 z-30">
         {/* Modern Discount Badge */}
@@ -52,15 +52,15 @@ function ProductCard({
           <img
             src={image}
             alt={name}
-            className={`w-full h-56 sm:h-56 md:h-72 object-fill mb-4 rounded-lg ${
+            className={`w-full h-56 sm:h-56 md:h-72 object-fill mb-4 rounded-t-lg ${
               is_out_of_stock ? "blur-sm" : ""
             }`}
           />
         </Link>
         {/* Out of Stock Overlay */}
         {is_out_of_stock && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-60 rounded-lg">
-            <span className="text-white text-xl font-bold">Out Of Stock</span>
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 rounded-t-lg">
+            <span className=" text-white text-xl font-bold">Out Of Stock</span>
           </div>
         )}
         {is_out_of_stock ? (
