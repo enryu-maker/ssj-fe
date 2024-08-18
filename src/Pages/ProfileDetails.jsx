@@ -299,15 +299,6 @@ const ProfileDetails = () => {
               Edit Details
             </button>
           )}
-          <button
-            onClick={() => {
-              navigate("/spin-wheel");
-            }}
-            className="md:ml-5 mt-6 sm:mt-8 bg-primary-color text-white py-2 px-6 rounded-md hover:bg-primary-dark transition-colors duration-300 w-full sm:w-auto text-lg"
-          >
-            Spin
-          </button>
-          
         </div>
       </div>
     </div>

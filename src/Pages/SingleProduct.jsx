@@ -370,11 +370,15 @@ const SingleProduct = () => {
           </div>
         </>
       )}
-        {/* Review form  */}
-
-        <div>
-          <ReviewForm/>
-        </div>
+      {/* Review form  */}
+      <div>
+        <ReviewForm
+          productId={productId}
+          reviews={thisProduct?.reviews}
+          avgRating={thisProduct?.average_rating}
+          isReviewed={thisProduct?.user_review?.is_reviewed}
+        />
+      </div>
 
       {/* Related Products */}
       <div className="w-full mt-10 flex justify-center overflow-x-auto scrollbar-hide">

@@ -7,6 +7,10 @@ export const GetAllProducts = async (page = 1, subCategory = "") => {
         page,
         sub_category: subCategory,
       },
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+    
     });
     return response;
   } catch (error) {
@@ -17,7 +21,11 @@ export const GetAllProducts = async (page = 1, subCategory = "") => {
 // Single product
 export const GetSingleProduct = async (productId) => {
   try {
-    const response = await api.get(`/product/${productId}/`);
+    const response = await api.get(`/product/${productId}/`, {
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+    });
     return response; // Assuming response.data contains the single product object
   } catch (error) {
     throw new Error(error.message);
