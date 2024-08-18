@@ -17,6 +17,8 @@ function Gift() {
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
 
+  console.log(products);
+
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true,

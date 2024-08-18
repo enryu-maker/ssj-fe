@@ -18,8 +18,8 @@ import {
 import { addToCart } from "../features/cart/cartSlice";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 import SuggestedProducts from "../Components/SuggestedProducts";
-import RatingComp from "../Components/RatingComp";
 import ReviewForm from "../Components/ReviewForm";
+import ReactStars from "react-rating-stars-component";
 
 const SingleProduct = () => {
   const [openWeight, setOpenWeight] = useState(false);
@@ -33,7 +33,7 @@ const SingleProduct = () => {
   const [selectedWeight, setSelectedWeight] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
 
-  console.log(thisProduct);
+  console.log();
 
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId));
@@ -121,6 +121,12 @@ const SingleProduct = () => {
   const discountPercentage =
     Math.round(thisProduct?.size_chart?.[0]?.discount_percentage) || undefined;
 
+  const averageRating = isNaN(thisProduct.average_rating)
+    ? 0
+    : Math.floor(Number(thisProduct.average_rating));
+
+  console.log(averageRating);
+
   // Slick carousel settings
   const settings = {
     dots: true,
@@ -146,9 +152,19 @@ const SingleProduct = () => {
                     {discountPercentage}% OFF
                   </span>
                 )}
-                <div className="absolute bottom-2 right-3 z-50">
-                  <RatingComp />
-                </div>
+                {averageRating && (
+                  <div className="absolute bottom-2 right-3 z-50">
+                    <div>
+                      <ReactStars
+                        count={5}
+                        size={20}
+                        activeColor="#ffd700"
+                        value={averageRating}
+                        edit={false}
+                      />
+                    </div>
+                  </div>
+                )}
                 <Slider {...settings}>
                   {images.map((item, index) => (
                     <div key={index} className="w-full aspect-w-1 aspect-h-1">

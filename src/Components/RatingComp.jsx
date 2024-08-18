@@ -1,10 +1,12 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
 
-const RatingComp = () => {
+const RatingComp = ({ avrageRating }) => {
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
+
+  console.log(avrageRating);
 
   return (
     <div>

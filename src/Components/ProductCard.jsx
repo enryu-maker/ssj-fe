@@ -12,8 +12,11 @@ function ProductCard({
   size_chart,
   is_bestseller,
   is_out_of_stock,
+  average_rating
 }) {
   const dispatch = useDispatch();
+
+  console.log(average_rating);
 
   // Extract total_price from size_chart
   const total_price =
@@ -63,13 +66,13 @@ function ProductCard({
             <span className=" text-white text-xl font-bold">Out Of Stock</span>
           </div>
         )}
-        {is_out_of_stock ? (
+        {/* {is_out_of_stock ? (
           null
         ) : (
           <div className="md:absolute md:bottom-4 md:right-2 flex justify-center">
-            <RatingComp />
+            <RatingComp  />
           </div>
-        )}
+        )} */}
       </div>
 
       {is_bestseller && (
